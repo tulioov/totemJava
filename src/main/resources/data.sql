@@ -1,0 +1,6 @@
+
+/*CREATE TABLE USUARIO (
+  cod_usuario INT AUTO_INCREMENT  PRIMARY KEY,
+  nome VARCHAR(250) NOT NULL,
+  especialidade VARCHAR(250) DEFAULT NULL
+);*/
