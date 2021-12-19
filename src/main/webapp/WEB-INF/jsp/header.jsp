@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+	pageEncoding="ISO-8859-1"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<!DOCTYPE html>
 <html>
 <head>
 	<meta>
@@ -12,6 +13,9 @@
 	<title>Welcome</title>
 </head>
 <body>
+<script src="https://code.jquery.com/jquery-1.12.0.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script src="../js/home/homeController.js"></script>
 	
 	<div class="wrapper">
 		<nav id="sidebar">
@@ -26,11 +30,11 @@
 		        <li class="active">
 		            <a href="#homeSubmenu" data-toggle="collapse" aria-expanded="false">Adm</a>
 		            <ul class="collapse list-unstyled" id="homeSubmenu">
-		                <li><a href="#">Cadastro Usuario</a></li>
-		                <li><a href="#">Cadastro Atividade</a></li>
-		                <li><a href="#">Cadastro Etapa</a></li>
-		                <li><a href="#">Cadastro Grupo de Material</a></li>
-		                <li><a href="#">Cadastro Material</a></li>
+		                <li><a href="/cadastroUsuario" onclick="CadastroUsuarioController.listar();" >Cadastro Usuario</a></li>
+		                <li><a href="" onclick="alert('teste')">Cadastro Atividade</a></li>
+		                <li><a href="">Cadastro Etapa</a></li>
+		                <li><a href="">Cadastro Grupo de Material</a></li>
+		                <li><a href="">Cadastro Material</a></li>
 		            </ul>
 		        </li>
 		    </ul>
@@ -52,20 +56,3 @@
 		            </div>
 		        </div>
 		    </nav>
-			<h2>Bem vindo NOME, Estamos ta etapa 5</h2>
-			<div class="col-12">
-				<button type="button" class="btn btn-primary btn-lg btn-block">Fibra</button>
-				<button type="button" class="btn btn-primary btn-lg btn-block">Eletrica</button>
-				<button type="button" class="btn btn-primary btn-lg btn-block">Etapa0</button>
-				<button type="button" class="btn btn-primary btn-lg btn-block">Etapa1</button>
-				<button type="button" class="btn btn-primary btn-lg btn-block">Etapa2</button>
-				<button type="button" class="btn btn-primary btn-lg btn-block">Etapa3</button>
-				<button type="button" class="btn btn-primary btn-lg btn-block">Etapa4</button>
-			</div>
-		</div>
-	</div>
-	<script src="https://code.jquery.com/jquery-1.12.0.min.js"></script>
-	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-	<script src="../js/home/homeController.js"></script>
-</body>
-</html>

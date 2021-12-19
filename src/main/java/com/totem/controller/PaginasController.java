@@ -5,11 +5,17 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-public class IndexController {
+public class PaginasController {
 	
 	@RequestMapping("/")
 	public String homePrincipal(Model model){
 		model.addAttribute("nome" , "tuloiee");
-		return "home";
+		return "header";
+	}
+	
+	@RequestMapping("/cadastroUsuario")
+	public String cadastroUsuario(Model model){
+		model.addAttribute("nome" , "tuloiee");
+		return "cadastroUsuario";
 	}
 }
