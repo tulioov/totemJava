@@ -4,10 +4,9 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="ISO-8859-1">
-<title>Welcome</title>
-
-
+	<meta charset="ISO-8859-1">
+	<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.3/css/jquery.dataTables.css">
+	<title>Welcome</title>
 </head>
 <body>
 
@@ -18,8 +17,35 @@
 	<input type="hidden" name="descricao" id="descricao">
 	<input type="hidden" name="localizacao" id="localizacao">
 	<div class="container">
-		<div class="row col-md-6 col-md-offset-2 custyle">
-			<table class="table table-striped custab">
+		<div class="row">
+			<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">
+				Add Usuario
+			</button>
+			<hr/>
+		</div>
+		
+		
+		
+		<div class="modal" id="myModal">
+		    <div class="modal-dialog">
+		        <div class="modal-content">
+		            <div class="modal-header">
+		                <h4 class="modal-title">Modal Heading</h4>
+		                <button type="button" class="close" data-dismiss="modal">&times;</button>
+		            </div>
+		            <div class="modal-body">
+		                Modal body..
+		            </div>
+		            <div class="modal-footer">
+		                <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+		            </div>
+		        </div>
+		    </div>
+		</div>
+		
+		
+		<div class="row">
+			<table id="tableUsuario">
 				<thead>
 			    <tr>
 			        <th>ID</th>
@@ -28,9 +54,14 @@
 			        <th class="text-center">Action</th>
 			    </tr>
 				</thead>
-		  </table>
+				<tbody></tbody>
+			</table>
 	  </div>
 	</div>
+	
+	
+	
+	<script src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.js"></script>
 	<script src="../js/cadastroUsuario/cadastroUsuarioController.js"></script>
 </body>
 </html>

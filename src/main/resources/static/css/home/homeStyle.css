@@ -1,6 +1,12 @@
-/*
-    DEMO STYLE
-*/
+:root{
+	--azulOkean : #001932;
+	--laranjaOkean : #944415;
+	--vermelho : #a94442;
+	--verde : #5cb85c;
+	--verdeexcel : #008641;
+	--amarelo : #ffc800;
+}
+
 @import "https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700";
 
 

@@ -1,6 +1,6 @@
 
 const CadastroUsuarioController = {
-	
+		
 	listar (){
 		$.ajax({
 	        type: "GET",
@@ -8,14 +8,21 @@ const CadastroUsuarioController = {
 	        url: "/usuario/listar",
 	        success: function(retorno) {
 	        	console.log("retorno:" + retorno);
-	        },
-
-	        error: function(e) {
-	            console.log("ERROR : ", e);
 	        }
 	    });
 	}
 	
 };
+
+$( document ).ready(function() {
+	
+	$('#tableUsuario').DataTable( {
+	    language: {
+	        url: '//cdn.datatables.net/plug-ins/1.11.3/i18n/pt_br.json'
+	    }
+	});
+	
+});
+
 
 

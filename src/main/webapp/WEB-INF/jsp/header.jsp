@@ -18,7 +18,7 @@
 <script src="../js/home/homeController.js"></script>
 	
 	<div class="wrapper">
-		<nav id="sidebar">
+		<nav id="sidebar" style="position: absolute;">
 		    <div class="sidebar-header">
 		        <h3>Menu</h3>
 		    </div>
@@ -56,3 +56,5 @@
 		            </div>
 		        </div>
 		    </nav>
+	    </div>
+    </div>
