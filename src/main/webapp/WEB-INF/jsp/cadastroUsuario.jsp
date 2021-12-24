@@ -6,7 +6,7 @@
 <head>
 	<meta charset="ISO-8859-1">
 	<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.3/css/jquery.dataTables.css">
-	<title>Welcome</title>
+	<title>Cadastro de Usuario</title>
 </head>
 <body>
 
@@ -23,8 +23,6 @@
 			</button>
 			<hr/>
 		</div>
-		
-		
 		
 		<div class="modal" id="myModal">
 		    <div class="modal-dialog">
