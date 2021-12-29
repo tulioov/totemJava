@@ -24,17 +24,20 @@
 		    </div>
 		
 		    <ul class="list-unstyled components">
-		    	<li>
-		            <a href="#">Menu</a>
-		        </li>
+		    	<li><a href="/">OKEAN</a></li>
+		        <li><a class="bg-azul texto" href="/monitoramento" onclick="" >Monitoramento</a></li>
 		        <li class="active">
 		            <a href="#homeSubmenu" class="bg-azul texto" data-toggle="collapse" aria-expanded="false">Adm</a>
 		            <ul class="collapse list-unstyled bg-azul texto" id="homeSubmenu">
+		            	<li><a class="bg-azul texto" href="/controlTotens" onclick="" >Controle Totens</a></li>
+		            	<li><a class="bg-azul texto" href="/cadastroBarco">Cadastro Barco</a></li>
 		                <li><a class="bg-azul texto" href="/cadastroUsuario" onclick="CadastroUsuarioController.listar();" >Cadastro Usuario</a></li>
-		                <li><a class="bg-azul texto" href="" onclick="alert('teste')">Cadastro Atividade</a></li>
-		                <li><a class="bg-azul texto" href="">Cadastro Etapa</a></li>
-		                <li><a class="bg-azul texto" href="">Cadastro Grupo de Material</a></li>
-		                <li><a class="bg-azul texto" href="">Cadastro Material</a></li>
+		                <li><a class="bg-azul texto" href="/cadasdroEtapas">Cadastro Etapa</a></li>
+		                <li><a class="bg-azul texto" href="/cadastroGruposAtividades">Cadastro Grupos da Atividade</a></li>
+		                <li><a class="bg-azul texto" href="/cadastroAtividade">Cadastro Atividade</a></li>
+		                <li><a class="bg-azul texto" href="/cadastroGrupoMaterial">Cadastro Grupo de Material</a></li>
+		                <li><a class="bg-azul texto" href="/cadastroMaterial">Cadastro Material</a></li>
+		                <li><a class="bg-azul texto" href="/relatorio">Relatorios</a></li>
 		            </ul>
 		        </li>
 		    </ul>
@@ -45,12 +48,13 @@
 		        <div class="container-fluid titulo" >
 		            <div class="row">
 		            	<div class="col-md-4">
-		            		<a href="/monitoramento"><img src="../img/logonOkean.jpg" alt="logonOkean"></a>
+		            		<a href="/monitoramento"><img src="../img/logonOkean.png" style="width: 247px; height: 95px;"
+		            		 alt="logonOkean"></a>
 		            	</div>
 		            	<div class="col-md-4">
-							<div class="text-center texto">
-								<h1>${nome}</h1>
-								<p class="textoGrifado">Gerenciamento de fabricação de Barcos</p>
+							<div class="text-center texto"  style= "margin-top: 55px;">
+<%-- 								<h1>${nome}</h1> --%>
+								<h3 class="textoGrifado">${titulo}</h3>
 							</div>
 						</div>
 						<div class="col-md-4">

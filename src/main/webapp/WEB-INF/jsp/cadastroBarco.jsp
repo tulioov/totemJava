@@ -6,7 +6,7 @@
 <head>
 	<meta charset="ISO-8859-1">
 	<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.3/css/jquery.dataTables.css">
-	<title>Cadastro de Usuario</title>
+	<title>Cadastro de Barco</title>
 </head>
 <body>
 
@@ -19,7 +19,7 @@
 	<div class="container">
 		<div class="row">
 			<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">
-				Add Usuario
+				Add Barco
 			</button>
 			<hr/>
 		</div>
@@ -47,8 +47,8 @@
 				<thead>
 			    <tr>
 			        <th>ID</th>
+			        <th>Descrição</th>
 			        <th>Nome</th>
-			        <th>Especialidade</th>
 			    </tr>
 				</thead>
 				<tbody></tbody>

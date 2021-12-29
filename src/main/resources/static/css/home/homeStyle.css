@@ -1,7 +1,7 @@
 :root {
-	--azulOkean: #001932;
+/* 	--azulOkean: #001932; */
 /* 	passado no zap */
-/* 	--azulOkean: #737da0; */
+	--azulOkean: #737da0;
 	--laranjaOkean: #944415;
 	--vermelho: #a94442;
 	--verde: #5cb85c;
@@ -12,7 +12,17 @@
 
 @import
 	"https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700";
-
+	
+	
+.bg-success{
+	background-color: #28a745!important;
+}
+.bg-danger{
+	background-color: #dc3545!important;
+}
+.bg-warning{
+	background-color: #ffc107!important;
+}
 .titulo {
 	background-color: var(--azulOkean);
 /* 	background-image: url("img_tree.gif"), url("paper.gif"); */

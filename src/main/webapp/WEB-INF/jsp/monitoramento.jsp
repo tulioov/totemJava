@@ -6,6 +6,7 @@
 <head>
 	<meta charset="ISO-8859-1">
 	<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.3/css/jquery.dataTables.css">
+	<link rel="stylesheet" type="text/css" href="../css/monitorUser/monitorUser.css">
 	<title>Monitor user</title>
 </head>
 <body>
@@ -22,13 +23,25 @@
 			<button type="button" onclick="MonitorUserController.abrirModal();" class="btn btn-primary" data-toggle="modal" data-target="#myModal">
 				RFC
 			</button>
+			
+			<button type="button" onclick="MonitorUserController.abrirModalContinuidade();" class="btn btn-primary" data-toggle="modal" data-target="#myModal">
+				RFC Continuidade
+			</button>
+			
+			<button type="button" onclick="MonitorUserController.abrirModalSaida();" class="btn btn-primary" data-toggle="modal" data-target="#myModal">
+				RFC Saída
+			</button>
 			<hr/>
 		</div>
 		
 		<div class="modal" id="myModal">
 		    
 		</div>
-		
+		<h3>Processo de fabricação do barco</h3>
+		<div class="progress">
+		  	<div class="progress-bar bg-success" role="progressbar" style="width: 25%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">25%</div>
+		</div>
+		<hr/>
 		<div class="row">
 			<table id="tableMonitorUser">
 				<thead>
@@ -46,39 +59,59 @@
 						<td>Fernand</td>
 						<td>Fibra</td>
 						<td>08:00</td>
-						<td>02:00</td>
+						<td>
+							<div class="progress">
+							  <div class="progress-bar bg-success" role="progressbar" style="width: 25%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">03:00</div>
+							</div>
+						</td>
 					</tr>
 					<tr>
 						<td>01</td>
 						<td>maria</td>
 						<td>Eletrica</td>
 						<td>08:00</td>
-						<td>02:00</td>
+						<td>
+							<div class="progress">
+							  <div class="progress-bar bg-warning" role="progressbar" style="width: 75%" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100">5:00</div>
+							</div>
+						</td>
 					</tr>
 					<tr>
 						<td>01</td>
 						<td>Geraldo</td>
 						<td>Motor</td>
 						<td>08:00</td>
-						<td>02:00</td>
+						<td>
+							<div class="progress">
+							  <div class="progress-bar bg-danger" role="progressbar" style="width: 100%" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">13:00</div>
+							</div>
+						</td>
 					</tr>
 					<tr>
 						<td>01</td>
 						<td>Jose</td>
 						<td>Fibra</td>
 						<td>08:00</td>
-						<td>02:00</td>
+						<td>
+							<div class="progress">
+							  <div class="progress-bar bg-warning" role="progressbar" style="width: 75%" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100">5:00</div>
+							</div>
+						</td>
 					</tr>
 					<tr>
 						<td>01</td>
 						<td>Fulano</td>
 						<td>Fibra</td>
 						<td>08:00</td>
-						<td>02:00</td>
+						<td>
+							<div class="progress">
+							  <div class="progress-bar bg-success" role="progressbar" style="width: 25%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">03:00</div>
+							</div>
+						</td>
 					</tr>
 				</tbody>
 			</table>
-	  </div>
+		</div>
 	</div>
 	
 	<script src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.js"></script>

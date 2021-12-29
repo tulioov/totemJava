@@ -14,6 +14,14 @@ const MonitorUserController = {
 		
 	abrirModal(){
 		$('#myModal').html(MonitorUserTemplate.modal())
+	},
+	
+	abrirModalContinuidade(){
+		$('#myModal').html(MonitorUserTemplate.modalContinuar())
+	},
+	
+	abrirModalSaida(){
+		$('#myModal').html(MonitorUserTemplate.modalSaida())
 	}
 };
 

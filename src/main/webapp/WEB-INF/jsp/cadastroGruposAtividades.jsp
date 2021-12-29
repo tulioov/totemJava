@@ -19,7 +19,7 @@
 	<div class="container">
 		<div class="row">
 			<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">
-				Add Usuario
+				Add Grupos Atividades
 			</button>
 			<hr/>
 		</div>
@@ -47,8 +47,9 @@
 				<thead>
 			    <tr>
 			        <th>ID</th>
-			        <th>Nome</th>
-			        <th>Especialidade</th>
+			        <th>Descrição</th>
+			        <th>Localização</th>
+			        <th class="text-center">Action</th>
 			    </tr>
 				</thead>
 				<tbody></tbody>
