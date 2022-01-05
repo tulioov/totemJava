@@ -8,66 +8,78 @@
 	    <meta http-equiv="X-UA-Compatible" content="IE=edge">
 	    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 	    <meta http-equiv="Cache-control" content="no-cache">
-		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+	    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+		<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css">		
+		<link rel="stylesheet" href="../css/menu/menu.css">
 		<link rel="stylesheet" href="../css/home/homeStyle.css">
 	<title>Okean</title>
 </head>
 <body>
+
 <script src="https://code.jquery.com/jquery-1.12.0.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-<script src="../js/home/homeController.js"></script>
-	
-	<div class="wrapper">
-		<nav id="sidebar" class="bg-azul texto" style="z-index: 9999;">
-		    <div class="sidebar-heade bg-azul texto">
-		        <h3>Menu</h3>
-		    </div>
-		
-		    <ul class="list-unstyled components">
-		    	<li><a href="/">OKEAN</a></li>
-		        <li><a class="bg-azul texto" href="/monitoramento" onclick="" >Monitoramento</a></li>
-		        <li class="active">
-		            <a href="#homeSubmenu" class="bg-azul texto" data-toggle="collapse" aria-expanded="false">Adm</a>
-		            <ul class="collapse list-unstyled bg-azul texto" id="homeSubmenu">
-		            	<li><a class="bg-azul texto" href="/controlTotens" onclick="" >Controle Totens</a></li>
-		            	<li><a class="bg-azul texto" href="/cadastroBarco">Cadastro Barco</a></li>
-		                <li><a class="bg-azul texto" href="/cadastroUsuario" onclick="CadastroUsuarioController.listar();" >Cadastro Usuario</a></li>
-		                <li><a class="bg-azul texto" href="/cadasdroEtapas">Cadastro Etapa</a></li>
-		                <li><a class="bg-azul texto" href="/cadastroGruposAtividades">Cadastro Grupos da Atividade</a></li>
-		                <li><a class="bg-azul texto" href="/cadastroAtividade">Cadastro Atividade</a></li>
-		                <li><a class="bg-azul texto" href="/cadastroGrupoMaterial">Cadastro Grupo de Material</a></li>
-		                <li><a class="bg-azul texto" href="/cadastroMaterial">Cadastro Material</a></li>
-		                <li><a class="bg-azul texto" href="/relatorio">Relatorios</a></li>
-		            </ul>
-		        </li>
-		    </ul>
-		</nav>
-		
-		<div class="container">
-		    <nav class="row navbar navbar-default bg-azul">
-		        <div class="container-fluid titulo" >
-		            <div class="row">
-		            	<div class="col-md-4">
-		            		<a href="/monitoramento"><img src="../img/logonOkean.png" style="width: 247px; height: 95px;"
-		            		 alt="logonOkean"></a>
-		            	</div>
-		            	<div class="col-md-4">
-							<div class="text-center texto"  style= "margin-top: 55px;">
-<%-- 								<h1>${nome}</h1> --%>
-								<h3 class="textoGrifado">${titulo}</h3>
-							</div>
-						</div>
-						<div class="col-md-4">
-						</div>
-						<div class="col-md-12">
-		            		<button type="button" id="sidebarCollapse" class="navbar-btn bg-azul">
-			                    <span class="bg-laranja"></span>
-			                    <span class="bg-laranja"></span>
-			                    <span class="bg-laranja"></span>
-			                </button>
-		                </div>
-		            </div>
-		        </div>
-		    </nav>
-	    </div>
+<script src="../js/menu/menu.js"></script>
+
+<div class='dashboard'>
+    <div class="dashboard-nav bg-azul">
+        <header>
+        	<a href="#!" class="menu-toggle">
+        		<i class="fas fa-bars"></i>
+        	</a>
+        	<a href="#" class="brand-logo">
+        		<i class="fas fa-anchor"></i> 
+        		<span>OKEAN</span>
+        	</a>
+		</header>
+        <nav class="dashboard-nav-list">
+        	<a href="/" class="dashboard-nav-item active">
+        		<i class="fas fa-home"></i>
+				Home 
+			</a>
+            <div class='dashboard-nav-dropdown'>
+            	<a href="#!" class="dashboard-nav-item dashboard-nav-dropdown-toggle">
+	            	<i class="fas fa-tachometer-alt"></i> 
+					Monitoramento
+				</a>
+                <div class='dashboard-nav-dropdown-menu'>
+	                <a href="/monitoramento" class="dashboard-nav-dropdown-item">Barco</a>
+					<a href="controlTotens" class="dashboard-nav-dropdown-item">Toten</a>
+				</div>
+            </div>
+            <a href="/relatorio" class="dashboard-nav-item">
+            	<i class="fas fa-file-upload"></i> 
+            	Relat&oacute;rio 
+			</a>
+            <div class='dashboard-nav-dropdown'>
+            	<a href="#!" class="dashboard-nav-item dashboard-nav-dropdown-toggle">
+	            	<i class="fas fa-cogs"></i> 
+					Cadastro
+				</a>
+                <div class='dashboard-nav-dropdown-menu'>
+					<a href="/cadastroBarco" class="dashboard-nav-dropdown-item">Barco</a>
+					<a href="/cadastroUsuario" onclick="CadastroUsuarioController.listar();" class="dashboard-nav-dropdown-item">Usuario</a>
+					<a href="/cadasdroEtapas" class="dashboard-nav-dropdown-item">Etapa</a>
+					<a href="/cadastroGruposAtividades" class="dashboard-nav-dropdown-item">Grupos da Atividade</a>
+					<a href="/cadastroAtividade" class="dashboard-nav-dropdown-item">Atividade</a>
+					<a href="/cadastroGrupoMaterial" class="dashboard-nav-dropdown-item">Grupo de Material</a>
+					<a href="/cadastroMaterial" class="dashboard-nav-dropdown-item">Material</a>
+				</div>
+            </div>
+            <div class="nav-item-divider"></div>
+            <a href="#" class="dashboard-nav-item">
+            	<i class="fas fa-sign-out-alt"></i> 
+            	Sair 
+			</a>
+        </nav>
     </div>
+    <div class='dashboard-app'>
+        <header class='dashboard-toolbar bg-azul'>
+        	<a href="#!" class="menu-toggle">
+       			<i class="fas fa-bars laranja"></i>	
+			</a>
+			<div class="col-md-8">
+          		<a href="/"><img src="../img/logonOkean.png" style="width: 247px; height: 95px;"
+				alt="logonOkean"></a>
+			</div>
+		</header>
+        <div class='dashboard-content' style="margin-top: 30px;">

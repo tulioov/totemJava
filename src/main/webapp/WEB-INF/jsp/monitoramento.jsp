@@ -114,6 +114,7 @@
 		</div>
 	</div>
 	
+	<script src="https://code.jquery.com/jquery-1.12.0.min.js"></script>
 	<script src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.js"></script>
 	<script src="../js/monitorUser/monitorUserTemplate.js"></script>
 	<script src="../js/monitorUser/monitorUserController.js"></script>
