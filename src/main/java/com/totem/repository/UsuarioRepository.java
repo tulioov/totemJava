@@ -5,10 +5,10 @@ import java.util.List;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
-import com.totem.entity.UsuarioEntity;
+import com.totem.entity.Usuario;
 
 @Repository
-public interface UsuarioRepository extends CrudRepository<UsuarioEntity, Long> {
+public interface UsuarioRepository extends CrudRepository<Usuario, Long> {
 
-	List<UsuarioEntity> findAll();
+	List<Usuario> findAll();
 }

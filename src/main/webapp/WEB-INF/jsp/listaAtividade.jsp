@@ -29,6 +29,6 @@
 				<button type="button" class="btn btn-primary btn-lg btn-block">Etapa4</button>
 			</div>
 	</div>
-	<script src="../js/cadastroUsuario/cadastroUsuarioController.js"></script>
+<!-- 	<script src="../js/cadastroUsuario/cadastroUsuarioController.js"></script> -->
 </body>
 </html>

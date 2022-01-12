@@ -46,6 +46,10 @@
 .textoGrifado{
 	color: var(--laranjaOkean);
 }
+.panel-heading{
+	background-color: var(--azulOkean) !important;
+	color: var(--branco) !important
+}
 
 body {
 	font-size: 15px;

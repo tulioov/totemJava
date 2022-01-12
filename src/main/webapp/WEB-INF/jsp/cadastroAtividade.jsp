@@ -58,6 +58,6 @@
 	</div>
 	
 	<script src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.js"></script>
-	<script src="../js/cadastroUsuario/cadastroUsuarioController.js"></script>
+<!-- 	<script src="../js/cadastroUsuario/cadastroUsuarioController.js"></script> -->
 </body>
 </html>
