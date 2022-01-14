@@ -37,3 +37,4 @@ HTML/JAVA
 ô	&ocirc;		Ô	& Ocirc;
 ú	&uacute;	Ú	&Uacute;
 ç	&ccedil;	Ç	&Ccedil;
+çã = &ccedil;&atilde;

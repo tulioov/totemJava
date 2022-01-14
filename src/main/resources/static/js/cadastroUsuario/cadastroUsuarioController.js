@@ -1,7 +1,6 @@
 
 const CadastroUsuarioController = {
 		
-	
 	salvar(){
 		
 		$.ajax({
@@ -10,7 +9,7 @@ const CadastroUsuarioController = {
 	        contentType: "application/json",
 	        dataType: "json",
 	        cache: false,
-//	        data: JSON.stringify({"nome":"fwefwef"}),
+//	        data: JSON.stringify({"nome":"vicotr", "especialidade":"eletirc"}),
 	        data : JSON.stringify($('#formId').serializeJSON()),
 	        success: function(retorno) {
 	        	console.log("retorno:" + retorno);
@@ -19,14 +18,22 @@ const CadastroUsuarioController = {
 	},
 		
 		
-		
 	listar(){
 		$.ajax({
 	        type: "GET",
 	        contentType: "application/json",
 	        url: "/usuario/listar",
 	        success: function(retorno) {
-	        	console.log("retorno:" + retorno);
+	        	$(retorno).each(function(index, data) {
+	        		$("#tableUsuario").find('tbody').append(CadastroUsuarioTemplate.itemLinha(data));
+        		});
+	        },
+	        complete: function(data) { 
+	        	$('#tableUsuario').DataTable( {
+	        	    language: {
+	        	        url: '//cdn.datatables.net/plug-ins/1.11.3/i18n/pt_br.json'
+	        	    }
+	        	});
 	        }
 	    });
 	},
@@ -42,11 +49,7 @@ const CadastroUsuarioController = {
 };
 
 $( document ).ready(function() {
-	$('#tableUsuario').DataTable( {
-	    language: {
-	        url: '//cdn.datatables.net/plug-ins/1.11.3/i18n/pt_br.json'
-	    }
-	});
+	CadastroUsuarioController.listar();
 });
 
 

@@ -10,6 +10,7 @@ const CadastroUsuarioTemplate = {
 	            </div>
 	            <div class="modal-body">
 	                <form id="formId">
+	                	<input type="text" id="campoId" name="id" class="oculta">
 		                <div class="panel panel-default">
 		                	<div class="panel-heading">Cadastro de Usu\u00e1rio</div>
 		                	<div class="panel-body">
@@ -51,6 +52,21 @@ const CadastroUsuarioTemplate = {
 	        </div>
 	    </div>
 		`;
+	},
+	
+	itemLinha(data){
+		return `
+			<tr>
+				<td>${data.id}</td>
+				<td>${data.nome}</td>
+				<td>${data.especialidade}</td>
+				<td>
+					<span onclick="alert('fazendo editar')" class="glyphicon glyphicon-pencil"></span>
+					<span onclick="alert('fazendo deletar')" class="glyphicon glyphicon-trash"></span>
+				</td>
+			</tr>
+		`;
+		
 	}
 	
 };

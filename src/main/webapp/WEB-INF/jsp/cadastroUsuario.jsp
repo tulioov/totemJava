@@ -34,12 +34,13 @@
 		
 		
 		<div class="row">
-			<table id="tableUsuario">
+			<table id="tableUsuario" class="display">
 				<thead>
 			    <tr>
 			        <th>ID</th>
 			        <th>Nome</th>
 			        <th>Especialidade</th>
+			        <th>A&ccedil;&atilde;o</th>
 			    </tr>
 				</thead>
 				<tbody></tbody>

@@ -9,7 +9,7 @@ public class PaginasController {
 	
 	@RequestMapping("/")
 	public String homePrincipal(Model model){
-		//model.addAttribute("titulo" , "OKEAN");
+		model.addAttribute("titulo" , "OKEAN");
 		return "header";
 	}
 	

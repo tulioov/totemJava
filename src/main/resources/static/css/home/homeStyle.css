@@ -13,15 +13,20 @@
 @import
 	"https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700";
 	
-	
+.glyphicon{
+	cursor: pointer;
+}
+.oculta{
+	display: none !importante;
+}	
 .bg-success{
-	background-color: #28a745!important;
+	background-color: #28a745 !important;
 }
 .bg-danger{
-	background-color: #dc3545!important;
+	background-color: #dc3545 !important;
 }
 .bg-warning{
-	background-color: #ffc107!important;
+	background-color: #ffc107 !important;
 }
 .titulo {
 	background-color: var(--azulOkean);
