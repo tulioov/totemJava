@@ -35,14 +35,11 @@ public class UsuarioController {
 		}
 
 	}
-
-	@GetMapping("/listar")
-	public ResponseEntity<Object> listar() {
-		try {
-			return AjaxResponse.generateResponse("Success", HttpStatus.OK, usuarioService.listar());
-		} catch (Exception e) {
-			return AjaxResponse.generateResponse(e.getMessage(), HttpStatus.MULTI_STATUS, null);
-		}
+	
+	@RequestMapping("/listar")
+	public @ResponseBody ResponseEntity<List<Usuario>> listar(){
+		return ResponseEntity.ok().body(usuarioService.listar());
+        //return new ResponseEntity<>(usuarioService.listar(), new HttpHeaders(), HttpStatus.OK);
 	}
 
 }
