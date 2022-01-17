@@ -28,7 +28,8 @@ public class UsuarioController {
 	
 	@RequestMapping("/listar")
 	public @ResponseBody ResponseEntity<List<Usuario>> listar(){
-        return new ResponseEntity<>(usuarioService.listar(), new HttpHeaders(), HttpStatus.OK);
+		return ResponseEntity.ok().body(usuarioService.listar());
+        //return new ResponseEntity<>(usuarioService.listar(), new HttpHeaders(), HttpStatus.OK);
 	}
 	
 }
