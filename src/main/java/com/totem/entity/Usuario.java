@@ -6,7 +6,9 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
-
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 @Entity
 @Table(name = "USUARIO")
@@ -17,10 +19,17 @@ public class Usuario {
 	@Column(name = "COD_USUARIO")
 	private Long id;
 
+	
 	@Column(name = "NOME")
+	@NotNull(message = "Usuario deve conter um nome.")
+	@NotEmpty(message = "Usuario deve conter um nome.")	
+	@Size(min = 3 , max = 100, message = "Nome deve conter minimo de 3 caracater")
 	private String nome;
 	
 	@Column(name = "ESPECIALIDADE")
+	@NotNull(message = "Usuario deve conter uma especialidade.")
+	@NotEmpty(message = "Usuario deve conter uma especialidade.")	
+	@Size(min = 3 , max = 100, message = "Especialidade deve conter minimo de 3 caracater")
 	private String especialidade;
 
 	public Long getId() {

@@ -9,10 +9,12 @@ const CadastroUsuarioController = {
 	        contentType: "application/json",
 	        dataType: "json",
 	        cache: false,
-//	        data: JSON.stringify({"nome":"vicotr", "especialidade":"eletirc"}),
 	        data : JSON.stringify($('#formId').serializeJSON()),
 	        success: function(retorno) {
 	        	console.log("retorno:" + retorno);
+	        },
+	        error: function(retorno){
+	        	console.log(retorno);
 	        }
 	    });
 	},

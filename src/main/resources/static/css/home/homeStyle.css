@@ -17,7 +17,7 @@
 	cursor: pointer;
 }
 .oculta{
-	display: none !importante;
+    display: none;
 }	
 .bg-success{
 	background-color: #28a745 !important;
