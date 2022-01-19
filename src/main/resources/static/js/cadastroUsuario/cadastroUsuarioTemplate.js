@@ -24,6 +24,17 @@ const CadastroUsuarioTemplate = {
 										<input type="text" name="especialidade" class="form-control" id="recipient-name">
 									</div>
 								</div>
+								<div class="row">
+									<div class="col-md-6">
+										<div class="material-switch mt15">
+											<div>Admin: </div>
+											Sim
+		                            		<input id="someSwitchOptionPrimary" name="someSwitchOption001" type="checkbox"/>
+		                            		<label for="someSwitchOptionPrimary" class="label-success mt15"></label>
+		                            		Nao
+		                        		</div>
+	                        		</div>
+                        		</div>
 							</div>
 						</div>
 						<div class="panel panel-default">

@@ -23,8 +23,8 @@ public class UsuarioController {
 	UsuarioService usuarioService;
 	
 	@PostMapping("/salvar")
-	public @ResponseBody Usuario salvar( @RequestBody Usuario usuario){
-        return usuarioService.salvar(usuario);
+	public @ResponseBody ResponseEntity<RetornoDTO> listar(@RequestHeader(name = "Authorization", required = true) Long idUsuario , @RequestBody Usuario usuario){
+        return  ResponseEntityUtil.defaultResponse(usuarioService.salvar(usuario));
 	}
 	
 	

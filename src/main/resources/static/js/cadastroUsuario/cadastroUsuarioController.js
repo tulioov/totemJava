@@ -4,6 +4,10 @@ const CadastroUsuarioController = {
 	salvar(){
 		
 		$.ajax({
+			headers: {
+	            'Authorization':'1',
+	            'Content-Type':'application/json'
+	        },
 	        type: "POST",
 	        url: "/usuario/salvar",
 	        contentType: "application/json",
@@ -22,11 +26,15 @@ const CadastroUsuarioController = {
 		
 	listar(){
 		$.ajax({
+			headers: {
+	            'Authorization':'1',
+	            'Content-Type':'application/json'
+	        },
 	        type: "GET",
 	        contentType: "application/json",
 	        url: "/usuario/listar",
 	        success: function(retorno) {
-	        	$(retorno).each(function(index, data) {
+	        	$(retorno.response).each(function(index, data) {
 	        		$("#tableUsuario").find('tbody').append(CadastroUsuarioTemplate.itemLinha(data));
         		});
 	        },
