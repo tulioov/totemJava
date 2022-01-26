@@ -9,7 +9,12 @@ const CadastroUsuarioTemplate = {
 	                <h4 class="modal-title">Adicionar Usu\u00e1rio</h4>
 	            </div>
 	            <div class="modal-body">
+		            
 	                <form id="formId">
+		                <div id="alertMsgId" class="alert alert-danger fade in oculta">
+		                	<a onclick="$('#alertMsgId').addClass('oculta');$('#formId').find('input').removeClass('errorInput');" class="close">&times;</a>
+		                	<div></div>
+						</div>
 	                	<input type="text" id="campoId" name="id" class="oculta">
 		                <div class="panel panel-default">
 		                	<div class="panel-heading">Cadastro de Usu\u00e1rio</div>
@@ -17,11 +22,11 @@ const CadastroUsuarioTemplate = {
 			                	<div class="row">
 									<div class="col-md-6">
 										<div>Nome: </div>
-										<input type="text" name="nome" class="form-control" id="recipient-name">
+										<input type="text" name="nome" class="form-control" id="nomeId">
 									</div>
 									<div class="col-md-4">
 										<div>Especialidade: </div>
-										<input type="text" name="especialidade" class="form-control" id="recipient-name">
+										<input type="text" name="especialidade" class="form-control" id="especialidadeId">
 									</div>
 								</div>
 								<div class="row">
@@ -72,8 +77,8 @@ const CadastroUsuarioTemplate = {
 				<td>${data.nome}</td>
 				<td>${data.especialidade}</td>
 				<td>
-					<span onclick="alert('fazendo editar')" class="glyphicon glyphicon-pencil"></span>
-					<span onclick="alert('fazendo deletar')" class="glyphicon glyphicon-trash"></span>
+					<span onclick="CadastroUsuarioController.editar(${data.id});" class="glyphicon glyphicon-pencil"></span>
+					<span onclick="CadastroUsuarioController.delete(${data.id});" class="glyphicon glyphicon-trash"></span>
 				</td>
 			</tr>
 		`;

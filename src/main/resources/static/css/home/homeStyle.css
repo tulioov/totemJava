@@ -19,7 +19,7 @@
 	cursor: pointer;
 }
 .oculta{
-    display: none;
+    display: none !important;
 }	
 .bg-success{
 	background-color: #28a745 !important;
@@ -63,6 +63,10 @@
 
 body {
 	font-size: 15px;
+}
+
+.errorInput{
+	border: 1px solid red;
 }
 
 /*Togle*/

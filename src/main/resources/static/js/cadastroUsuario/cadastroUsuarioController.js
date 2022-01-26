@@ -10,19 +10,39 @@ const CadastroUsuarioController = {
 	        },
 	        type: "POST",
 	        url: "/usuario/salvar",
-	        contentType: "application/json",
 	        dataType: "json",
 	        cache: false,
 	        data : JSON.stringify($('#formId').serializeJSON()),
 	        success: function(retorno) {
 	        	console.log("retorno:" + retorno);
 	        },
-	        error: function(retorno){
-	        	console.log(retorno);
+	        error: function (data) {   
+	        	$("#alertMsgId").find('div').html("");
+	        	retorno = data.responseJSON.response;
+	        	for (const property in retorno) {
+	        		$("#"+property+"Id").addClass("errorInput");
+	        		$("#alertMsgId").removeClass("oculta").find('div').append(retorno[property]+"<br>");
+        		}
+	        },
+	    });
+	},
+	
+	editar(id){
+		$.ajax({
+			headers: {
+	            'Authorization':'1',
+	            'Content-Type':'application/json'
+	        },
+	        type: "GET",
+	        contentType: "application/json",
+	        url: "/usuario/findById/"+id,
+	        success: function(retorno) {
+	        	CadastroUsuarioController.addUser(retorno.response)
+	        }, error: function (data) {   
+	        	console.log(data)
 	        }
 	    });
 	},
-		
 		
 	listar(){
 		$.ajax({
@@ -48,12 +68,19 @@ const CadastroUsuarioController = {
 	    });
 	},
 	
-	addUser(){
+	addUser(usuario){
+		
 		$('#myModal').html(CadastroUsuarioTemplate.addUser());
 		$('[name=duallistbox]').bootstrapDualListbox({
 			nonSelectedListLabel: 'N\u00e3o Selecionadas',
 			selectedListLabel: 'Selecionadas'
 		});
+		
+//		if(usuario != undefined){
+//			$('campoId').val(usuario.id);
+//			$('nomeId').val(usuario.nome);
+//			$('especialidadeId').val(usuario.especialidade);
+//		}
 	}
 	
 };
