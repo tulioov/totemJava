@@ -23,13 +23,13 @@ public class Usuario {
 	@Column(name = "NOME")
 	@NotNull(message = "Usuario deve conter um nome.")
 	@NotEmpty(message = "Usuario deve conter um nome.")	
-	@Size(min = 3 , max = 100, message = "Nome deve conter minimo de 3 caracater")
+	@Size(min = 3 , max = 100, message = "Nome deve conter minimo de 3 caracter")
 	private String nome;
 	
 	@Column(name = "ESPECIALIDADE")
 	@NotNull(message = "Usuario deve conter uma especialidade.")
 	@NotEmpty(message = "Usuario deve conter uma especialidade.")	
-	@Size(min = 3 , max = 100, message = "Especialidade deve conter minimo de 3 caracater")
+	@Size(min = 3 , max = 100, message = "Especialidade deve conter minimo de 3 caracter")
 	private String especialidade;
 
 	public Long getId() {

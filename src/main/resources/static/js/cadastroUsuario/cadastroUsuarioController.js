@@ -43,6 +43,25 @@ const CadastroUsuarioController = {
 	        }
 	    });
 	},
+	
+	
+	
+	deletar(id){
+		$.ajax({
+			headers: {
+	            'Authorization':'1',
+	            'Content-Type':'application/json'
+	        },
+	        type: "DELETE",
+	        contentType: "application/json",
+	        url: "/usuario/deletar/"+id,
+	        success: function(retorno) {
+	        	CadastroUsuarioController.addUser(retorno.response)
+	        }, error: function (data) {   
+	        	console.log(data)
+	        }
+	    });
+	},
 		
 	listar(){
 		$.ajax({
@@ -70,17 +89,17 @@ const CadastroUsuarioController = {
 	
 	addUser(usuario){
 		
-		$('#myModal').html(CadastroUsuarioTemplate.addUser());
+		$('#myModal').html(CadastroUsuarioTemplate.addUser()).show();
 		$('[name=duallistbox]').bootstrapDualListbox({
 			nonSelectedListLabel: 'N\u00e3o Selecionadas',
 			selectedListLabel: 'Selecionadas'
 		});
 		
-//		if(usuario != undefined){
-//			$('campoId').val(usuario.id);
-//			$('nomeId').val(usuario.nome);
-//			$('especialidadeId').val(usuario.especialidade);
-//		}
+		if(usuario != undefined){
+			$('#campoId').val(usuario.id);
+			$('#nomeId').val(usuario.nome);
+			$('#especialidadeId').val(usuario.especialidade);
+		}
 	}
 	
 };

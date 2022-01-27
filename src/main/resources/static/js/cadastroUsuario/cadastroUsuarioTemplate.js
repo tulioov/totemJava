@@ -63,7 +63,7 @@ const CadastroUsuarioTemplate = {
 	            </div>
 	            <div class="modal-footer">
 	            	<button type="button" class="btn btn-success" onClick="CadastroUsuarioController.salvar()" >Salvar</button>
-	                <button type="button" class="btn btn-danger" data-dismiss="modal">Fechar</button>
+	                <button type="button" class="btn btn-danger" onClick="$('#myModal').hide();" data-dismiss="modal">Fechar</button>
 	            </div>
 	        </div>
 	    </div>
@@ -78,7 +78,7 @@ const CadastroUsuarioTemplate = {
 				<td>${data.especialidade}</td>
 				<td>
 					<span onclick="CadastroUsuarioController.editar(${data.id});" class="glyphicon glyphicon-pencil"></span>
-					<span onclick="CadastroUsuarioController.delete(${data.id});" class="glyphicon glyphicon-trash"></span>
+					<span onclick="CadastroUsuarioController.deletar(${data.id});" class="glyphicon glyphicon-trash"></span>
 				</td>
 			</tr>
 		`;

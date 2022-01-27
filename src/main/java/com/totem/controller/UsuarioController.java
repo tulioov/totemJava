@@ -5,6 +5,7 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -44,7 +45,11 @@ public class UsuarioController {
 			@RequestHeader(name = "Authorization", required = true) Long idUsuario) {
 		return ResponseEntityUtil.defaultResponse(usuarioService.listar());
 	}
-
 	
+	@DeleteMapping("/deletar/{id}")
+	public @ResponseBody ResponseEntity<RetornoDTO> deletar(
+			@RequestHeader(name = "Authorization", required = true) Long idUsuario, @PathVariable("id") Long id) {
+		return ResponseEntityUtil.defaultResponse(usuarioService.delete(id));
+	}
 
 }
