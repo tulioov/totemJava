@@ -11,26 +11,25 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 @Entity
-@Table(name = "USUARIO")
-public class Usuario {
+@Table(name = "BARCO")
+public class Barco {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY, generator = "native")
-	@Column(name = "COD_USUARIO")
+	@Column(name = "COD_BARCO")
 	private Long id;
-
 	
 	@Column(name = "NOME")
-	@NotNull(message = "Usuario deve conter um nome.")
-	@NotEmpty(message = "Usuario deve conter um nome.")	
+	@NotNull(message = "Barco deve conter um nome.")
+	@NotEmpty(message = "Barco deve conter um nome.")	
 	@Size(min = 3 , max = 250, message = "Nome deve conter minimo de 3 caracter")
 	private String nome;
 	
-	@Column(name = "ESPECIALIDADE")
-	@NotNull(message = "Usuario deve conter uma especialidade.")
-	@NotEmpty(message = "Usuario deve conter uma especialidade.")	
-	@Size(min = 3 , max = 250, message = "Especialidade deve conter minimo de 3 caracter")
-	private String especialidade;
+	@Column(name = "DESCRICAO")
+	@NotNull(message = "Barco deve conter uma descrição.")
+	@NotEmpty(message = "Barco deve conter uma descrição.")	
+	@Size(min = 3 , max = 250, message = "descrição deve conter minimo de 3 caracter")
+	private String descricao;
 
 	public Long getId() {
 		return id;
@@ -48,12 +47,12 @@ public class Usuario {
 		this.nome = nome;
 	}
 
-	public String getEspecialidade() {
-		return especialidade;
+	public String getDescricao() {
+		return descricao;
 	}
 
-	public void setEspecialidade(String especialidade) {
-		this.especialidade = especialidade;
+	public void setDescricao(String descricao) {
+		this.descricao = descricao;
 	}
 
 }

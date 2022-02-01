@@ -1,12 +1,12 @@
 
-const CadastroUsuarioTemplate = {
+const CadastroBarcoTemplate = {
 		
-	addUser (){
+	add (){
 		return `
 		<div class="modal-dialog modal-lg ">
 	        <div class="modal-content">
 	            <div class="modal-header">
-	                <h4 class="modal-title">Adicionar Usu\u00e1rio</h4>
+	                <h4 class="modal-title">Adicionar Barco</h4>
 	            </div>
 	            <div class="modal-body">
 		            
@@ -17,7 +17,7 @@ const CadastroUsuarioTemplate = {
 						</div>
 	                	<input type="text" id="campoId" name="id" class="oculta">
 		                <div class="panel panel-default">
-		                	<div class="panel-heading">Cadastro de Usu\u00e1rio</div>
+		                	<div class="panel-heading">Cadastro de Barco</div>
 		                	<div class="panel-body">
 			                	<div class="row">
 									<div class="col-md-6">
@@ -25,8 +25,8 @@ const CadastroUsuarioTemplate = {
 										<input type="text" name="nome" class="form-control" id="nomeId">
 									</div>
 									<div class="col-md-4">
-										<div>Especialidade: </div>
-										<input type="text" name="especialidade" class="form-control" id="especialidadeId">
+										<div>Descri\u00e7\u00e3o: </div>
+										<input type="text" name="descricao" class="form-control" id="descricaoId">
 									</div>
 								</div>
 								<div class="row">
@@ -42,27 +42,10 @@ const CadastroUsuarioTemplate = {
                         		</div>
 							</div>
 						</div>
-						<div class="panel panel-default">
-							<div class="panel-heading">Rela\u00e7\u00e3o Usu\u00e1rio Etapa</div>
-	                			<div class="panel-body">
-								<select multiple="multiple" size="10" name="duallistbox">
-									<option value="option1">Option 1</option>
-									<option value="option2">Option 2</option>
-									<option value="option3" selected="selected">Option 3</option>
-									<option value="option4">Option 4</option>
-									<option value="option5">Option 5</option>
-									<option value="option6" selected="selected">Option 6</option>
-									<option value="option7">Option 7</option>
-									<option value="option8">Option 8</option>
-									<option value="option9">Option 9</option>
-									<option value="option0">Option 10</option>
-								</select>
-							</div>
-						</div>
 			        </form>
 	            </div>
 	            <div class="modal-footer">
-	            	<button type="button" class="btn btn-success" onClick="CadastroUsuarioController.salvar()" >Salvar</button>
+	            	<button type="button" class="btn btn-success" onClick="CadastroBarcoController.salvar()" >Salvar</button>
 	                <button type="button" class="btn btn-danger" onClick="$('#myModal').hide();" data-dismiss="modal">Fechar</button>
 	            </div>
 	        </div>
@@ -75,10 +58,10 @@ const CadastroUsuarioTemplate = {
 			<tr>
 				<td>${data.id}</td>
 				<td>${data.nome}</td>
-				<td>${data.especialidade}</td>
+				<td>${data.descricao}</td>
 				<td>
-					<span onclick="CadastroUsuarioController.editar(${data.id});" class="glyphicon glyphicon-pencil"></span>
-					<span onclick="CadastroUsuarioController.deletar(${data.id});" class="glyphicon glyphicon-trash"></span>
+					<span onclick="CadastroBarcoController.editar(${data.id});" class="glyphicon glyphicon-pencil"></span>
+					<span onclick="CadastroBarcoController.deletar(${data.id});" class="glyphicon glyphicon-trash"></span>
 				</td>
 			</tr>
 		`;
