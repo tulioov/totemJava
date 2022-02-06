@@ -7,7 +7,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 @Entity
@@ -21,13 +20,11 @@ public class Usuario {
 
 	
 	@Column(name = "NOME")
-	@NotNull(message = "Usuario deve conter um nome.")
 	@NotEmpty(message = "Usuario deve conter um nome.")	
 	@Size(min = 3 , max = 250, message = "Nome deve conter minimo de 3 caracter")
 	private String nome;
 	
 	@Column(name = "ESPECIALIDADE")
-	@NotNull(message = "Usuario deve conter uma especialidade.")
 	@NotEmpty(message = "Usuario deve conter uma especialidade.")	
 	@Size(min = 3 , max = 250, message = "Especialidade deve conter minimo de 3 caracter")
 	private String especialidade;

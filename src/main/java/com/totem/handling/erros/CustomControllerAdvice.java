@@ -12,9 +12,9 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
-import com.totem.controller.exception.CustomDataNotFoundException;
-import com.totem.controller.exception.CustomErrorException;
-import com.totem.controller.exception.CustomParameterConstraintException;
+import com.totem.exception.CustomDataNotFoundException;
+import com.totem.exception.CustomErrorException;
+import com.totem.exception.CustomParameterConstraintException;
 import com.totem.util.ResponseEntityUtil;
 import com.totem.util.RetornoDTO;
 

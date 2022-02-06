@@ -1,4 +1,4 @@
-package com.totem.controller.exception;
+package com.totem.exception;
 
 public class CustomParameterConstraintException extends RuntimeException {
 	private static final long serialVersionUID = 1L;

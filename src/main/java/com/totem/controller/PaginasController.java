@@ -43,10 +43,10 @@ public class PaginasController {
 		return "cadasdroEtapas";
 	}
 	
-	@GetMapping("/cadastroGruposAtividades")
+	@GetMapping("/cadastroSubAtividade")
 	public String cadastroGruposAtividades(Model model){
 		model.addAttribute("titulo" , "Controle de Tontens");
-		return "cadastroGruposAtividades";
+		return "cadastroSubAtividade";
 	}
 	
 	@GetMapping("/cadastroAtividade")
@@ -55,10 +55,10 @@ public class PaginasController {
 		return "cadastroAtividade";
 	}
 	
-	@GetMapping("/cadastroGrupoMaterial")
+	@GetMapping("/cadastroItens")
 	public String cadastroGrupoMaterial(Model model){
 		model.addAttribute("titulo" , "Controle de Tontens");
-		return "cadastroGrupoMaterial";
+		return "cadastroItens";
 	}
 	
 	@GetMapping("/cadastroMaterial")

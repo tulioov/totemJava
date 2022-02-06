@@ -1,5 +1,5 @@
 
-const CadastroUsuarioController = {
+const CadastroItemController = {
 		
 	salvar(){
 		$.ajax({
@@ -8,7 +8,7 @@ const CadastroUsuarioController = {
 	            'Content-Type':'application/json'
 	        },
 	        type: "POST",
-	        url: "/usuario/salvar",
+	        url: "/item/salvar",
 	        dataType: "json",
 	        cache: false,
 	        data : JSON.stringify($('#formId').serializeJSON()),
@@ -18,7 +18,7 @@ const CadastroUsuarioController = {
 	        	setTimeout(function(){
 	        		$("#alertMsgId").addClass("oculta").find('div').removeClass("alert-success").html("");
 	        		$('#myModal').modal('hide');
-	        		CadastroUsuarioController.listar();
+	        		CadastroItemController.listar();
         		},2000); 
 	        },
 	        error: function (data) {   
@@ -41,9 +41,9 @@ const CadastroUsuarioController = {
 	        },
 	        type: "GET",
 	        contentType: "application/json",
-	        url: "/usuario/findById/"+id,
+	        url: "/item/findById/"+id,
 	        success: function(retorno) {
-	        	CadastroUsuarioController.addUser(retorno.response)
+	        	CadastroItemController.addUser(retorno.response)
 	        }, error: function (data) {   
 	        	console.log(data)
 	        }
@@ -58,13 +58,13 @@ const CadastroUsuarioController = {
 	        },
 	        type: "DELETE",
 	        contentType: "application/json",
-	        url: "/usuario/deletar/"+id,
+	        url: "/item/deletar/"+id,
 	        success: function(retorno) {
 	        	$("#myModal").scrollTop(0);
 	        	$("#alertMsgIdTable").removeClass("oculta").addClass("alert-success").find('div').append("Deletado com sucesso!");
 	        	setTimeout(function(){
 	        		$("#alertMsgIdTable").addClass("oculta").removeClass("alert-success").find('div').html("");
-	        		CadastroUsuarioController.listar();
+	        		CadastroItemController.listar();
         		},2000); 
 	        }, error: function (data) {  
 	        	$("#myModal").scrollTop(0);
@@ -74,8 +74,8 @@ const CadastroUsuarioController = {
 	},
 		
 	listar(){
-		$('#tableUsuario').dataTable().fnClearTable();
-	    $('#tableUsuario').dataTable().fnDestroy();
+		$('#tableItem').dataTable().fnClearTable();
+	    $('#tableItem').dataTable().fnDestroy();
 		$.ajax({
 			headers: {
 	            'Authorization':'1',
@@ -83,14 +83,14 @@ const CadastroUsuarioController = {
 	        },
 	        type: "GET",
 	        contentType: "application/json",
-	        url: "/usuario/listar",
+	        url: "/item/listar",
 	        success: function(retorno) {
 	        	$(retorno.response).each(function(index, data) {
-	        		$("#tableUsuario").find('tbody').append(CadastroUsuarioTemplate.itemLinha(data));
+	        		$("#tableItem").find('tbody').append(CadastroItemTemplate.itemLinha(data));
         		});
 	        },
 	        complete: function(data) { 
-	        	$('#tableUsuario').DataTable( {
+	        	$('#tableItem').DataTable( {
 	        	    language: {
 	        	        url: '//cdn.datatables.net/plug-ins/1.11.3/i18n/pt_br.json'
 	        	    }
@@ -99,25 +99,24 @@ const CadastroUsuarioController = {
 	    });
 	},
 	
-	addUser(usuario){
+	addUser(item){
 		
-		$('#myModal').html(CadastroUsuarioTemplate.addUser()).show();
+		$('#myModal').html(CadastroItemTemplate.add()).show();
 		$('[name=duallistbox]').bootstrapDualListbox({
 			nonSelectedListLabel: 'N\u00e3o Selecionadas',
 			selectedListLabel: 'Selecionadas'
 		});
 		
-		if(usuario != undefined){
-			$('#campoId').val(usuario.id);
-			$('#nomeId').val(usuario.nome);
-			$('#especialidadeId').val(usuario.especialidade);
+		if(item != undefined){
+			$('#campoId').val(item.id);
+			$('#nomeId').val(item.nome);
+			$('#descricaoId').val(item.descricao);
 		}
 	}
-	
 };
 
 $( document ).ready(function() {
-	CadastroUsuarioController.listar();
+	CadastroItemController.listar();
 });
 
 

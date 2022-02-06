@@ -17,7 +17,7 @@ const CadastroBarcoController = {
 	        	$("#alertMsgId").removeClass("oculta").addClass("alert-success").find('div').append("Salvo com sucesso!");
 	        	setTimeout(function(){
 	        		$("#alertMsgId").addClass("oculta").find('div').removeClass("alert-success").html("");
-	        		$('#myModal').modal('hide').addClass("oculta");
+	        		$('#myModal').modal('hide');
 	        		CadastroBarcoController.listar();
         		},2000); 
 	        },

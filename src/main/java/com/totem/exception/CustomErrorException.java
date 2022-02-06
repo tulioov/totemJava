@@ -1,4 +1,4 @@
-package com.totem.controller.exception;
+package com.totem.exception;
 
 import lombok.Getter;
 import lombok.Setter;
