@@ -39,8 +39,8 @@
 				<thead>
 			    <tr>
 			        <th>ID</th>
-			        <th>Nome</th>
 			        <th>Descri&ccedil;&atilde;o</th>
+			        <th>Constante Campo</th>
 			        <th>A&ccedil;&atilde;o</th>
 			    </tr>
 				</thead>

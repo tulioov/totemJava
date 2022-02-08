@@ -53,8 +53,8 @@ const CadastroAtividadeTemplate = {
 		return `
 			<tr>
 				<td>${data.id}</td>
-				<td>${data.nome}</td>
 				<td>${data.descricao}</td>
+				<td>${data.constanteCampo}</td>
 				<td>
 					<span onclick="CadastroAtividadeController.editar(${data.id});" class="glyphicon glyphicon-pencil"></span>
 					<span onclick="CadastroAtividadeController.deletar(${data.id});" class="glyphicon glyphicon-trash"></span>

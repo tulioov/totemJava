@@ -1,7 +1,7 @@
 
 const CadastroAtividadeController = {
 		
-	carregarDualList(){
+	carregarDualList(subAtividadeList){
 		$.ajax({
 			headers: {
 	            'Authorization':'1',
@@ -12,22 +12,27 @@ const CadastroAtividadeController = {
 	        url: "/subAtividade/listar",
 	        success: function(retorno) {
 	        	$(retorno.response).each(function(index, data) {
-	        		$("#duallistboxId").append(`<option value="${data.id}">${data.descricao}</option>`);
-	        		$("#duallistboxId").bootstrapDualListbox('refresh');
+	        		if (subAtividadeList != undefined){
+        				if(subAtividadeList.some(atividade => atividade.id === data.id)){
+	        				$("#duallistboxId").append(`<option value="${data.id}" selected="selected" >${data.descricao}</option>`);
+        				}else{
+        					$("#duallistboxId").append(`<option value="${data.id}">${data.descricao}</option>`);
+        				}
+	        		}else{
+	        			$("#duallistboxId").append(`<option value="${data.id}">${data.descricao}</option>`);
+	        		}
         		});
-	        },
+	        },complete: function(data) { 
+	        	$("#duallistboxId").bootstrapDualListbox('refresh');
+	        }
 	    });
 	},
 	salvar(){
 		
-		var meuCarro = new Object();
-		
-		meuCarro  = $('#formId').serializeJSON();
-		meuCarro.subAtividadeList = $('#duallistboxId').val();
-		
-		
-		myJson = JSON.stringify(     meuCarro      );
-		console.log(myJson);
+		let formControl = new Object();
+		formControl  = $('#formId').serializeJSON();
+		formControl.subAtividadeList = $('#duallistboxId').val();
+		let myJsonData = JSON.stringify(formControl);
 		
 		$.ajax({
 			headers: {
@@ -38,7 +43,7 @@ const CadastroAtividadeController = {
 	        url: "/atividade/salvar",
 	        dataType: "json",
 	        cache: false,
-	        data : myJson,
+	        data : myJsonData,
 	        success: function(retorno) {
 	        	$("#myModal").scrollTop(0);
 	        	$("#alertMsgId").removeClass("oculta").addClass("alert-success").find('div').append("Salvo com sucesso!");
@@ -134,13 +139,14 @@ const CadastroAtividadeController = {
 			selectedListLabel: 'Selecionadas'
 		});
 		
-		CadastroAtividadeController.carregarDualList();
-		
 		if(atividade != undefined){
 			$('#campoId').val(atividade.id);
-			$('#nomeId').val(atividade.nome);
 			$('#descricaoId').val(atividade.descricao);
+			$('#constanteCampoId').val(atividade.constanteCampo);
+			CadastroAtividadeController.carregarDualList(atividade.subAtividadeList);
+			return;
 		}
+		CadastroAtividadeController.carregarDualList();
 	}
 };
 
