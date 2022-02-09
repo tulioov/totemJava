@@ -18,35 +18,22 @@ public class Etapa {
 	@Column(name = "COD_ETAPA")
 	private Long id;
 	
-	@Column(name = "NOME")
-	@NotEmpty(message = "Barco deve conter um nome.")	
-	@Size(min = 3 , max = 250, message = "Nome deve conter minimo de 3 caracter")
-	private String nome;
+	@Column(name = "DESCRICAO")
+	@NotEmpty(message = "Etapa deve conter uma descrição.")	
+	@Size(min = 3 , max = 250, message = "descrição deve conter minimo de 3 caracter")
+	private String descricao;
 	
 	@Column(name = "CONSTANTE_CAMPO")
 	@NotEmpty(message = "Constante campo deve conter um nome.")	
 	@Size(min = 3 , max = 250, message = "Constante campo deve conter minimo de 3 caracter")
 	private String constanteCampo;
 	
-	@Column(name = "DESCRICAO")
-	@NotEmpty(message = "Barco deve conter uma descrição.")	
-	@Size(min = 3 , max = 250, message = "descrição deve conter minimo de 3 caracter")
-	private String descricao;
-
 	public Long getId() {
 		return id;
 	}
 
 	public void setId(Long id) {
 		this.id = id;
-	}
-
-	public String getNome() {
-		return nome;
-	}
-
-	public void setNome(String nome) {
-		this.nome = nome;
 	}
 
 	public String getDescricao() {

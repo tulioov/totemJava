@@ -20,10 +20,6 @@ const CadastroEtapaTemplate = {
 		                	<div class="panel-heading">Cadastro de Etapa</div>
 		                	<div class="panel-body">
 			                	<div class="row">
-									<div class="col-md-6">
-										<div>Nome: </div>
-										<input type="text" name="nome" class="form-control" id="nomeId">
-									</div>
 									<div class="col-md-4">
 										<div>Descri\u00e7\u00e3o: </div>
 										<input type="text" name="descricao" class="form-control" id="descricaoId">
@@ -33,17 +29,6 @@ const CadastroEtapaTemplate = {
 										<input type="text" name="constanteCampo" class="form-control" id="constanteCampoId">
 									</div>
 								</div>
-								<div class="row">
-									<div class="col-md-6">
-										<div class="material-switch mt15">
-											<div>Admin: </div>
-											Sim
-		                            		<input id="someSwitchOptionPrimary" name="someSwitchOption001" type="checkbox"/>
-		                            		<label for="someSwitchOptionPrimary" class="label-success mt15"></label>
-		                            		Nao
-		                        		</div>
-	                        		</div>
-                        		</div>
 							</div>
 						</div>
 			        </form>
@@ -61,8 +46,8 @@ const CadastroEtapaTemplate = {
 		return `
 			<tr>
 				<td>${data.id}</td>
-				<td>${data.nome}</td>
 				<td>${data.descricao}</td>
+				<td>${data.constanteCampo}</td>
 				<td>
 					<span onclick="CadastroEtapaController.editar(${data.id});" class="glyphicon glyphicon-pencil"></span>
 					<span onclick="CadastroEtapaController.deletar(${data.id});" class="glyphicon glyphicon-trash"></span>

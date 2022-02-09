@@ -1,7 +1,41 @@
 
 const CadastroUsuarioController = {
 		
+	carregarDualList(etapaList){
+		$.ajax({
+			headers: {
+	            'Authorization':'1',
+	            'Content-Type':'application/json'
+	        },
+	        type: "GET",
+	        contentType: "application/json",
+	        url: "/etapa/listar",
+	        success: function(retorno) {
+	        	$(retorno.response).each(function(index, data) {
+	        		if (etapaList != undefined){
+        				if(etapaList.some(etapa => etapa.id === data.id)){
+	        				$("#duallistboxId").append(`<option value="${data.id}" selected="selected" >${data.descricao}</option>`);
+        				}else{
+        					$("#duallistboxId").append(`<option value="${data.id}">${data.descricao}</option>`);
+        				}
+	        		}else{
+	        			$("#duallistboxId").append(`<option value="${data.id}">${data.descricao}</option>`);
+	        		}
+        		});
+	        },complete: function(data) { 
+	        	$("#duallistboxId").bootstrapDualListbox('refresh');
+	        }
+	    });
+	},
+		
 	salvar(){
+		
+		let formControl = new Object();
+		formControl  = $('#formId').serializeJSON();
+		formControl.etapaList = $('#duallistboxId').val();
+		formControl.isAdmin = $('#isAdminId').prop('checked');
+		let myJsonData = JSON.stringify(formControl);
+		
 		$.ajax({
 			headers: {
 	            'Authorization':'1',
@@ -11,7 +45,7 @@ const CadastroUsuarioController = {
 	        url: "/usuario/salvar",
 	        dataType: "json",
 	        cache: false,
-	        data : JSON.stringify($('#formId').serializeJSON()),
+	        data : myJsonData,
 	        success: function(retorno) {
 	        	$("#myModal").scrollTop(0);
 	        	$("#alertMsgId").removeClass("oculta").addClass("alert-success").find('div').append("Salvo com sucesso!");
@@ -102,7 +136,7 @@ const CadastroUsuarioController = {
 	addUser(usuario){
 		
 		$('#myModal').html(CadastroUsuarioTemplate.addUser()).show();
-		$('[name=duallistbox]').bootstrapDualListbox({
+		$('#duallistboxId').bootstrapDualListbox({
 			nonSelectedListLabel: 'N\u00e3o Selecionadas',
 			selectedListLabel: 'Selecionadas'
 		});
@@ -111,7 +145,12 @@ const CadastroUsuarioController = {
 			$('#campoId').val(usuario.id);
 			$('#nomeId').val(usuario.nome);
 			$('#especialidadeId').val(usuario.especialidade);
+			$('#codRfidId').val(usuario.codRfid);
+			$('#isAdminId').prop('checked', usuario.isAdmin);
+			CadastroUsuarioController.carregarDualList(usuario.etapaList);
+			return;
 		}
+		CadastroUsuarioController.carregarDualList();
 	}
 	
 };

@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.totem.entity.Usuario;
+import com.totem.dto.UsuarioDTO;
 import com.totem.service.UsuarioService;
 import com.totem.util.ResponseEntityUtil;
 import com.totem.util.RetornoDTO;
@@ -29,9 +29,9 @@ public class UsuarioController {
 	@PostMapping("/salvar")
 	public @ResponseBody ResponseEntity<RetornoDTO> salvar(
 			@RequestHeader(name = "Authorization", required = true) Long idUsuario,
-			@Valid @RequestBody Usuario usuario) {
+			@Valid @RequestBody UsuarioDTO usuarioDTO) {
 
-		return ResponseEntityUtil.defaultResponse(usuarioService.salvar(usuario));
+		return ResponseEntityUtil.defaultResponse(usuarioService.salvar(usuarioDTO));
 	}
 	
 	@GetMapping("/findById/{id}")

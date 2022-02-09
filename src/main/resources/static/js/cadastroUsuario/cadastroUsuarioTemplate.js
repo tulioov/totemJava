@@ -31,12 +31,16 @@ const CadastroUsuarioTemplate = {
 								</div>
 								<div class="row">
 									<div class="col-md-6">
+										<div>RFID: </div>
+										<input type="text" name="codRfid" class="form-control" id="codRfidId">
+									</div>
+									<div class="col-md-6">
 										<div class="material-switch mt15">
 											<div>Admin: </div>
-											Sim
-		                            		<input id="someSwitchOptionPrimary" name="someSwitchOption001" type="checkbox"/>
-		                            		<label for="someSwitchOptionPrimary" class="label-success mt15"></label>
-		                            		Nao
+											Nao
+		                            		<input id="isAdminId" name="isAdmin" type="checkbox"/>
+		                            		<label for="isAdminId" class="label-success mt15"></label>
+		                            		Sim
 		                        		</div>
 	                        		</div>
                         		</div>
@@ -45,17 +49,7 @@ const CadastroUsuarioTemplate = {
 						<div class="panel panel-default">
 							<div class="panel-heading">Rela\u00e7\u00e3o Usu\u00e1rio Etapa</div>
 	                			<div class="panel-body">
-								<select multiple="multiple" size="10" name="duallistbox">
-									<option value="option1">Option 1</option>
-									<option value="option2">Option 2</option>
-									<option value="option3" selected="selected">Option 3</option>
-									<option value="option4">Option 4</option>
-									<option value="option5">Option 5</option>
-									<option value="option6" selected="selected">Option 6</option>
-									<option value="option7">Option 7</option>
-									<option value="option8">Option 8</option>
-									<option value="option9">Option 9</option>
-									<option value="option0">Option 10</option>
+								<select multiple="multiple" size="10" id="duallistboxId" name="duallistbox">
 								</select>
 							</div>
 						</div>

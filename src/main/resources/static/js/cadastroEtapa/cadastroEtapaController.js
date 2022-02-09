@@ -102,10 +102,6 @@ const CadastroEtapaController = {
 	addUser(etapa){
 		
 		$('#myModal').html(CadastroEtapaTemplate.add()).show();
-		$('[name=duallistbox]').bootstrapDualListbox({
-			nonSelectedListLabel: 'N\u00e3o Selecionadas',
-			selectedListLabel: 'Selecionadas'
-		});
 		
 		if(etapa != undefined){
 			$('#campoId').val(etapa.id);
