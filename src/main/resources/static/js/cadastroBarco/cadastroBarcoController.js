@@ -1,7 +1,15 @@
 
+let imageUploadBarco;
+
 const CadastroBarcoController = {
 		
 	salvar(){
+		
+		let formControl = new Object();
+		formControl  = $('#formId').serializeJSON();
+		formControl.imagem = $('#base64image').val();
+		let myJsonData = JSON.stringify(formControl);
+		
 		$.ajax({
 			headers: {
 	            'Authorization':'1',
@@ -11,7 +19,7 @@ const CadastroBarcoController = {
 	        url: "/barco/salvar",
 	        dataType: "json",
 	        cache: false,
-	        data : JSON.stringify($('#formId').serializeJSON()),
+	        data : myJsonData,
 	        success: function(retorno) {
 	        	$("#myModal").scrollTop(0);
 	        	$("#alertMsgId").removeClass("oculta").addClass("alert-success").find('div').append("Salvo com sucesso!");
@@ -107,12 +115,54 @@ const CadastroBarcoController = {
 			selectedListLabel: 'Selecionadas'
 		});
 		
+		CadastroBarcoController.bs_input_file();
+		
 		if(barco != undefined){
 			$('#campoId').val(barco.id);
 			$('#nomeId').val(barco.nome);
 			$('#descricaoId').val(barco.descricao);
+			$('#base64image').attr('src', barco.imagem); 
+			$('#base64image').val(barco.imagem);
 		}
+	},
+	
+	upImg(){
+		let file = $('#imageId')[0].files[0];
+		var reader = new FileReader();
+			reader.readAsDataURL(file);
+			reader.onload = function () {
+			fileBase64 = reader.result;
+			$('#base64image').attr('src', fileBase64); 
+			$('#base64image').val(fileBase64);
+		};
+		   reader.onerror = function (error) {
+		   console.log('Error: ', error);
+	    };
+	},
+	
+	bs_input_file() {
+	    $(".input-file").before(
+	        function () {
+	            if (!$(this).prev().hasClass('input-ghost')) {
+	                var element = $("<input id='imageId' type='file' onchange='CadastroBarcoController.upImg();' class='input-ghost' style='visibility:hidden; height:0'>");
+	                element.attr("name", $(this).attr("name"));
+	                element.change(function () {
+	                    element.next(element).find('input').val((element.val()).split('\\').pop());
+	                });
+	                $(this).find("button.btn-choose").click(function () {
+	                    element.click();
+	                });
+	                $(this).find('input').css("cursor", "pointer");
+	                $(this).find('input').mousedown(function () {
+	                    $(this).parents('.input-file').prev().click();
+	                    return false;
+	                });
+	                return element;
+	            }
+	        }
+	    );
 	}
+	
 };
 
 $( document ).ready(function() {

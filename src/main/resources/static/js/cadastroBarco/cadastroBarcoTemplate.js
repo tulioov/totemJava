@@ -19,27 +19,30 @@ const CadastroBarcoTemplate = {
 		                <div class="panel panel-default">
 		                	<div class="panel-heading">Cadastro de Barco</div>
 		                	<div class="panel-body">
+								<div class="col-8 ">
+									<img style='display:block; width:100px;height:100px;' 
+										id='base64image'
+									/>
+								    <div>Imagem: </div>
+									<div class="form-group">
+										<div class="input-group input-file" name="Fichier1">
+								    		<input  type="text" class="form-control" placeholder='Escolha uma imagem...' />			
+								            <span class="input-group-btn">
+								        		<button class="btn btn-default btn-choose" type="button">Escolha</button>
+								    		</span>
+										</div>
+									</div>
+								</div>
 			                	<div class="row">
 									<div class="col-md-6">
 										<div>Nome: </div>
 										<input type="text" name="nome" class="form-control" id="nomeId">
 									</div>
-									<div class="col-md-4">
+									<div class="col-md-6">
 										<div>Descri\u00e7\u00e3o: </div>
 										<input type="text" name="descricao" class="form-control" id="descricaoId">
 									</div>
 								</div>
-								<div class="row">
-									<div class="col-md-6">
-										<div class="material-switch mt15">
-											<div>Admin: </div>
-											Sim
-		                            		<input id="someSwitchOptionPrimary" name="someSwitchOption001" type="checkbox"/>
-		                            		<label for="someSwitchOptionPrimary" class="label-success mt15"></label>
-		                            		Nao
-		                        		</div>
-	                        		</div>
-                        		</div>
 							</div>
 						</div>
 			        </form>

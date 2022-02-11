@@ -1,5 +1,6 @@
 package com.totem.entity;
 
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -9,6 +10,9 @@ import javax.persistence.Lob;
 import javax.persistence.Table;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
+
+import com.fasterxml.jackson.databind.deser.Deserializers.Base;
+
 
 @Entity
 @Table(name = "BARCO")
@@ -21,7 +25,7 @@ public class Barco {
 	
 	@Lob
 	@Column(name = "imagem")
-	private byte[] imagem;
+	private String imagem;
 	
 	@Column(name = "NOME")
 	@NotEmpty(message = "Barco deve conter um nome.")	
@@ -55,6 +59,14 @@ public class Barco {
 
 	public void setDescricao(String descricao) {
 		this.descricao = descricao;
+	}
+
+	public String getImagem() {
+		return imagem;
+	}
+
+	public void setImagem(String imagem) {
+		this.imagem = imagem;
 	}
 
 }
