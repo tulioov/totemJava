@@ -95,7 +95,7 @@
        			<i class="fas fa-bars laranja"></i>	
 			</a>
 			<div class="col-md-8">
-          		<a href="/"><img src="../img/logonOkean.png" style="width: 247px; height: 95px;"
+          		<a href="/"><img src="../img/logonOkean.png" style="width: 167px; height: 44px;"
 				alt="logonOkean"></a>
 			</div>
 		</header>

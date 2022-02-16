@@ -20,7 +20,12 @@
 	<div class="container">
 	
 		<div class="row">
-			<button type="button" onclick="MonitorUserController.abrirModal();" class="btn btn-primary" data-toggle="modal" data-target="#myModal">
+		
+			<button type="button" onclick="MonitorUserController.abrirEscolhaBarco();" class="btn btn-primary" data-toggle="modal" data-target="#myModal">
+				Escolha Barco
+			</button>
+			
+			<button type="button" onclick="MonitorUserController.abrirEscolhaEtapa();" class="btn btn-primary" data-toggle="modal" data-target="#myModal">
 				RFC
 			</button>
 			

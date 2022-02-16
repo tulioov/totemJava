@@ -1,7 +1,7 @@
 :root {
 /* 	--azulOkean: #001932; */
 /* 	passado no zap */
-	--azulOkean: #737da0;
+	--azulOkean: #35455b;
 	--laranjaOkean: #944415;
 	--vermelho: #a94442;
 	--verde: #5cb85c;
@@ -81,6 +81,10 @@ body {
     height: 0px;
     position: relative; 
     width: 40px;  
+}
+
+.btn-primary{
+	background-color: var(--azulOkean) !important;
 }
 
 .material-switch > label::before {
