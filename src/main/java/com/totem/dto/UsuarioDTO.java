@@ -5,12 +5,28 @@ import java.util.List;
 public class UsuarioDTO {
 	
 	private Long id;
+	private String username;
+	private String password;
 	private String nome;
 	private String especialidade;
 	private String codRfid;
 	private Boolean isAdmin;
 	private List<Long> etapaList;
 	
+	
+	
+	public String getUsername() {
+		return username;
+	}
+	public void setUsername(String username) {
+		this.username = username;
+	}
+	public String getPassword() {
+		return password;
+	}
+	public void setPassword(String password) {
+		this.password = password;
+	}
 	public Long getId() {
 		return id;
 	}

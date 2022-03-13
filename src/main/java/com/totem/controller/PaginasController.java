@@ -3,14 +3,21 @@ package com.totem.controller;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 
 @Controller
 public class PaginasController {
 	
-	@GetMapping("/")
+	@GetMapping("/login")
 	public String homePrincipal(Model model){
-		model.addAttribute("titulo" , "OKEAN");
-		return "header";
+		return "login";
+	}
+	
+	@PostMapping("/login")
+	public String login(@RequestBody Object usuarioDTO) {
+
+		return "cadastroUsuario";
 	}
 	
 	@GetMapping("/cadastroUsuario")
