@@ -1,5 +1,8 @@
 package com.totem.controller;
 
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -9,16 +12,16 @@ import org.springframework.web.bind.annotation.RequestBody;
 @Controller
 public class PaginasController {
 	
+	
 	@GetMapping("/login")
 	public String homePrincipal(Model model){
 		return "login";
 	}
 	
-	@PostMapping("/login")
-	public String login(@RequestBody Object usuarioDTO) {
-
-		return "cadastroUsuario";
-	}
+    @GetMapping( "home" )
+    public String home( @AuthenticationPrincipal(expression = "claims['name']") String name ) {
+        return String.format( "Hello %s!  welcome to the Security app", name);
+    }
 	
 	@GetMapping("/cadastroUsuario")
 	public String cadastroUsuario(Model model){
