@@ -1,13 +1,13 @@
 package com.totem.controller;
 
-import org.springframework.security.core.Authentication;
+
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.oauth2.core.oidc.user.OidcUser;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
+
+import com.totem.util.Utilities;
 
 @Controller
 public class PaginasController {
@@ -18,19 +18,15 @@ public class PaginasController {
 		return "login";
 	}
 	
-    @GetMapping( "home" )
-    public String home( @AuthenticationPrincipal(expression = "claims['name']") String name ) {
-        return String.format( "Hello %s!  welcome to the Security app", name);
-    }
-	
 	@GetMapping("/cadastroUsuario")
 	public String cadastroUsuario(Model model){
 		model.addAttribute("titulo" , "Cadastro Usuario");
 		return "cadastroUsuario";
 	}
 	
-	@GetMapping("/monitoramento")
-	public String monitoramento(Model model){
+	@GetMapping(value = {"/", "/monitoramento"})
+	public String home(Model model, @AuthenticationPrincipal OidcUser principal){
+		model.addAttribute("claims", Utilities.filterClaims(principal));
 		model.addAttribute("titulo" , "Apontamento de horas");
 		return "monitoramento";
 	}
