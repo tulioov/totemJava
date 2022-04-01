@@ -2,7 +2,41 @@
 const MonitorUserTemplate = {
 		
 		
-	modal(){
+	modalEscolhaBarco(){
+		return`
+			<div class="modal-dialog modal-lg">
+		        <div class="modal-content">
+		            <div class="modal-header">
+		                <h4 class="modal-title">Escolha sua Embarca\u00e7\u00e3o</h4>
+		            </div>
+		            <div class="modal-body">
+		            
+		            	<h2>Bem vindo NOME.</h2>
+		            
+						<div class="panel-group" >
+						    <div class="panel panel-default">
+						        <div class="panel-heading">
+						            <h4 class="panel-title">
+										Embarca\u00e7\u00e3o					            
+									</h4>
+						        </div>
+				            	<div class="card card-body">
+					            	<div id="imgEscolhaBarco" class="row">
+									</div>
+							    </div>
+						    </div>
+						</div>
+		            </div>
+		            <div class="modal-footer">
+		                <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+		            </div>
+		        </div>
+		    </div>
+		`
+	},
+		
+		
+	abrirEscolhaEtapa(){
 		return`
 				<div class="modal-dialog modal-lg">
 			        <div class="modal-content">

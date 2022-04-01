@@ -26,27 +26,28 @@
 			<button type="submit" onclick="CadastroUsuarioController.addUser();" class="btn btn-primary" data-toggle="modal" data-target="#myModal">
 				Add Usuario
 			</button>
+			<div id="alertMsgIdTable" class=" mt15 alert fade in oculta ">
+              	<a onclick="$('#alertMsgIdTable').addClass('oculta');" class="close">&times;</a>
+              	<div></div>
+			</div>
 			<hr/>
 		</div>
-		
-		<div class="modal" id="myModal">
+		<div class="modal scroll" id="myModal">
 		</div>
-		
-		
 		<div class="row">
-			<table id="tableUsuario">
+			<table id="tableUsuario" class="display">
 				<thead>
 			    <tr>
 			        <th>ID</th>
 			        <th>Nome</th>
 			        <th>Especialidade</th>
+			        <th>A&ccedil;&atilde;o</th>
 			    </tr>
 				</thead>
 				<tbody></tbody>
 			</table>
 	    </div>
 	</div>
-	
 	<script src="../externo/serializejson/serializejson.js"></script>
 	<script src="../externo/dual-list/jquery.bootstrap-duallistbox.js"></script>
 	<script src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.js"></script>

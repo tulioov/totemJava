@@ -2,11 +2,16 @@
 	pageEncoding="ISO-8859-1"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://thymeleaf.org"
+	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 <head>
 	<meta charset="ISO-8859-1">
 	<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.3/css/jquery.dataTables.css">
-	<title>Cadastro de Usuario</title>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+	<link href="../externo/dual-list/bootstrap-duallistbox.css" rel="stylesheet" />
+	
+	
+	<title>Cadastro de Etapa</title>
 </head>
 <body>
 
@@ -18,46 +23,35 @@
 	<input type="hidden" name="localizacao" id="localizacao">
 	<div class="container">
 		<div class="row">
-			<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">
-				Add Etapas
+			<button type="submit" onclick="CadastroEtapaController.addUser();" class="btn btn-primary" data-toggle="modal" data-target="#myModal">
+				Add Etapa
 			</button>
+			<div id="alertMsgIdTable" class=" mt15 alert fade in oculta ">
+              	<a onclick="$('#alertMsgIdTable').addClass('oculta');" class="close">&times;</a>
+              	<div></div>
+			</div>
 			<hr/>
 		</div>
-		
-		<div class="modal" id="myModal">
-		    <div class="modal-dialog">
-		        <div class="modal-content">
-		            <div class="modal-header">
-		                <h4 class="modal-title">Modal Heading</h4>
-		                <button type="button" class="close" data-dismiss="modal">&times;</button>
-		            </div>
-		            <div class="modal-body">
-		                Modal body..
-		            </div>
-		            <div class="modal-footer">
-		                <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-		            </div>
-		        </div>
-		    </div>
+		<div class="modal scroll" id="myModal">
 		</div>
-		
-		
 		<div class="row">
-			<table id="tableUsuario">
+			<table id="tableEtapa" class="display">
 				<thead>
 			    <tr>
 			        <th>ID</th>
-			        <th>Nome</th>
-			        <th>Descrição</th>
-			        <th>Cosntante Campo</th>
+			        <th>Descri&ccedil;&atilde;o</th>
+			        <th>Constante Campo</th>
+			        <th>A&ccedil;&atilde;o</th>
 			    </tr>
 				</thead>
 				<tbody></tbody>
 			</table>
 	    </div>
 	</div>
-	
+	<script src="../externo/serializejson/serializejson.js"></script>
+	<script src="../externo/dual-list/jquery.bootstrap-duallistbox.js"></script>
 	<script src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.js"></script>
-<!-- 	<script src="../js/cadastroUsuario/cadastroUsuarioController.js"></script> -->
+	<script src="../js/cadastroEtapa/cadastroEtapaTemplate.js"></script>
+	<script src="../js/cadastroEtapa/cadastroEtapaController.js"></script>
 </body>
 </html>

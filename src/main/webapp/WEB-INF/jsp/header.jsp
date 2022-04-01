@@ -59,10 +59,27 @@
 					<a href="/cadastroBarco" class="dashboard-nav-dropdown-item">Barco</a>
 					<a href="/cadastroUsuario" onclick="CadastroUsuarioController.listar();" class="dashboard-nav-dropdown-item">Usuario</a>
 					<a href="/cadasdroEtapas" class="dashboard-nav-dropdown-item">Etapa</a>
-					<a href="/cadastroGruposAtividades" class="dashboard-nav-dropdown-item">Grupos da Atividade</a>
-					<a href="/cadastroAtividade" class="dashboard-nav-dropdown-item">Atividade</a>
-					<a href="/cadastroGrupoMaterial" class="dashboard-nav-dropdown-item">Grupo de Material</a>
-					<a href="/cadastroMaterial" class="dashboard-nav-dropdown-item">Material</a>
+					<div class='dashboard-nav-dropdown'>
+		            	<a href="#!" class="dashboard-nav-item dashboard-nav-dropdown-toggle">
+			            	<i class="fas fa-coins"></i> 
+							Grupo Atividade
+						</a>
+		                <div class='dashboard-nav-dropdown-menu'>
+							<a href="/cadastroAtividade" class="dashboard-nav-dropdown-item">Atividade</a>
+							<a href="/cadastroSubAtividade" class="dashboard-nav-dropdown-item">SubAtividade</a>
+						</div>
+		            </div>
+		            
+		            <div class='dashboard-nav-dropdown'>
+		            	<a href="#!" class="dashboard-nav-item dashboard-nav-dropdown-toggle">
+			            	<i class="fas fa-coins"></i> 
+							Grupo Material
+						</a>
+		                <div class='dashboard-nav-dropdown-menu'>
+							<a href="/cadastroMaterial" class="dashboard-nav-dropdown-item">Material</a>
+							<a href="/cadastroItens" class="dashboard-nav-dropdown-item">Itens</a>
+						</div>
+		            </div>
 				</div>
             </div>
             <div class="nav-item-divider"></div>
@@ -78,7 +95,7 @@
        			<i class="fas fa-bars laranja"></i>	
 			</a>
 			<div class="col-md-8">
-          		<a href="/"><img src="../img/logonOkean.png" style="width: 247px; height: 95px;"
+          		<a href="/"><img src="../img/logonOkean.png" style="width: 167px; height: 44px;"
 				alt="logonOkean"></a>
 			</div>
 		</header>

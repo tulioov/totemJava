@@ -12,8 +12,40 @@ const MonitorUserController = {
 //	    });
 //	}
 		
-	abrirModal(){
-		$('#myModal').html(MonitorUserTemplate.modal())
+	
+	abrirEscolhaEtapa(id){
+		alert(id);
+		$('#myModal').html(MonitorUserTemplate.abrirEscolhaEtapa())
+	},
+	
+	abrirEscolhaBarco(){
+		
+		$('#myModal').html(MonitorUserTemplate.modalEscolhaBarco())
+		
+		$.ajax({
+			headers: {
+	            'Authorization':'1',
+	            'Content-Type':'application/json'
+	        },
+	        type: "GET",
+	        contentType: "application/json",
+	        url: "/barco/listar",
+	        success: function(retorno) {
+	        	$(retorno.response).each(function(index, data) {
+	        		$('#imgEscolhaBarco').append(
+	        				`<div class="col-md-4 mt15">
+	        					<img 
+	        						style='display:block; width:16em;height:9em;' 
+	        						id='base64image-${data.id}' 
+	        						src='${data.imagem}'
+	        						onClick="MonitorUserController.abrirEscolhaEtapa(${data.id})"
+        						/>
+	        				</div>`);
+        		});
+	        }
+	    });
+		
+		
 	},
 	
 	abrirModalContinuidade(){

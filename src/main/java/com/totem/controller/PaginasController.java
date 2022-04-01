@@ -1,73 +1,79 @@
 package com.totem.controller;
 
+
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.oauth2.core.oidc.user.OidcUser;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+
+import com.totem.util.Utilities;
 
 @Controller
 public class PaginasController {
 	
-	@RequestMapping("/")
+	
+	@GetMapping("/login")
 	public String homePrincipal(Model model){
-		//model.addAttribute("titulo" , "OKEAN");
-		return "header";
+		return "login";
 	}
 	
-	@RequestMapping("/cadastroUsuario")
+	@GetMapping("/cadastroUsuario")
 	public String cadastroUsuario(Model model){
 		model.addAttribute("titulo" , "Cadastro Usuario");
 		return "cadastroUsuario";
 	}
 	
-	@RequestMapping("/monitoramento")
-	public String monitoramento(Model model){
+	@GetMapping(value = {"/", "/monitoramento"})
+	public String home(Model model, @AuthenticationPrincipal OidcUser principal){
+		model.addAttribute("claims", Utilities.filterClaims(principal));
 		model.addAttribute("titulo" , "Apontamento de horas");
 		return "monitoramento";
 	}
 	
-	@RequestMapping("/controlTotens")
+	@GetMapping("/controlTotens")
 	public String nfc(Model model){
 		model.addAttribute("titulo" , "Controle de Tontens");
 		return "controlTotens";
 	}
 	
-	@RequestMapping("/cadastroBarco")
+	@GetMapping("/cadastroBarco")
 	public String cadastroBarco(Model model){
 		model.addAttribute("titulo" , "Controle de Tontens");
 		return "cadastroBarco";
 	}
 	
-	@RequestMapping("/cadasdroEtapas")
+	@GetMapping("/cadasdroEtapas")
 	public String cadasdroEtapas(Model model){
 		model.addAttribute("titulo" , "Controle de Tontens");
 		return "cadasdroEtapas";
 	}
 	
-	@RequestMapping("/cadastroGruposAtividades")
+	@GetMapping("/cadastroSubAtividade")
 	public String cadastroGruposAtividades(Model model){
 		model.addAttribute("titulo" , "Controle de Tontens");
-		return "cadastroGruposAtividades";
+		return "cadastroSubAtividade";
 	}
 	
-	@RequestMapping("/cadastroAtividade")
+	@GetMapping("/cadastroAtividade")
 	public String cadastroAtividade(Model model){
 		model.addAttribute("titulo" , "Controle de Tontens");
 		return "cadastroAtividade";
 	}
 	
-	@RequestMapping("/cadastroGrupoMaterial")
+	@GetMapping("/cadastroItens")
 	public String cadastroGrupoMaterial(Model model){
 		model.addAttribute("titulo" , "Controle de Tontens");
-		return "cadastroGrupoMaterial";
+		return "cadastroItens";
 	}
 	
-	@RequestMapping("/cadastroMaterial")
+	@GetMapping("/cadastroMaterial")
 	public String cadastroMaterial(Model model){
 		model.addAttribute("titulo" , "Controle de Tontens");
 		return "cadastroMaterial";
 	}
 	
-	@RequestMapping("/relatorio")
+	@GetMapping("/relatorio")
 	public String relatorio(Model model){
 		model.addAttribute("titulo" , "Controle de Tontens");
 		return "relatorio";
