@@ -9,12 +9,17 @@ public class UsuarioDTO {
 	private String password;
 	private String nome;
 	private String especialidade;
+	private String email;
 	private String codRfid;
 	private Boolean isAdmin;
 	private List<Long> etapaList;
 	
-	
-	
+	public String getEmail() {
+		return email;
+	}
+	public void setEmail(String email) {
+		this.email = email;
+	}
 	public String getUsername() {
 		return username;
 	}

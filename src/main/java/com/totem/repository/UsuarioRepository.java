@@ -11,4 +11,6 @@ import com.totem.entity.Usuario;
 public interface UsuarioRepository extends CrudRepository<Usuario, Long> {
 
 	List<Usuario> findAll();
+	
+	Usuario findByEmail(String email);
 }

@@ -4,7 +4,7 @@ const CadastroEtapaController = {
 	salvar(){
 		$.ajax({
 			headers: {
-	            'Authorization':'1',
+	            'Authorization': email,
 	            'Content-Type':'application/json'
 	        },
 	        type: "POST",
@@ -36,7 +36,7 @@ const CadastroEtapaController = {
 	editar(id){
 		$.ajax({
 			headers: {
-	            'Authorization':'1',
+	            'Authorization': email,
 	            'Content-Type':'application/json'
 	        },
 	        type: "GET",
@@ -53,7 +53,7 @@ const CadastroEtapaController = {
 	deletar(id){
 		$.ajax({
 			headers: {
-	            'Authorization':'1',
+	            'Authorization': email,
 	            'Content-Type':'application/json'
 	        },
 	        type: "DELETE",
@@ -78,7 +78,7 @@ const CadastroEtapaController = {
 	    $('#tableEtapa').dataTable().fnDestroy();
 		$.ajax({
 			headers: {
-	            'Authorization':'1',
+	            'Authorization': email,
 	            'Content-Type':'application/json'
 	        },
 	        type: "GET",

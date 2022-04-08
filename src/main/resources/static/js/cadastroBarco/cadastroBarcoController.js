@@ -12,7 +12,7 @@ const CadastroBarcoController = {
 		
 		$.ajax({
 			headers: {
-	            'Authorization':'1',
+	            'Authorization': email,
 	            'Content-Type':'application/json'
 	        },
 	        type: "POST",
@@ -44,7 +44,7 @@ const CadastroBarcoController = {
 	editar(id){
 		$.ajax({
 			headers: {
-	            'Authorization':'1',
+	            'Authorization': email,
 	            'Content-Type':'application/json'
 	        },
 	        type: "GET",
@@ -61,7 +61,7 @@ const CadastroBarcoController = {
 	deletar(id){
 		$.ajax({
 			headers: {
-	            'Authorization':'1',
+	            'Authorization': email,
 	            'Content-Type':'application/json'
 	        },
 	        type: "DELETE",
@@ -86,7 +86,7 @@ const CadastroBarcoController = {
 	    $('#tableBarco').dataTable().fnDestroy();
 		$.ajax({
 			headers: {
-	            'Authorization':'1',
+	            'Authorization': email,
 	            'Content-Type':'application/json'
 	        },
 	        type: "GET",

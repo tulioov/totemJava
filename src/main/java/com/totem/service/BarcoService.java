@@ -6,30 +6,48 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.totem.entity.Barco;
+import com.totem.exception.CustomErrorException;
 import com.totem.repository.BarcoRepository;
 
 @Service
 public class BarcoService {
 
 	@Autowired
+	UsuarioService usuarioService;
+	
+	@Autowired
     private BarcoRepository barcoRepository;
 	
+	private static final String ERRO_PERMISSAO = "Usuário em premissão";  
+	
 
-	public List<Barco> listar() {
+	public List<Barco> listar(String emailUsuario) {
+		if(!usuarioService.isAdm(emailUsuario)) {
+			throw new CustomErrorException(ERRO_PERMISSAO);
+		}
 		return barcoRepository.findAll();
 	}
 	
-	public Barco findById (Long id) {
+	public Barco findById (Long id, String emailUsuario) {
+		if(!usuarioService.isAdm(emailUsuario)) {
+			throw new CustomErrorException(ERRO_PERMISSAO);
+		}
 		return barcoRepository.findById(id).get();
 	}
 	
-	public Barco salvar(Barco barco) {
+	public Barco salvar(Barco barco, String emailUsuario) {
+		if(!usuarioService.isAdm(emailUsuario)) {
+			throw new CustomErrorException(ERRO_PERMISSAO);
+		}
 		
 		barcoRepository.save(barco);
 		return barco;
 	}
 	
-	public Barco delete(Long id) {
+	public Barco delete(Long id, String emailUsuario) {
+		if(!usuarioService.isAdm(emailUsuario)) {
+			throw new CustomErrorException(ERRO_PERMISSAO);
+		}
 		Barco barco = barcoRepository.findById(id).get();
 		barcoRepository.delete(barco);
 		return barco;

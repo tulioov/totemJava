@@ -4,7 +4,7 @@ const CadastroItemController = {
 	salvar(){
 		$.ajax({
 			headers: {
-	            'Authorization':'1',
+	            'Authorization': email,
 	            'Content-Type':'application/json'
 	        },
 	        type: "POST",
@@ -36,7 +36,7 @@ const CadastroItemController = {
 	editar(id){
 		$.ajax({
 			headers: {
-	            'Authorization':'1',
+	            'Authorization': email,
 	            'Content-Type':'application/json'
 	        },
 	        type: "GET",
@@ -53,7 +53,7 @@ const CadastroItemController = {
 	deletar(id){
 		$.ajax({
 			headers: {
-	            'Authorization':'1',
+	            'Authorization': email,
 	            'Content-Type':'application/json'
 	        },
 	        type: "DELETE",
@@ -78,7 +78,7 @@ const CadastroItemController = {
 	    $('#tableItem').dataTable().fnDestroy();
 		$.ajax({
 			headers: {
-	            'Authorization':'1',
+	            'Authorization': email,
 	            'Content-Type':'application/json'
 	        },
 	        type: "GET",

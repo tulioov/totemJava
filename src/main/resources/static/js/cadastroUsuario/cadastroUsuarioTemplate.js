@@ -31,6 +31,12 @@ const CadastroUsuarioTemplate = {
 								</div>
 								<div class="row">
 									<div class="col-md-6">
+										<div>Email: </div>
+										<input type="text" disabled name="email" class="form-control" id="emailId">
+									</div>
+								</div>
+								<div class="row">
+									<div class="col-md-6">
 										<div>RFID: </div>
 										<input type="text" name="codRfid" class="form-control" id="codRfidId">
 									</div>

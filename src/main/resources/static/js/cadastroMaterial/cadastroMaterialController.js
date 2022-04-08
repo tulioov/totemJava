@@ -4,7 +4,7 @@ const CadastroMaterialController = {
 	salvar(){
 		$.ajax({
 			headers: {
-	            'Authorization':'1',
+	            'Authorization': email,
 	            'Content-Type':'application/json'
 	        },
 	        type: "POST",
@@ -36,7 +36,7 @@ const CadastroMaterialController = {
 	editar(id){
 		$.ajax({
 			headers: {
-	            'Authorization':'1',
+	            'Authorization': email,
 	            'Content-Type':'application/json'
 	        },
 	        type: "GET",
@@ -53,7 +53,7 @@ const CadastroMaterialController = {
 	deletar(id){
 		$.ajax({
 			headers: {
-	            'Authorization':'1',
+	            'Authorization': email,
 	            'Content-Type':'application/json'
 	        },
 	        type: "DELETE",
@@ -78,7 +78,7 @@ const CadastroMaterialController = {
 	    $('#tableMaterial').dataTable().fnDestroy();
 		$.ajax({
 			headers: {
-	            'Authorization':'1',
+	            'Authorization': email,
 	            'Content-Type':'application/json'
 	        },
 	        type: "GET",

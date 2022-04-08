@@ -4,7 +4,7 @@ const CadastroUsuarioController = {
 	carregarDualList(etapaList){
 		$.ajax({
 			headers: {
-	            'Authorization':'1',
+	            'Authorization': email,
 	            'Content-Type':'application/json'
 	        },
 	        type: "GET",
@@ -38,7 +38,7 @@ const CadastroUsuarioController = {
 		
 		$.ajax({
 			headers: {
-	            'Authorization':'1',
+	            'Authorization': email,
 	            'Content-Type':'application/json'
 	        },
 	        type: "POST",
@@ -70,7 +70,7 @@ const CadastroUsuarioController = {
 	editar(id){
 		$.ajax({
 			headers: {
-	            'Authorization':'1',
+	            'Authorization': email,
 	            'Content-Type':'application/json'
 	        },
 	        type: "GET",
@@ -87,7 +87,7 @@ const CadastroUsuarioController = {
 	deletar(id){
 		$.ajax({
 			headers: {
-	            'Authorization':'1',
+	            'Authorization': email,
 	            'Content-Type':'application/json'
 	        },
 	        type: "DELETE",
@@ -112,7 +112,7 @@ const CadastroUsuarioController = {
 	    $('#tableUsuario').dataTable().fnDestroy();
 		$.ajax({
 			headers: {
-	            'Authorization':'1',
+	            'Authorization': email,
 	            'Content-Type':'application/json'
 	        },
 	        type: "GET",
@@ -145,6 +145,7 @@ const CadastroUsuarioController = {
 			$('#campoId').val(usuario.id);
 			$('#nomeId').val(usuario.nome);
 			$('#especialidadeId').val(usuario.especialidade);
+			$('#emailId').val(usuario.email);
 			$('#codRfidId').val(usuario.codRfid);
 			$('#isAdminId').prop('checked', usuario.isAdmin);
 			CadastroUsuarioController.carregarDualList(usuario.etapaList);

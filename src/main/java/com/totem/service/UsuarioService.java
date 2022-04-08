@@ -16,39 +16,60 @@ import com.totem.repository.UsuarioRepository;
 public class UsuarioService {
 
 	@Autowired
-    private UsuarioRepository usuarioRepository;
-	
+	private UsuarioRepository usuarioRepository;
+
 	@Autowired
-    private EtapaService etapaService;
-	
+	private EtapaService etapaService;
 
 	public List<Usuario> listar() {
 		return usuarioRepository.findAll();
 	}
-	
-	public Usuario findById (Long id) {
+
+	public Usuario findById(Long id) {
 		return usuarioRepository.findById(id).get();
 	}
-	
-	public Usuario salvar(UsuarioDTO usuarioDTO) {
-		
-		List<Etapa> etapaList = new ArrayList<>();
+
+	public Usuario findByEmail(String email) {
+		return usuarioRepository.findByEmail(email);
+	}
+
+	public Usuario salvar(UsuarioDTO usuarioDTO, String emailUsuario) {
+
 		Usuario usuario = new Usuario();
-		
-		for (Long codEtapa : usuarioDTO.getEtapaList()) {
-			etapaList.add(etapaService.findById(codEtapa));
-		}
-		
+
+		addListEtapaInUsuario(usuarioDTO, usuario);
+
 		BeanUtils.copyProperties(usuarioDTO, usuario);
-		usuario.setEtapaList(etapaList);
+
 		usuarioRepository.save(usuario);
 		return usuario;
 	}
-	
+
+	private void addListEtapaInUsuario(UsuarioDTO usuarioDTO, Usuario usuario) {
+		
+		if (usuarioDTO.getEtapaList() == null || usuarioDTO.getEtapaList().isEmpty()) {
+			return;
+		}
+		List<Etapa> etapaList = new ArrayList<>();
+
+		for (Long codEtapa : usuarioDTO.getEtapaList()) {
+			etapaList.add(etapaService.findById(codEtapa));
+		}
+		usuario.setEtapaList(etapaList);
+	}
+
 	public Usuario delete(Long id) {
 		Usuario usuario = usuarioRepository.findById(id).get();
 		usuarioRepository.delete(usuario);
 		return usuario;
+	}
+	
+	public boolean isAdm(String email) {
+		Usuario usuario = usuarioRepository.findByEmail(email);
+		if(usuario == null) {
+			return false;
+		}
+		return usuario.getIsAdmin()==null?false:usuario.getIsAdmin();
 	}
 
 }

@@ -33,6 +33,9 @@ public class Usuario {
 	@Size(min = 3 , max = 250, message = "Especialidade deve conter minimo de 3 caracter")
 	private String especialidade;
 	
+	@Column(name = "EMAIL", unique=true)
+	private String email;
+	
 	@Column(name = "COD_RFID")
 	private String codRfid;
 	
@@ -89,6 +92,14 @@ public class Usuario {
 
 	public void setEspecialidade(String especialidade) {
 		this.especialidade = especialidade;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
 	}
 
 }
