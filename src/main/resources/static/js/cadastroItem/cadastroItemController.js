@@ -1,10 +1,31 @@
 
 const CadastroItemController = {
 		
+	erro(data, alertComponent){
+		$("#myModal").scrollTop(0);
+    	$("#"+alertComponent).find('div').html("");
+    	if(data.responseJSON.statusCode === 404){
+    		$("#"+alertComponent).removeClass("oculta").addClass("alert-danger").find('div').append(data.responseJSON.response+"<br>");
+    		return;
+    	}
+    	if(data.responseJSON.statusCode === 401){
+    		$("#"+alertComponent).removeClass("oculta").addClass("alert-danger").find('div').append(data.responseJSON.response.message+"<br>");
+    		return;
+    	}
+    	retorno = data.responseJSON.response;
+    	for (const property in retorno) {
+    		if(property == 'stackTrace'){
+    			return;
+    		}
+    		$("#"+property+"Id").addClass("errorInput");
+    		$("#"+alertComponent).removeClass("oculta").addClass("alert-danger").find('div').append(retorno[property]+"<br>");
+		}
+	},
+		
 	salvar(){
 		$.ajax({
 			headers: {
-	            'Authorization':'1',
+	            'Authorization': email,
 	            'Content-Type':'application/json'
 	        },
 	        type: "POST",
@@ -22,13 +43,7 @@ const CadastroItemController = {
         		},2000); 
 	        },
 	        error: function (data) {   
-	        	$("#myModal").scrollTop(0);
-	        	$("#alertMsgId").find('div').html("");
-	        	retorno = data.responseJSON.response;
-	        	for (const property in retorno) {
-	        		$("#"+property+"Id").addClass("errorInput");
-	        		$("#alertMsgId").removeClass("oculta").addClass("alert-danger").find('div').append(retorno[property]+"<br>");
-        		}
+	        	CadastroItemController.erro(data,"alertMsgId");
 	        },
 	    });
 	},
@@ -36,7 +51,7 @@ const CadastroItemController = {
 	editar(id){
 		$.ajax({
 			headers: {
-	            'Authorization':'1',
+	            'Authorization': email,
 	            'Content-Type':'application/json'
 	        },
 	        type: "GET",
@@ -45,7 +60,7 @@ const CadastroItemController = {
 	        success: function(retorno) {
 	        	CadastroItemController.addUser(retorno.response)
 	        }, error: function (data) {   
-	        	console.log(data)
+	        	CadastroItemController.erro(data,"alertMsgId");
 	        }
 	    });
 	},
@@ -53,7 +68,7 @@ const CadastroItemController = {
 	deletar(id){
 		$.ajax({
 			headers: {
-	            'Authorization':'1',
+	            'Authorization': email,
 	            'Content-Type':'application/json'
 	        },
 	        type: "DELETE",
@@ -66,9 +81,9 @@ const CadastroItemController = {
 	        		$("#alertMsgIdTable").addClass("oculta").removeClass("alert-success").find('div').html("");
 	        		CadastroItemController.listar();
         		},2000); 
-	        }, error: function (data) {  
-	        	$("#myModal").scrollTop(0);
-	        	console.log(data)
+	        }, 
+	        error: function (data) {  
+	        	CadastroItemController.erro(data,"alertMsgIdTable");
 	        }
 	    });
 	},
@@ -78,7 +93,7 @@ const CadastroItemController = {
 	    $('#tableItem').dataTable().fnDestroy();
 		$.ajax({
 			headers: {
-	            'Authorization':'1',
+	            'Authorization': email,
 	            'Content-Type':'application/json'
 	        },
 	        type: "GET",
@@ -88,6 +103,8 @@ const CadastroItemController = {
 	        	$(retorno.response).each(function(index, data) {
 	        		$("#tableItem").find('tbody').append(CadastroItemTemplate.itemLinha(data));
         		});
+	        }, error: function (data) {  
+	        	CadastroItemController.erro(data,"alertMsgIdTable");
 	        },
 	        complete: function(data) { 
 	        	$('#tableItem').DataTable( {

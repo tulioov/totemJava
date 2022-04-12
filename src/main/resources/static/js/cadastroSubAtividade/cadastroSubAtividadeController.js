@@ -1,10 +1,31 @@
 
 const CadastroSubAtividadeController = {
 		
+	erro(data, alertComponent){
+		$("#myModal").scrollTop(0);
+    	$("#"+alertComponent).find('div').html("");
+    	if(data.responseJSON.statusCode === 404){
+    		$("#"+alertComponent).removeClass("oculta").addClass("alert-danger").find('div').append(data.responseJSON.response+"<br>");
+    		return;
+    	}
+    	if(data.responseJSON.statusCode === 401){
+    		$("#"+alertComponent).removeClass("oculta").addClass("alert-danger").find('div').append(data.responseJSON.response.message+"<br>");
+    		return;
+    	}
+    	retorno = data.responseJSON.response;
+    	for (const property in retorno) {
+    		if(property == 'stackTrace'){
+    			return;
+    		}
+    		$("#"+property+"Id").addClass("errorInput");
+    		$("#"+alertComponent).removeClass("oculta").addClass("alert-danger").find('div').append(retorno[property]+"<br>");
+		}
+	},
+		
 	salvar(){
 		$.ajax({
 			headers: {
-	            'Authorization':'1',
+	            'Authorization': email,
 	            'Content-Type':'application/json'
 	        },
 	        type: "POST",
@@ -22,13 +43,7 @@ const CadastroSubAtividadeController = {
         		},2000); 
 	        },
 	        error: function (data) {   
-	        	$("#myModal").scrollTop(0);
-	        	$("#alertMsgId").find('div').html("");
-	        	retorno = data.responseJSON.response;
-	        	for (const property in retorno) {
-	        		$("#"+property+"Id").addClass("errorInput");
-	        		$("#alertMsgId").removeClass("oculta").addClass("alert-danger").find('div').append(retorno[property]+"<br>");
-        		}
+	        	CadastroSubAtividadeController.erro(data,"alertMsgId");
 	        },
 	    });
 	},
@@ -36,7 +51,7 @@ const CadastroSubAtividadeController = {
 	editar(id){
 		$.ajax({
 			headers: {
-	            'Authorization':'1',
+	            'Authorization': email,
 	            'Content-Type':'application/json'
 	        },
 	        type: "GET",
@@ -45,7 +60,7 @@ const CadastroSubAtividadeController = {
 	        success: function(retorno) {
 	        	CadastroSubAtividadeController.addUser(retorno.response)
 	        }, error: function (data) {   
-	        	console.log(data)
+	        	CadastroSubAtividadeController.erro(data,"alertMsgId");
 	        }
 	    });
 	},
@@ -53,7 +68,7 @@ const CadastroSubAtividadeController = {
 	deletar(id){
 		$.ajax({
 			headers: {
-	            'Authorization':'1',
+	            'Authorization': email,
 	            'Content-Type':'application/json'
 	        },
 	        type: "DELETE",
@@ -67,8 +82,7 @@ const CadastroSubAtividadeController = {
 	        		CadastroSubAtividadeController.listar();
         		},2000); 
 	        }, error: function (data) {  
-	        	$("#myModal").scrollTop(0);
-	        	console.log(data)
+	        	CadastroSubAtividadeController.erro(data,"alertMsgIdTable");
 	        }
 	    });
 	},
@@ -78,7 +92,7 @@ const CadastroSubAtividadeController = {
 	    $('#tableSubAtividade').dataTable().fnDestroy();
 		$.ajax({
 			headers: {
-	            'Authorization':'1',
+	            'Authorization': email,
 	            'Content-Type':'application/json'
 	        },
 	        type: "GET",
@@ -88,6 +102,9 @@ const CadastroSubAtividadeController = {
 	        	$(retorno.response).each(function(index, data) {
 	        		$("#tableSubAtividade").find('tbody').append(CadastroSubAtividadeTemplate.itemLinha(data));
         		});
+	        }, 
+	        error: function (data) {  
+	        	CadastroSubAtividadeController.erro(data,"alertMsgIdTable");
 	        },
 	        complete: function(data) { 
 	        	$('#tableSubAtividade').DataTable( {

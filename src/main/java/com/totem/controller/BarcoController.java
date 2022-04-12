@@ -28,27 +28,27 @@ public class BarcoController {
 
 	@PostMapping("/salvar")
 	public @ResponseBody ResponseEntity<RetornoDTO> salvar(
-			@RequestHeader(name = "Authorization", required = true) Long idUsuario, @Valid @RequestBody Barco barco) {
+			@RequestHeader(name = "Authorization", required = true) String emailUsuario, @Valid @RequestBody Barco barco) {
 
-		return ResponseEntityUtil.defaultResponse(barcoService.salvar(barco));
+		return ResponseEntityUtil.defaultResponse(barcoService.salvar(barco, emailUsuario));
 	}
 
 	@GetMapping("/findById/{id}")
 	public @ResponseBody ResponseEntity<RetornoDTO> buscarDadosPorId(
-			@RequestHeader(name = "Authorization", required = true) Long idUsuario, @PathVariable("id") Long id) {
-		return ResponseEntityUtil.defaultResponse(barcoService.findById(id));
+			@RequestHeader(name = "Authorization", required = true) String emailUsuario, @PathVariable("id") Long id) {
+		return ResponseEntityUtil.defaultResponse(barcoService.findById(id, emailUsuario));
 	}
 
 	@GetMapping("/listar")
 	public @ResponseBody ResponseEntity<RetornoDTO> listar(
-			@RequestHeader(name = "Authorization", required = true) Long idUsuario) {
-		return ResponseEntityUtil.defaultResponse(barcoService.listar());
+			@RequestHeader(name = "Authorization", required = true) String emailUsuario) {
+		return ResponseEntityUtil.defaultResponse(barcoService.listar(emailUsuario));
 	}
 
 	@DeleteMapping("/deletar/{id}")
 	public @ResponseBody ResponseEntity<RetornoDTO> deletar(
-			@RequestHeader(name = "Authorization", required = true) Long idUsuario, @PathVariable("id") Long id) {
-		return ResponseEntityUtil.defaultResponse(barcoService.delete(id));
+			@RequestHeader(name = "Authorization", required = true) String emailUsuario, @PathVariable("id") Long id) {
+		return ResponseEntityUtil.defaultResponse(barcoService.delete(id, emailUsuario));
 	}
 
 }

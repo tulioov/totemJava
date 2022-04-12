@@ -45,6 +45,10 @@ class CustomControllerAdvice {
 		CustomErrorException customErrorException = (CustomErrorException) e;
 
 		HttpStatus status = customErrorException.getStatus();
+		
+		if(status == null) {
+			status = HttpStatus.INTERNAL_SERVER_ERROR; // 500
+		}
 
 		StringWriter stringWriter = new StringWriter();
 		PrintWriter printWriter = new PrintWriter(stringWriter);

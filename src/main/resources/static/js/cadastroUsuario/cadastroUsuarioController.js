@@ -1,10 +1,31 @@
 
 const CadastroUsuarioController = {
 		
+	erro(data, alertComponent){
+		$("#myModal").scrollTop(0);
+    	$("#"+alertComponent).find('div').html("");
+    	if(data.responseJSON.statusCode === 404){
+    		$("#"+alertComponent).removeClass("oculta").addClass("alert-danger").find('div').append(data.responseJSON.response+"<br>");
+    		return;
+    	}
+    	if(data.responseJSON.statusCode === 401){
+    		$("#"+alertComponent).removeClass("oculta").addClass("alert-danger").find('div').append(data.responseJSON.response.message+"<br>");
+    		return;
+    	}
+    	retorno = data.responseJSON.response;
+    	for (const property in retorno) {
+    		if(property == 'stackTrace'){
+    			return;
+    		}
+    		$("#"+property+"Id").addClass("errorInput");
+    		$("#"+alertComponent).removeClass("oculta").addClass("alert-danger").find('div').append(retorno[property]+"<br>");
+		}
+	},
+		
 	carregarDualList(etapaList){
 		$.ajax({
 			headers: {
-	            'Authorization':'1',
+	            'Authorization': email,
 	            'Content-Type':'application/json'
 	        },
 	        type: "GET",
@@ -38,7 +59,7 @@ const CadastroUsuarioController = {
 		
 		$.ajax({
 			headers: {
-	            'Authorization':'1',
+	            'Authorization': email,
 	            'Content-Type':'application/json'
 	        },
 	        type: "POST",
@@ -56,13 +77,7 @@ const CadastroUsuarioController = {
         		},2000); 
 	        },
 	        error: function (data) {   
-	        	$("#myModal").scrollTop(0);
-	        	$("#alertMsgId").find('div').html("");
-	        	retorno = data.responseJSON.response;
-	        	for (const property in retorno) {
-	        		$("#"+property+"Id").addClass("errorInput");
-	        		$("#alertMsgId").removeClass("oculta").addClass("alert-danger").find('div').append(retorno[property]+"<br>");
-        		}
+	        	CadastroUsuarioController.erro(data,"alertMsgId");
 	        },
 	    });
 	},
@@ -70,7 +85,7 @@ const CadastroUsuarioController = {
 	editar(id){
 		$.ajax({
 			headers: {
-	            'Authorization':'1',
+	            'Authorization': email,
 	            'Content-Type':'application/json'
 	        },
 	        type: "GET",
@@ -78,8 +93,9 @@ const CadastroUsuarioController = {
 	        url: "/usuario/findById/"+id,
 	        success: function(retorno) {
 	        	CadastroUsuarioController.addUser(retorno.response)
-	        }, error: function (data) {   
-	        	console.log(data)
+	        }, 
+	        error: function (data) {   
+	        	CadastroUsuarioController.erro(data,"alertMsgId");
 	        }
 	    });
 	},
@@ -87,7 +103,7 @@ const CadastroUsuarioController = {
 	deletar(id){
 		$.ajax({
 			headers: {
-	            'Authorization':'1',
+	            'Authorization': email,
 	            'Content-Type':'application/json'
 	        },
 	        type: "DELETE",
@@ -100,9 +116,9 @@ const CadastroUsuarioController = {
 	        		$("#alertMsgIdTable").addClass("oculta").removeClass("alert-success").find('div').html("");
 	        		CadastroUsuarioController.listar();
         		},2000); 
-	        }, error: function (data) {  
-	        	$("#myModal").scrollTop(0);
-	        	console.log(data)
+	        }, 
+	        error: function (data) {  
+	        	CadastroUsuarioController.erro(data,"alertMsgIdTable");
 	        }
 	    });
 	},
@@ -112,7 +128,7 @@ const CadastroUsuarioController = {
 	    $('#tableUsuario').dataTable().fnDestroy();
 		$.ajax({
 			headers: {
-	            'Authorization':'1',
+	            'Authorization': email,
 	            'Content-Type':'application/json'
 	        },
 	        type: "GET",
@@ -122,6 +138,9 @@ const CadastroUsuarioController = {
 	        	$(retorno.response).each(function(index, data) {
 	        		$("#tableUsuario").find('tbody').append(CadastroUsuarioTemplate.itemLinha(data));
         		});
+	        },
+	        error: function (data) {  
+	        	CadastroUsuarioController.erro(data,"alertMsgIdTable");
 	        },
 	        complete: function(data) { 
 	        	$('#tableUsuario').DataTable( {
@@ -145,6 +164,7 @@ const CadastroUsuarioController = {
 			$('#campoId').val(usuario.id);
 			$('#nomeId').val(usuario.nome);
 			$('#especialidadeId').val(usuario.especialidade);
+			$('#emailId').val(usuario.email);
 			$('#codRfidId').val(usuario.codRfid);
 			$('#isAdminId').prop('checked', usuario.isAdmin);
 			CadastroUsuarioController.carregarDualList(usuario.etapaList);

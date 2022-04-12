@@ -15,6 +15,12 @@
 	<title>Okean</title>
 </head>
 <body>
+<script type="text/javascript">
+	var nome = '${nome}';
+	var email = '${email}';
+	var isAdm = ${isAdm};
+	
+</script>
 
 <script src="https://code.jquery.com/jquery-1.12.0.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
@@ -23,7 +29,7 @@
 <div class='dashboard'>
     <div class="dashboard-nav bg-azul">
         <header>
-        	<a href="#!" class="menu-toggle">
+        	<a href="#!" id="menuId" class="menu-toggle">
         		<i class="fas fa-bars"></i>
         	</a>
         	<a href="#" class="brand-logo">
@@ -83,7 +89,7 @@
 				</div>
             </div>
             <div class="nav-item-divider"></div>
-            <a href="#" class="dashboard-nav-item">
+            <a href="/logout" class="dashboard-nav-item">
             	<i class="fas fa-sign-out-alt"></i> 
             	Sair 
 			</a>
@@ -91,7 +97,7 @@
     </div>
     <div class='dashboard-app'>
         <header class='dashboard-toolbar bg-azul'>
-        	<a href="#!" class="menu-toggle">
+        	<a id="headMenuId" href="#!" class="menu-toggle">
        			<i class="fas fa-bars laranja"></i>	
 			</a>
 			<div class="col-md-8">
