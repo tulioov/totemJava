@@ -19,7 +19,10 @@ public class SecurityConfig extends AADWebSecurityConfigurerAdapter{
     super.configure(http);
     http.authorizeRequests()
 		.antMatchers(protectedRoutes).authenticated()
-     	.antMatchers("/**").permitAll();
+     	.antMatchers("/**").permitAll()
+     	.and()
+     	.csrf().disable()
+     	.headers().frameOptions().disable();
     
     http.logout()
     .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))

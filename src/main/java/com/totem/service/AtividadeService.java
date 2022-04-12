@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import com.totem.dto.AtividadeDTO;
@@ -26,13 +27,13 @@ public class AtividadeService {
 	@Autowired
     private AtividadeRepository atividadeRepository;
 	
-	private static final String ERRO_PERMISSAO = "Usuário em premissão";  
+	private static final String ERRO_PERMISSAO = "Usuário sem permissão";  
 	
 
 	public List<Atividade> listar(String emailUsuario) {
 		
 		if(!usuarioService.isAdm(emailUsuario)) {
-			throw new CustomErrorException(ERRO_PERMISSAO);
+			throw new CustomErrorException(HttpStatus.UNAUTHORIZED, ERRO_PERMISSAO);
 		}
 		
 		return atividadeRepository.findAll();
@@ -40,7 +41,7 @@ public class AtividadeService {
 	
 	public Atividade findById (Long id, String emailUsuario) {
 		if(!usuarioService.isAdm(emailUsuario)) {
-			throw new CustomErrorException(ERRO_PERMISSAO);
+			throw new CustomErrorException(HttpStatus.UNAUTHORIZED, ERRO_PERMISSAO);
 		}
 		return atividadeRepository.findById(id).get();
 	}
@@ -48,7 +49,7 @@ public class AtividadeService {
 	public Atividade salvar(AtividadeDTO atividadeDTO, String emailUsuario) {
 		
 		if(!usuarioService.isAdm(emailUsuario)) {
-			throw new CustomErrorException(ERRO_PERMISSAO);
+			throw new CustomErrorException(HttpStatus.UNAUTHORIZED, ERRO_PERMISSAO);
 		}
 		
 		List<SubAtividade> subAtividadeList = new ArrayList<>();
@@ -69,7 +70,7 @@ public class AtividadeService {
 	public Atividade delete(Long id, String emailUsuario) {
 		
 		if(!usuarioService.isAdm(emailUsuario)) {
-			throw new CustomErrorException(ERRO_PERMISSAO);
+			throw new CustomErrorException(HttpStatus.UNAUTHORIZED, ERRO_PERMISSAO);
 		}
 		
 		Atividade atividade = atividadeRepository.findById(id).get();

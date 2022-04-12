@@ -43,13 +43,13 @@ public class UsuarioController {
 	@GetMapping("/listar")
 	public @ResponseBody ResponseEntity<RetornoDTO> listar(
 			@RequestHeader(name = "Authorization", required = true) String emailUsuario) {
-		return ResponseEntityUtil.defaultResponse(usuarioService.listar());
+		return ResponseEntityUtil.defaultResponse(usuarioService.listar(emailUsuario));
 	}
 	
 	@DeleteMapping("/deletar/{id}")
 	public @ResponseBody ResponseEntity<RetornoDTO> deletar(
 			@RequestHeader(name = "Authorization", required = true) String emailUsuario, @PathVariable("id") Long id) {
-		return ResponseEntityUtil.defaultResponse(usuarioService.delete(id));
+		return ResponseEntityUtil.defaultResponse(usuarioService.delete(id, emailUsuario));
 	}
 
 }

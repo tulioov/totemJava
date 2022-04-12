@@ -38,7 +38,7 @@ public class PaginaService {
 			usuarioDTO.setIsAdmin((email.equals(admDefault1)||email.equals(admDefault2))?Boolean.TRUE:Boolean.FALSE);
 			usuarioDTO.setEmail(email);
 			usuarioDTO.setEspecialidade("Usuário");
-			usuarioService.salvar(usuarioDTO, email);
+			usuarioService.salvar(usuarioDTO);
 			return;
 		}
 		

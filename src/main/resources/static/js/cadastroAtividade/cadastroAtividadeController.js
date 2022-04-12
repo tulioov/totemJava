@@ -1,6 +1,27 @@
 
 const CadastroAtividadeController = {
 		
+	erro(data, alertComponent){
+		$("#myModal").scrollTop(0);
+    	$("#"+alertComponent).find('div').html("");
+    	if(data.responseJSON.statusCode === 404){
+    		$("#"+alertComponent).removeClass("oculta").addClass("alert-danger").find('div').append(data.responseJSON.response+"<br>");
+    		return;
+    	}
+    	if(data.responseJSON.statusCode === 401){
+    		$("#"+alertComponent).removeClass("oculta").addClass("alert-danger").find('div').append(data.responseJSON.response.message+"<br>");
+    		return;
+    	}
+    	retorno = data.responseJSON.response;
+    	for (const property in retorno) {
+    		if(property == 'stackTrace'){
+    			return;
+    		}
+    		$("#"+property+"Id").addClass("errorInput");
+    		$("#alertMsgId").removeClass("oculta").addClass("alert-danger").find('div').append(retorno[property]+"<br>");
+		}
+	},
+		
 	carregarDualList(subAtividadeList){
 		$.ajax({
 			headers: {
@@ -54,13 +75,7 @@ const CadastroAtividadeController = {
         		},2000); 
 	        },
 	        error: function (data) {   
-	        	$("#myModal").scrollTop(0);
-	        	$("#alertMsgId").find('div').html("");
-	        	retorno = data.responseJSON.response;
-	        	for (const property in retorno) {
-	        		$("#"+property+"Id").addClass("errorInput");
-	        		$("#alertMsgId").removeClass("oculta").addClass("alert-danger").find('div').append(retorno[property]+"<br>");
-        		}
+	        	CadastroAtividadeController.erro(data,"alertMsgId");
 	        },
 	    });
 	},
@@ -76,8 +91,9 @@ const CadastroAtividadeController = {
 	        url: "/atividade/findById/"+id,
 	        success: function(retorno) {
 	        	CadastroAtividadeController.addUser(retorno.response)
-	        }, error: function (data) {   
-	        	console.log(data)
+	        }, 
+	        error: function (data) {   
+	        	CadastroAtividadeController.erro(data,"alertMsgId");
 	        }
 	    });
 	},
@@ -99,8 +115,7 @@ const CadastroAtividadeController = {
 	        		CadastroAtividadeController.listar();
         		},2000); 
 	        }, error: function (data) {  
-	        	$("#myModal").scrollTop(0);
-	        	console.log(data)
+	        	CadastroAtividadeController.erro(data,'alertMsgIdTable');
 	        }
 	    });
 	},
@@ -121,6 +136,9 @@ const CadastroAtividadeController = {
 	        		$("#tableAtividade").find('tbody').append(CadastroAtividadeTemplate.itemLinha(data));
         		});
 	        },
+	        error: function (data) {  
+	        	CadastroAtividadeController.erro(data,'alertMsgIdTable');
+	        }
 	        complete: function(data) { 
 	        	$('#tableAtividade').DataTable( {
 	        	    language: {

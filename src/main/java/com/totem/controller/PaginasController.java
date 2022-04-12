@@ -32,7 +32,9 @@ public class PaginasController {
 	
 	@GetMapping(value = {"/", "/monitoramento"})
 	public String home(Model model, @AuthenticationPrincipal OidcUser principal){
+		System.out.println("entrei em paginas");
 		paginaService.control(principal, model);
+		System.out.println("redirecionei");
 		return "monitoramento";
 	}
 	

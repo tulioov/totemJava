@@ -1,6 +1,27 @@
 
 const CadastroEtapaController = {
 		
+	erro(data, alertComponent){
+		$("#myModal").scrollTop(0);
+    	$("#"+alertComponent).find('div').html("");
+    	if(data.responseJSON.statusCode === 404){
+    		$("#"+alertComponent).removeClass("oculta").addClass("alert-danger").find('div').append(data.responseJSON.response+"<br>");
+    		return;
+    	}
+    	if(data.responseJSON.statusCode === 401){
+    		$("#"+alertComponent).removeClass("oculta").addClass("alert-danger").find('div').append(data.responseJSON.response.message+"<br>");
+    		return;
+    	}
+    	retorno = data.responseJSON.response;
+    	for (const property in retorno) {
+    		if(property == 'stackTrace'){
+    			return;
+    		}
+    		$("#"+property+"Id").addClass("errorInput");
+    		$("#"+alertComponent).removeClass("oculta").addClass("alert-danger").find('div').append(retorno[property]+"<br>");
+		}
+	},
+		
 	salvar(){
 		$.ajax({
 			headers: {
@@ -22,13 +43,7 @@ const CadastroEtapaController = {
         		},2000); 
 	        },
 	        error: function (data) {   
-	        	$("#myModal").scrollTop(0);
-	        	$("#alertMsgId").find('div').html("");
-	        	retorno = data.responseJSON.response;
-	        	for (const property in retorno) {
-	        		$("#"+property+"Id").addClass("errorInput");
-	        		$("#alertMsgId").removeClass("oculta").addClass("alert-danger").find('div').append(retorno[property]+"<br>");
-        		}
+	        	CadastroEtapaController.erro(data,"alertMsgId");
 	        },
 	    });
 	},
@@ -45,7 +60,7 @@ const CadastroEtapaController = {
 	        success: function(retorno) {
 	        	CadastroEtapaController.addUser(retorno.response)
 	        }, error: function (data) {   
-	        	console.log(data)
+	        	CadastroEtapaController.erro(data,"alertMsgId");
 	        }
 	    });
 	},
@@ -67,8 +82,7 @@ const CadastroEtapaController = {
 	        		CadastroEtapaController.listar();
         		},2000); 
 	        }, error: function (data) {  
-	        	$("#myModal").scrollTop(0);
-	        	console.log(data)
+	        	CadastroEtapaController.erro(data,"alertMsgIdTable");
 	        }
 	    });
 	},
@@ -88,6 +102,8 @@ const CadastroEtapaController = {
 	        	$(retorno.response).each(function(index, data) {
 	        		$("#tableEtapa").find('tbody').append(CadastroEtapaTemplate.itemLinha(data));
         		});
+	        },error: function (data) {   
+	        	CadastroEtapaController.erro(data,"alertMsgIdTable");
 	        },
 	        complete: function(data) { 
 	        	$('#tableEtapa').DataTable( {

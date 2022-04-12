@@ -3,6 +3,27 @@ let imageUploadBarco;
 
 const CadastroBarcoController = {
 		
+	erro(data, alertComponent){
+		$("#myModal").scrollTop(0);
+    	$("#"+alertComponent).find('div').html("");
+    	if(data.responseJSON.statusCode === 404){
+    		$("#"+alertComponent).removeClass("oculta").addClass("alert-danger").find('div').append(data.responseJSON.response+"<br>");
+    		return;
+    	}
+    	if(data.responseJSON.statusCode === 401){
+    		$("#"+alertComponent).removeClass("oculta").addClass("alert-danger").find('div').append(data.responseJSON.response.message+"<br>");
+    		return;
+    	}
+    	retorno = data.responseJSON.response;
+    	for (const property in retorno) {
+    		if(property == 'stackTrace'){
+    			return;
+    		}
+    		$("#"+property+"Id").addClass("errorInput");
+    		$("#"+alertComponent).removeClass("oculta").addClass("alert-danger").find('div').append(retorno[property]+"<br>");
+		}
+	},
+		
 	salvar(){
 		
 		let formControl = new Object();
@@ -30,13 +51,7 @@ const CadastroBarcoController = {
         		},2000); 
 	        },
 	        error: function (data) {   
-	        	$("#myModal").scrollTop(0);
-	        	$("#alertMsgId").find('div').html("");
-	        	retorno = data.responseJSON.response;
-	        	for (const property in retorno) {
-	        		$("#"+property+"Id").addClass("errorInput");
-	        		$("#alertMsgId").removeClass("oculta").addClass("alert-danger").find('div').append(retorno[property]+"<br>");
-        		}
+	        	CadastroBarcoController.erro(data,"alertMsgId");
 	        },
 	    });
 	},
@@ -53,8 +68,8 @@ const CadastroBarcoController = {
 	        success: function(retorno) {
 	        	CadastroBarcoController.addUser(retorno.response)
 	        }, error: function (data) {   
-	        	console.log(data)
-	        }
+	        	CadastroBarcoController.erro(data,"alertMsgId");
+	        },
 	    });
 	},
 	
@@ -74,10 +89,9 @@ const CadastroBarcoController = {
 	        		$("#alertMsgIdTable").addClass("oculta").removeClass("alert-success").find('div').html("");
 	        		CadastroBarcoController.listar();
         		},2000); 
-	        }, error: function (data) {  
-	        	$("#myModal").scrollTop(0);
-	        	console.log(data)
-	        }
+	        }, error: function (data) {   
+	        	CadastroBarcoController.erro(data,"alertMsgIdTable");
+	        },
 	    });
 	},
 		
@@ -96,6 +110,9 @@ const CadastroBarcoController = {
 	        	$(retorno.response).each(function(index, data) {
 	        		$("#tableBarco").find('tbody').append(CadastroBarcoTemplate.itemLinha(data));
         		});
+	        },
+	        error: function (data) {   
+	        	CadastroBarcoController.erro(data,"alertMsgIdTable");
 	        },
 	        complete: function(data) { 
 	        	$('#tableBarco').DataTable( {
