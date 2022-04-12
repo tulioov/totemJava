@@ -19,7 +19,7 @@ $(document).ready(function () {
         }
     });
     
-    $("#menuId").click();
+    //$("#menuId").click();
     
     if(!isAdm){
     	$("#headMenuId").addClass('oculta');
