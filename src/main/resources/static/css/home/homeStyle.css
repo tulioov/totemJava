@@ -22,7 +22,10 @@
 }
 .oculta{
     display: none !important;
-}	
+}
+.bg-white{
+	background-color: white !important;
+}
 .bg-success{
 	background-color: #28a745 !important;
 }

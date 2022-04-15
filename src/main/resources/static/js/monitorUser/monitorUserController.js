@@ -1,20 +1,7 @@
 
 const MonitorUserController = {
 		
-//	listar (){
-//		$.ajax({
-//	        type: "GET",
-//	        contentType: "application/json",
-//	        url: "/usuario/listar",
-//	        success: function(retorno) {
-//	        	console.log("retorno:" + retorno);
-//	        }
-//	    });
-//	}
-		
-	
 	abrirEscolhaEtapa(id){
-		alert(id);
 		$('#myModal').html(MonitorUserTemplate.abrirEscolhaEtapa())
 	},
 	
@@ -24,7 +11,7 @@ const MonitorUserController = {
 		
 		$.ajax({
 			headers: {
-	            'Authorization':'1',
+	            'Authorization': email,
 	            'Content-Type':'application/json'
 	        },
 	        type: "GET",
@@ -33,19 +20,17 @@ const MonitorUserController = {
 	        success: function(retorno) {
 	        	$(retorno.response).each(function(index, data) {
 	        		$('#imgEscolhaBarco').append(
-	        				`<div class="col-md-4 mt15">
-	        					<img 
-	        						style='display:block; width:16em;height:9em;' 
-	        						id='base64image-${data.id}' 
-	        						src='${data.imagem}'
-	        						onClick="MonitorUserController.abrirEscolhaEtapa(${data.id})"
-        						/>
-	        				</div>`);
+        				`<div class="col-md-4 mt15">
+        					<img 
+        						style='display:block; width:16em;height:9em;' 
+        						id='base64image-${data.id}' 
+        						src='${data.imagem}'
+        						onClick="MonitorUserController.abrirEscolhaEtapa(${data.id})"
+    						/>
+        				</div>`);
         		});
 	        }
 	    });
-		
-		
 	},
 	
 	abrirModalContinuidade(){
@@ -57,8 +42,6 @@ const MonitorUserController = {
 	}
 };
 
-
-
 $( document ).ready(function() {
 	
 	$('#tableMonitorUser').DataTable( {
@@ -68,6 +51,3 @@ $( document ).ready(function() {
 	});
 	
 });
-
-
-

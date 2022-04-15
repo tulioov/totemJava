@@ -6,6 +6,7 @@
 <head>
 	<meta charset="ISO-8859-1">
 	<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.3/css/jquery.dataTables.css">
+	<link rel="stylesheet" type="text/css" href="../css/monitorUser/steps.css">
 	<link rel="stylesheet" type="text/css" href="../css/monitorUser/monitorUser.css">
 	<title>Monitor user</title>
 </head>
@@ -119,7 +120,6 @@
 		</div>
 	</div>
 	
-	<script src="https://code.jquery.com/jquery-1.12.0.min.js"></script>
 	<script src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.js"></script>
 	<script src="../js/monitorUser/monitorUserTemplate.js"></script>
 	<script src="../js/monitorUser/monitorUserController.js"></script>
