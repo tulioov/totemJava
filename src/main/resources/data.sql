@@ -25,6 +25,23 @@ CREATE TABLE IF NOT EXISTS  atividade (
 	constante_campo VARCHAR(100) NOT NULL
 );
 
+insert into etapa  (CONSTANTE_CAMPO,DESCRICAO)
+select  'ETAPA_0', 'Etapa 0'  from dual 
+where not exists(select * from etapa where CONSTANTE_CAMPO='ETAPA_0');
+insert into etapa  (CONSTANTE_CAMPO,DESCRICAO)
+select  'ETAPA_1', 'Etapa 1'  from dual 
+where not exists(select * from etapa where CONSTANTE_CAMPO='ETAPA_1');
+insert into etapa  (CONSTANTE_CAMPO,DESCRICAO)
+select  'ETAPA_2', 'Etapa 2'  from dual 
+where not exists(select * from etapa where CONSTANTE_CAMPO='ETAPA_2');
+insert into etapa  (CONSTANTE_CAMPO,DESCRICAO)
+select  'ETAPA_3', 'Etapa 3'  from dual 
+where not exists(select * from etapa where CONSTANTE_CAMPO='ETAPA_3');
+insert into etapa  (CONSTANTE_CAMPO,DESCRICAO)
+select  'ETAPA_4', 'Etapa 4'  from dual 
+where not exists(select * from etapa where CONSTANTE_CAMPO='ETAPA_4');
+
+
 CREATE TABLE IF NOT EXISTS  sub_atividade (
 	cod_sub_atividade INT AUTO_INCREMENT PRIMARY KEY,
 	Descricao VARCHAR(250) NOT NULL,

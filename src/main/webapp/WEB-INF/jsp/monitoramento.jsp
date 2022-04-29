@@ -15,108 +15,16 @@
 	<jsp:include page="./header.jsp"></jsp:include>
 
 	<input type="hidden" name="action" id="action">
-	<input type="hidden" name="id" id="id">
-	<input type="hidden" name="descricao" id="descricao">
-	<input type="hidden" name="localizacao" id="localizacao">
-	<div class="container">
 	
+	<div class="container">
 		<div class="row">
-		
-			<button type="button" onclick="MonitorUserController.abrirEscolhaBarco();" class="btn btn-primary" data-toggle="modal" data-target="#myModal">
-				Escolha Barco
-			</button>
-			
-			<button type="button" onclick="MonitorUserController.abrirEscolhaEtapa();" class="btn btn-primary" data-toggle="modal" data-target="#myModal">
+			<button type="button" onclick="MonitorUserController.abrirEscolhaBarco();" class="btn btn-primary">
 				RFC
-			</button>
-			
-			<button type="button" onclick="MonitorUserController.abrirModalContinuidade();" class="btn btn-primary" data-toggle="modal" data-target="#myModal">
-				RFC Continuidade
-			</button>
-			
-			<button type="button" onclick="MonitorUserController.abrirModalSaida();" class="btn btn-primary" data-toggle="modal" data-target="#myModal">
-				RFC Saída
 			</button>
 			<hr/>
 		</div>
-		
-		<div class="modal" id="myModal">
-		    
-		</div>
-		<h3>Processo de fabricação do barco</h3>
-		<div class="progress">
-		  	<div class="progress-bar bg-success" role="progressbar" style="width: 25%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">25%</div>
-		</div>
-		<hr/>
-		<div class="row">
-			<table id="tableMonitorUser">
-				<thead>
-			    <tr>
-			        <th>ID</th>
-			        <th>Nome</th>
-			        <th>Trabalhando em</th>
-			        <th>Hr. Entrada</th>
-			        <th>Tempo</th>
-			    </tr>
-				</thead>
-				<tbody>
-					<tr>
-						<td>01</td>
-						<td>Fernand</td>
-						<td>Fibra</td>
-						<td>08:00</td>
-						<td>
-							<div class="progress">
-							  <div class="progress-bar bg-success" role="progressbar" style="width: 25%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">03:00</div>
-							</div>
-						</td>
-					</tr>
-					<tr>
-						<td>01</td>
-						<td>maria</td>
-						<td>Eletrica</td>
-						<td>08:00</td>
-						<td>
-							<div class="progress">
-							  <div class="progress-bar bg-warning" role="progressbar" style="width: 75%" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100">5:00</div>
-							</div>
-						</td>
-					</tr>
-					<tr>
-						<td>01</td>
-						<td>Geraldo</td>
-						<td>Motor</td>
-						<td>08:00</td>
-						<td>
-							<div class="progress">
-							  <div class="progress-bar bg-danger" role="progressbar" style="width: 100%" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">13:00</div>
-							</div>
-						</td>
-					</tr>
-					<tr>
-						<td>01</td>
-						<td>Jose</td>
-						<td>Fibra</td>
-						<td>08:00</td>
-						<td>
-							<div class="progress">
-							  <div class="progress-bar bg-warning" role="progressbar" style="width: 75%" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100">5:00</div>
-							</div>
-						</td>
-					</tr>
-					<tr>
-						<td>01</td>
-						<td>Fulano</td>
-						<td>Fibra</td>
-						<td>08:00</td>
-						<td>
-							<div class="progress">
-							  <div class="progress-bar bg-success" role="progressbar" style="width: 25%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">03:00</div>
-							</div>
-						</td>
-					</tr>
-				</tbody>
-			</table>
+		<div class="modal" id="myModal"></div>
+		<div id="contentId">
 		</div>
 	</div>
 	

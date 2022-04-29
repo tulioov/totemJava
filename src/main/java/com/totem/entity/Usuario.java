@@ -42,7 +42,7 @@ public class Usuario {
 	@Column(name = "isAdmin")
 	private Boolean isAdmin;
 	
-	@JoinColumn(name = "ID_ETAPA")
+	@JoinColumn(name = "ID_USUARIO")
 	@OneToMany
 	private List<Etapa> etapaList;
 	

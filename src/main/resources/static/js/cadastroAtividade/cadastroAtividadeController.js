@@ -138,7 +138,7 @@ const CadastroAtividadeController = {
 	        },
 	        error: function (data) {  
 	        	CadastroAtividadeController.erro(data,'alertMsgIdTable');
-	        }
+	        },
 	        complete: function(data) { 
 	        	$('#tableAtividade').DataTable( {
 	        	    language: {
