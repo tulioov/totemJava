@@ -3,12 +3,28 @@ const MonitorUserController = {
 		
 		
 	abrirMonitoracao(){
-		$('#contentId').html(MonitorUserTemplate.monitoracao());
-		$('#tableMonitorUser').DataTable( {
-		    language: {
-		        url: '//cdn.datatables.net/plug-ins/1.11.3/i18n/pt_br.json'
-		    }
-		});
+		
+		$.ajax({
+			headers: {
+	            'Authorization': email,
+	            'Content-Type':'application/json'
+	        },
+	        type: "GET",
+	        contentType: "application/json",
+	        url: "barcoMonitoracao/listar",
+	        success: function(retorno) {
+	        	$(retorno.response).each(function(index, data) {
+	        		
+	        		$('#contentId').html(MonitorUserTemplate.monitoracao(data));
+	        		$('#tableMonitorUser').DataTable( {
+	        		    language: {
+	        		        url: '//cdn.datatables.net/plug-ins/1.11.3/i18n/pt_br.json'
+	        		    }
+	        		});
+	        		
+        		});
+	        }
+	    });
 	},
 		
 	abrirEscolhaBarco(){
@@ -23,7 +39,7 @@ const MonitorUserController = {
 	        },
 	        type: "GET",
 	        contentType: "application/json",
-	        url: "/barco/listar",
+	        url: "/barcoMonitoracao/listar",
 	        success: function(retorno) {
 	        	$(retorno.response).each(function(index, data) {
 	        		$('#imgEscolhaBarco').append(
@@ -96,7 +112,7 @@ const MonitorUserController = {
 	    });
 		
 		
-		MonitorUserController.tempoProgressbar();
+//		MonitorUserController.tempoProgressbar();
 	}
 };
 

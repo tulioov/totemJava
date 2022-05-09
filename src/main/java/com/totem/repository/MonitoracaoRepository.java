@@ -6,10 +6,12 @@ import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
 import com.totem.entity.Barco;
+import com.totem.entity.Monitoracao;
 
 @Repository
-public interface BarcoRepository extends CrudRepository<Barco, Long> {
+public interface MonitoracaoRepository extends CrudRepository<Monitoracao, Long> {
 
-	List<Barco> findAll();
+	List<Monitoracao> findAll();
 
+	Monitoracao findByBarco(Barco barco);
 }

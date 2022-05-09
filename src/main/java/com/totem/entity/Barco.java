@@ -1,15 +1,22 @@
 package com.totem.entity;
 
 
+import java.util.Date;
+import java.util.List;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 
 @Entity
@@ -20,6 +27,14 @@ public class Barco {
 	@GeneratedValue(strategy = GenerationType.IDENTITY, generator = "native")
 	@Column(name = "COD_BARCO")
 	private Long id;
+	
+	@JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
+	@Column(name = "DT_INICIO")
+	private Date dtInicio;
+
+	@JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
+	@Column(name = "DT_FIM")
+	private Date dtFim;
 	
 	@Lob
 	@Column(name = "imagem")
@@ -34,6 +49,10 @@ public class Barco {
 	@NotEmpty(message = "Barco deve conter uma descrição.")	
 	@Size(min = 3 , max = 250, message = "descrição deve conter minimo de 3 caracter")
 	private String descricao;
+	
+	@JoinColumn(name = "ID_MONITORACAO")
+	@OneToMany
+	private List<Monitoracao> monitoracaoList;
 
 	public Long getId() {
 		return id;
@@ -41,6 +60,23 @@ public class Barco {
 
 	public void setId(Long id) {
 		this.id = id;
+	}
+	
+
+	public Date getDtInicio() {
+		return dtInicio;
+	}
+
+	public void setDtInicio(Date dtInicio) {
+		this.dtInicio = dtInicio;
+	}
+
+	public Date getDtFim() {
+		return dtFim;
+	}
+
+	public void setDtFim(Date dtFim) {
+		this.dtFim = dtFim;
 	}
 
 	public String getNome() {
@@ -67,4 +103,12 @@ public class Barco {
 		this.imagem = imagem;
 	}
 
+	public List<Monitoracao> getMonitoracaoList() {
+		return monitoracaoList;
+	}
+
+	public void setMonitoracaoList(List<Monitoracao> monitoracaoList) {
+		this.monitoracaoList = monitoracaoList;
+	}
+	
 }

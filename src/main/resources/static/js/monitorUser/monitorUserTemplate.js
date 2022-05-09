@@ -1,9 +1,15 @@
 
 const MonitorUserTemplate = {
 	
-	monitoracao(){
+	monitoracao(data){
 		return `
-			<h3>Processo de fabrica\u00e7\u00e3o do barco</h3>
+			<h3>Processo de fabrica\u00e7\u00e3o do barco ${data.barco.nome}</h3>
+			<img 
+				style='width:16em;height:9em;' 
+				src='${data.barco.imagem}'
+			/>
+			<h1>Data de inicio = ${data.barco.dtInicio}</h1> 
+			<h1>Data de Termino previsto = ${data.barco.fim}</h1> 
 			<div class="progress">
 			  	<div class="progress-bar bg-success" role="progressbar" style="width: 25%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">25%</div>
 			</div>
