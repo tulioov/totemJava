@@ -2,16 +2,13 @@ package com.totem.entity;
 
 
 import java.util.Date;
-import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
@@ -28,11 +25,11 @@ public class Barco {
 	@Column(name = "COD_BARCO")
 	private Long id;
 	
-	@JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
+	@JsonFormat(pattern="dd/MM/yyyy HH:mm")
 	@Column(name = "DT_INICIO")
 	private Date dtInicio;
 
-	@JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
+	@JsonFormat(pattern="dd/MM/yyyy HH:mm")
 	@Column(name = "DT_FIM")
 	private Date dtFim;
 	
@@ -50,10 +47,6 @@ public class Barco {
 	@Size(min = 3 , max = 250, message = "descrição deve conter minimo de 3 caracter")
 	private String descricao;
 	
-	@JoinColumn(name = "ID_MONITORACAO")
-	@OneToMany
-	private List<Monitoracao> monitoracaoList;
-
 	public Long getId() {
 		return id;
 	}
@@ -103,12 +96,4 @@ public class Barco {
 		this.imagem = imagem;
 	}
 
-	public List<Monitoracao> getMonitoracaoList() {
-		return monitoracaoList;
-	}
-
-	public void setMonitoracaoList(List<Monitoracao> monitoracaoList) {
-		this.monitoracaoList = monitoracaoList;
-	}
-	
 }

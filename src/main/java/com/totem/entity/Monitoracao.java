@@ -23,19 +23,20 @@ public class Monitoracao {
 	@Column(name = "COD_MONITORACAO")
 	private Long id;
 	
-	@JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
+	
+	@JsonFormat(pattern="dd/MM/yyyy HH:mm")
 	@Column(name = "DT_INICIO_ATIVIDADE")
 	private Date dtInicioAtividade;
 
-	@JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
+	@JsonFormat(pattern="dd/MM/yyyy HH:mm")
 	@Column(name = "DT_FIM_ATIVIDADE")
 	private Date dtFimAtividade;
 	
-	@JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
+	@JsonFormat(pattern="dd/MM/yyyy HH:mm")
 	@Column(name = "DT_INICIO_ATIVIDADE_TOTAL")
 	private Date dtInicioAtividadeTotal;
 
-	@JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
+	@JsonFormat(pattern="dd/MM/yyyy HH:mm")
 	@Column(name = "DT_FIM_ATIVIDADE_TOTAL")
 	private Date dtFimAtividadeTotal;
 

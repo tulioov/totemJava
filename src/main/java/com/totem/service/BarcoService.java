@@ -55,7 +55,7 @@ public class BarcoService {
 		Monitoracao monitoracao = new Monitoracao();
 		monitoracao.setBarco(barco);
 		monitoracaoService.salvar(monitoracao, emailUsuario);
-				
+		
 		return barco;
 	}
 	

@@ -4,13 +4,16 @@ const MonitorUserTemplate = {
 	monitoracao(data){
 		return `
 			<h3>Processo de fabrica\u00e7\u00e3o do barco ${data.barco.nome}</h3>
-			<img 
-				style='width:16em;height:9em;' 
-				src='${data.barco.imagem}'
-			/>
-			<h1>Data de inicio = ${data.barco.dtInicio}</h1> 
-			<h1>Data de Termino previsto = ${data.barco.fim}</h1> 
-			<div class="progress">
+			<div class="row">
+				<div class="col-md-4 ">
+					<img style='width:16em;height:9em;' src='${data.barco.imagem}'/>
+				</div>
+				<div class="col-md-6 mt3em">
+					<h4>Data de inicio = ${data.barco.dtInicio}</h4> 
+					<h4>Data de Termino previsto = ${data.barco.fim==undefined?'Sem previsao':data.barco.fim}</h4> 
+				</div>
+			</div>
+			<div class="progress mt15">
 			  	<div class="progress-bar bg-success" role="progressbar" style="width: 25%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">25%</div>
 			</div>
 			<hr/>

@@ -1,6 +1,24 @@
 
 const MonitorUserController = {
 		
+	reproduzirListaBarcos(barcosList){
+		
+		$(barcosList).each(function(index, data) {
+			
+			setTimeout(function () {
+				$('#contentId').html(MonitorUserTemplate.monitoracao(data));
+				$('#tableMonitorUser').DataTable().destroy();
+				$('#tableMonitorUser').DataTable( {
+	    		    language: {
+	    		        url: '//cdn.datatables.net/plug-ins/1.11.3/i18n/pt_br.json'
+	    		    }
+	    		});
+				if(barcosList.length == index+1){
+					setTimeout(function () {MonitorUserController.reproduzirListaBarcos(barcosList);}, 5000);
+				}	
+            }, 5000 * index);
+		});
+	},
 		
 	abrirMonitoracao(){
 		
@@ -11,18 +29,9 @@ const MonitorUserController = {
 	        },
 	        type: "GET",
 	        contentType: "application/json",
-	        url: "barcoMonitoracao/listar",
+	        url: "monitoracao/listar",
 	        success: function(retorno) {
-	        	$(retorno.response).each(function(index, data) {
-	        		
-	        		$('#contentId').html(MonitorUserTemplate.monitoracao(data));
-	        		$('#tableMonitorUser').DataTable( {
-	        		    language: {
-	        		        url: '//cdn.datatables.net/plug-ins/1.11.3/i18n/pt_br.json'
-	        		    }
-	        		});
-	        		
-        		});
+	        	MonitorUserController.reproduzirListaBarcos(retorno.response);
 	        }
 	    });
 	},
@@ -30,7 +39,7 @@ const MonitorUserController = {
 	abrirEscolhaBarco(){
 		
 		var tempoEscolhaBarco = 5000;
-		$('#contentId').html(MonitorUserTemplate.modalEscolhaBarco());
+		$('#contentIdBarco').html(MonitorUserTemplate.modalEscolhaBarco());
 		
 		$.ajax({
 			headers: {
@@ -39,7 +48,7 @@ const MonitorUserController = {
 	        },
 	        type: "GET",
 	        contentType: "application/json",
-	        url: "/barcoMonitoracao/listar",
+	        url: "/barco/listar",
 	        success: function(retorno) {
 	        	$(retorno.response).each(function(index, data) {
 	        		$('#imgEscolhaBarco').append(
@@ -57,7 +66,7 @@ const MonitorUserController = {
 	    });
 		
 		setTimeout(function() { 
-			MonitorUserController.abrirMonitoracao();
+			$('#contentIdBarco').html("");
 	    }, tempoEscolhaBarco);
 	},
 	

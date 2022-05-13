@@ -24,6 +24,8 @@
 			<hr/>
 		</div>
 		<div class="modal" id="myModal"></div>
+		<div id="contentIdBarco">
+		</div>
 		<div id="contentId">
 		</div>
 	</div>
