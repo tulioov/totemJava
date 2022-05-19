@@ -31,6 +31,13 @@ const CadastroEtapaTemplate = {
 								</div>
 							</div>
 						</div>
+						<div class="panel panel-default">
+							<div class="panel-heading">Rela\u00e7\u00e3o Etapa e Atividade</div>
+                			<div class="panel-body">
+								<select multiple="multiple" size="10"  id="duallistboxId">
+								</select>
+							</div>
+						</div>
 			        </form>
 	            </div>
 	            <div class="modal-footer">

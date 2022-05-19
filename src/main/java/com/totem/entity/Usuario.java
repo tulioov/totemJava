@@ -1,14 +1,13 @@
 package com.totem.entity;
 
-import java.util.List;
+import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToMany;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
@@ -18,7 +17,7 @@ import javax.validation.constraints.Size;
 public class Usuario {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY, generator = "native")
+	@GeneratedValue( strategy = GenerationType.AUTO )
 	@Column(name = "COD_USUARIO")
 	private Long id;
 
@@ -42,16 +41,15 @@ public class Usuario {
 	@Column(name = "isAdmin")
 	private Boolean isAdmin;
 	
-	@JoinColumn(name = "ID_USUARIO")
-	@OneToMany
-	private List<Etapa> etapaList;
+	@ManyToMany(targetEntity=Etapa.class)
+	private Set<?> usuarioEtapa;
 	
-	public List<Etapa> getEtapaList() {
-		return etapaList;
+	public Set<?> getUsuarioEtapa() {
+		return usuarioEtapa;
 	}
 
-	public void setEtapaList(List<Etapa> etapaList) {
-		this.etapaList = etapaList;
+	public void setUsuarioEtapa(Set<?> usuarioEtapa) {
+		this.usuarioEtapa = usuarioEtapa;
 	}
 
 	public Boolean getIsAdmin() {

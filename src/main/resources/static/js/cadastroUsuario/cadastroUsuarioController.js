@@ -55,6 +55,8 @@ const CadastroUsuarioController = {
 		formControl  = $('#formId').serializeJSON();
 		formControl.etapaList = $('#duallistboxId').val();
 		formControl.isAdmin = $('#isAdminId').prop('checked');
+		formControl.email = $('#emailId').val();
+		
 		let myJsonData = JSON.stringify(formControl);
 		
 		$.ajax({

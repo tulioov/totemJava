@@ -24,7 +24,7 @@ CREATE TABLE IF NOT EXISTS  atividade (
 	Descricao VARCHAR(250) NOT NULL,
 	constante_campo VARCHAR(100) NOT NULL
 );
-
+/*
 insert into etapa  (CONSTANTE_CAMPO,DESCRICAO)
 select  'ETAPA_0', 'Etapa 0'  from dual 
 where not exists(select * from etapa where CONSTANTE_CAMPO='ETAPA_0');
@@ -40,7 +40,7 @@ where not exists(select * from etapa where CONSTANTE_CAMPO='ETAPA_3');
 insert into etapa  (CONSTANTE_CAMPO,DESCRICAO)
 select  'ETAPA_4', 'Etapa 4'  from dual 
 where not exists(select * from etapa where CONSTANTE_CAMPO='ETAPA_4');
-
+*/
 
 CREATE TABLE IF NOT EXISTS  sub_atividade (
 	cod_sub_atividade INT AUTO_INCREMENT PRIMARY KEY,
@@ -65,6 +65,7 @@ CREATE TABLE IF NOT EXISTS  item (
 
 /*
 DROP TABLE IF EXISTS BARCO ;
+DROP TABLE IF EXISTS BARCO _MONITORACAO;
 DROP TABLE IF EXISTS ETAPA ;
 DROP TABLE IF EXISTS ITEM  ;
 DROP TABLE IF EXISTS MATERIAL ;
