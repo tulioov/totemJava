@@ -9,7 +9,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.totem.entity.Barco;
-import com.totem.entity.Monitoracao;
 import com.totem.exception.CustomErrorException;
 import com.totem.repository.BarcoRepository;
 
@@ -35,19 +34,31 @@ public class BarcoService {
 		return barcoRepository.findAll();
 	}
 	
-	public Barco findById (Long id, String emailUsuario) {
-		if(!usuarioService.isAdm(emailUsuario)) {
-			throw new CustomErrorException(HttpStatus.UNAUTHORIZED, ERRO_PERMISSAO);
+	public List<Barco> listar(String emailUsuario, String nfc) {
+//		if(!usuarioService.isAdm(emailUsuario)) {
+//			throw new CustomErrorException(HttpStatus.UNAUTHORIZED, ERRO_PERMISSAO);
+//		}
+		
+		if(monitoracaoService.isUsuarioTrabalhando(nfc)){
+			throw new CustomErrorException(HttpStatus.BAD_REQUEST, "Você está trabalhando!");
 		}
+		
+		return barcoRepository.findAll();
+	}
+	
+	public Barco findById (Long id, String emailUsuario) {
+//		if(!usuarioService.isAdm(emailUsuario)) {
+//			throw new CustomErrorException(HttpStatus.UNAUTHORIZED, ERRO_PERMISSAO);
+//		}
 		return barcoRepository.findById(id).get();
 	}
 	
 	@Transactional
 	public Barco salvar(Barco barco, String emailUsuario) {
 		
-		if(!usuarioService.isAdm(emailUsuario)) {
-			throw new CustomErrorException(HttpStatus.UNAUTHORIZED,ERRO_PERMISSAO);
-		}
+//		if(!usuarioService.isAdm(emailUsuario)) {
+//			throw new CustomErrorException(HttpStatus.UNAUTHORIZED,ERRO_PERMISSAO);
+//		}
 		
 		barco.setDtInicio(new Date());
 		barcoRepository.save(barco);

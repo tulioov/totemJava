@@ -24,7 +24,7 @@
 		<div id="contentIdBarco">
 		</div>
 		<div style="position: absolute; z-index: -1; margin-top: 50px;" >
-			<form id="formNCId" onSubmit="MonitorUserController.abrirEscolhaBarco();" role="form"  class="login-box">
+			<form id="formNCId" onSubmit="MonitorUserController.abrirEscolhaBarco();" role="form"  class="login-box" onfocusout="document.getElementById('nfcId').focus();">
 				<input type="text" id="nfcId" autofocus>
 			</form>
 		</div>

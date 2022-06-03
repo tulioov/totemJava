@@ -74,20 +74,9 @@ const MonitorUserController = {
 	        },
 	        type: "GET",
 	        contentType: "application/json",
-	        url: "/barco/listar",
+	        url: "/barco/escolhaBarco/"+$('#nfcId').val(),
 	        success: function(retorno) {
         		for (const barco of retorno.response){	
-	        		
-        			for (const monitoracao of barco.monitoracao){
-	        			if(monitoracao.usuario.codRfid == $('#nfcId').val()){
-	        				$('#imgEscolhaBarco').append(
-    						`<div class="col-md-4 mt15">
-    							<h4>Voc&ecirc; j&aacute; est&aacute; contando hora no barco ${barco.descricao}</h4>
-        					</div>`);
-	        				return;
-	        			}
-	        		}
-	        		
 	        		$('#imgEscolhaBarco').append(
         				`<div class="col-md-4 mt15">
         					<img 
@@ -99,6 +88,11 @@ const MonitorUserController = {
     						/>
         				</div>`);
         		}
+	        },error: function (data) {   
+	        	$('#imgEscolhaBarco').append(
+					`<div class="col-md-4 mt15">
+						<h4>Voc&ecirc; j&aacute; est&aacute; contando hora no barco</h4>
+					</div>`);
 	        }
 	    });
 		
@@ -138,7 +132,7 @@ const MonitorUserController = {
         		},2000); 
 	        },
 	        error: function (data) {   
-	        	CadastroUsuarioController.erro(data,"alertMsgId");
+	        	
 	        },
 	    });
 	},

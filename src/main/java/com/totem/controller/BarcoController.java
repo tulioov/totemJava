@@ -44,6 +44,12 @@ public class BarcoController {
 			@RequestHeader(name = "Authorization", required = true) String emailUsuario) {
 		return ResponseEntityUtil.defaultResponse(barcoService.listar(emailUsuario));
 	}
+	
+	@GetMapping("/escolhaBarco/{nfc}")
+	public @ResponseBody ResponseEntity<RetornoDTO> buscarUsuarioPorNFC(
+			@RequestHeader(name = "Authorization", required = true) String emailUsuario, @PathVariable("nfc") String nfc) {
+		return ResponseEntityUtil.defaultResponse(barcoService.listar(emailUsuario, nfc));
+	}
 
 	@DeleteMapping("/deletar/{id}")
 	public @ResponseBody ResponseEntity<RetornoDTO> deletar(
