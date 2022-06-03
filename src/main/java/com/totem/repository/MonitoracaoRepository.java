@@ -12,6 +12,6 @@ import com.totem.entity.Monitoracao;
 public interface MonitoracaoRepository extends CrudRepository<Monitoracao, Long> {
 
 	List<Monitoracao> findAll();
-
-	Monitoracao findByBarco(Barco barco);
+	
 }
+

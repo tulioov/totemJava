@@ -39,6 +39,12 @@ public class UsuarioController {
 			@RequestHeader(name = "Authorization", required = true) String emailUsuario, @PathVariable("id") Long id) {
 		return ResponseEntityUtil.defaultResponse(usuarioService.findById(id));
 	}
+	
+	@GetMapping("/findByNFC/{nfc}")
+	public @ResponseBody ResponseEntity<RetornoDTO> buscarUsuarioPorNFC(
+			@RequestHeader(name = "Authorization", required = true) String emailUsuario, @PathVariable("nfc") String nfc) {
+		return ResponseEntityUtil.defaultResponse(usuarioService.buscarUsuarioPorNFC(nfc));
+	}
 
 	@GetMapping("/listar")
 	public @ResponseBody ResponseEntity<RetornoDTO> listar(

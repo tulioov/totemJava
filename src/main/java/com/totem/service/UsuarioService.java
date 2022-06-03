@@ -74,7 +74,7 @@ public class UsuarioService {
 		for (Long codEtapa : usuarioDTO.getEtapaList()) {
 			etapaList.add(etapaService.findById(codEtapa));
 		}
-		usuario.setUsuarioEtapa(etapaList);
+		usuario.setEtapa(etapaList);
 	}
 
 	public Usuario delete(Long id, String emailUsuario) {
@@ -93,6 +93,10 @@ public class UsuarioService {
 			return false;
 		}
 		return usuario.getIsAdmin()==null?Boolean.FALSE:usuario.getIsAdmin();
+	}
+
+	public Usuario buscarUsuarioPorNFC(String nfc) {
+		return usuarioRepository.findByCodRfid(nfc);
 	}
 
 }

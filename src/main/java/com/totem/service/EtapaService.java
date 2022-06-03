@@ -30,9 +30,9 @@ public class EtapaService {
 	
 
 	public List<Etapa> listar(String emailUsuario) {
-		if(!usuarioService.isAdm(emailUsuario)) {
-			throw new CustomErrorException(HttpStatus.UNAUTHORIZED, ERRO_PERMISSAO);
-		}
+//		if(!usuarioService.isAdm(emailUsuario)) {
+//			throw new CustomErrorException(HttpStatus.UNAUTHORIZED, ERRO_PERMISSAO);
+//		}
 		return etapaRepository.findAll();
 	}
 	

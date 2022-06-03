@@ -29,9 +29,9 @@ public class BarcoService {
 	
 
 	public List<Barco> listar(String emailUsuario) {
-		if(!usuarioService.isAdm(emailUsuario)) {
-			throw new CustomErrorException(HttpStatus.UNAUTHORIZED, ERRO_PERMISSAO);
-		}
+//		if(!usuarioService.isAdm(emailUsuario)) {
+//			throw new CustomErrorException(HttpStatus.UNAUTHORIZED, ERRO_PERMISSAO);
+//		}
 		return barcoRepository.findAll();
 	}
 	
@@ -52,10 +52,6 @@ public class BarcoService {
 		barco.setDtInicio(new Date());
 		barcoRepository.save(barco);
 		
-		Monitoracao monitoracao = new Monitoracao();
-		monitoracao.setBarco(barco);
-		monitoracaoService.salvar(monitoracao, emailUsuario);
-		
 		return barco;
 	}
 	
@@ -66,11 +62,11 @@ public class BarcoService {
 		}
 		
 		Barco barco = barcoRepository.findById(id).get();
-		Monitoracao monitoracao = monitoracaoService.findByBarco(barco.getId(), emailUsuario);
+//		Monitoracao monitoracao = monitoracaoService.findByBarco(barco.getId(), emailUsuario);
 		
-		if(monitoracao != null) {
-			monitoracaoService.delete(id, emailUsuario);
-		}
+//		if(monitoracao != null) {
+//			monitoracaoService.delete(id, emailUsuario);
+//		}
 		
 		barcoRepository.delete(barco);
 		return barco;

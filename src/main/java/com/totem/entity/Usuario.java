@@ -17,7 +17,7 @@ import javax.validation.constraints.Size;
 public class Usuario {
 
 	@Id
-	@GeneratedValue( strategy = GenerationType.AUTO )
+	@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	@Column(name = "COD_USUARIO")
 	private Long id;
 
@@ -42,14 +42,15 @@ public class Usuario {
 	private Boolean isAdmin;
 	
 	@ManyToMany(targetEntity=Etapa.class)
-	private Set<?> usuarioEtapa;
+	private Set<?> Etapa;
 	
-	public Set<?> getUsuarioEtapa() {
-		return usuarioEtapa;
+	
+	public Set<?> getEtapa() {
+		return Etapa;
 	}
 
-	public void setUsuarioEtapa(Set<?> usuarioEtapa) {
-		this.usuarioEtapa = usuarioEtapa;
+	public void setEtapa(Set<?> etapa) {
+		Etapa = etapa;
 	}
 
 	public Boolean getIsAdmin() {

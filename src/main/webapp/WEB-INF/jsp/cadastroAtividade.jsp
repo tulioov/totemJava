@@ -52,6 +52,6 @@
 	<script src="../externo/dual-list/jquery.bootstrap-duallistbox.js"></script>
 	<script src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.js"></script>
 	<script src="../js/cadastroAtividade/cadastroAtividadeTemplate.js"></script>
-	<script src="../js/cadastroAtividade/cadastroatividadeController.js"></script>
+	<script src="../js/cadastroAtividade/cadastroAtividadeController.js"></script>
 </body>
 </html>

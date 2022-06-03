@@ -1,16 +1,16 @@
 
 const MonitorUserTemplate = {
 	
-	monitoracao(data){
+	monitoracao(barco){
 		return `
-			<h3>Processo de fabrica\u00e7\u00e3o do barco ${data.barco.nome}</h3>
+			<h3>Processo de fabrica\u00e7\u00e3o do barco ${barco.nome}</h3>
 			<div class="row">
 				<div class="col-md-4 ">
-					<img style='width:16em;height:9em;' src='${data.barco.imagem}'/>
+					<img style='width:16em;height:9em;' src='${barco.imagem}'/>
 				</div>
 				<div class="col-md-6 mt3em">
-					<h4>Data de inicio = ${data.barco.dtInicio}</h4> 
-					<h4>Data de Termino previsto = ${data.barco.fim==undefined?'Sem previsao':data.barco.fim}</h4> 
+					<h4>Data de inicio = ${barco.dtInicio}</h4> 
+					<h4>Data de Termino previsto = ${barco.fim==undefined?'Sem previsao':barco.fim}</h4> 
 				</div>
 			</div>
 			<div class="progress mt15">
@@ -25,13 +25,25 @@ const MonitorUserTemplate = {
 				        <th>Nome</th>
 				        <th>Trabalhando em</th>
 				        <th>Hr. Entrada</th>
-				        <th>Tempo</th>
+				        <th>Tempo (dias)</th>
 				    </tr>
 					</thead>
 					<tbody>
 					</tbody>
 				</table>
 			</div>
+		`;
+	},
+	
+	itemLinha(data){
+		return `
+			<tr>
+				<td>${data.id}</td>
+				<td>${data.usuario.nome}</td>
+				<td>${data.subAtividade.descricao}</td>
+				<td>${data.dtInicioAtividade}</td>
+				<td>${data.tempoTrabalho}</td>
+			</tr>
 		`;
 	},
 		
@@ -73,17 +85,26 @@ const MonitorUserTemplate = {
 			`
 	},
 	
-	contentAtividade(index,etapa){
-		return `
+	htmlSubAtividade(atividade){
+		let html = "";
+		$(atividade.subAtividadeList).each(function(index, subAtividade) {
+			html += `<button type="button" class="btn btn-success col-md-12 mt15" onclick="MonitorUserController.salvarSubAtividadeEscolhida(${subAtividade.id})">${subAtividade.descricao}</button>`
+		});
+		return html;
+	},
+	
+	contentAtividade(index,atividade){
+		
+		return` 
 			<div class="list-content">
-		        <a href="#cmb${index}${etapa.id}"  data-toggle="collapse" aria-expanded="false" aria-controls="cmb${index}${etapa.id}">Atividade 1<i class="fa fa-chevron-down"></i></a>
-		        <div class="collapse" id="cmb${index}${etapa.id}">
+		        <a href="#cmb${index}${atividade.id}"  data-toggle="collapse" aria-expanded="false" aria-controls="cmb${index}${atividade.id}">${atividade.descricao}<i class="fa fa-chevron-down"></i></a>
+		        <div class="collapse" id="cmb${index}${atividade.id}">
 		            <div class="list-box">
 		                <div class="row">
 		                    <div class="col-md-12">
-		                        <div class="form-group">
-		                            <button type="button" class="btn btn-success col-md-12" onclick="">SubAtividade 1</button>
-		                        </div>
+		                        <div class="form-group">`+
+		                        MonitorUserTemplate.htmlSubAtividade(atividade);
+		                        +`</div>
 		                    </div>
 		                </div>
 		            </div>
@@ -94,7 +115,7 @@ const MonitorUserTemplate = {
 	
 	
 		
-	abrirEscolhaEtapa(){
+	abrirEscolhaEtapa(idBarco){
 		return`
 				<div class="modal-dialog modal-lg">
 			        <div class="modal-content">
@@ -104,6 +125,7 @@ const MonitorUserTemplate = {
 								<div id="progressBarEtapaId" class="progress-bar bg-success" role="progressbar" style="width: 100%" value=100 aria-valuemin="0" aria-valuemax="100">Tempo de espera</div>
 							</div>
 			            </div>
+			            <input type="hidden" value="${idBarco}" id="barcoId">
 			            <div class="modal-body">
 			            	<section>
 						        <div>

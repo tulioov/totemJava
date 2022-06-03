@@ -51,7 +51,7 @@
 	<script src="../externo/serializejson/serializejson.js"></script>
 	<script src="../externo/dual-list/jquery.bootstrap-duallistbox.js"></script>
 	<script src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.js"></script>
-	<script src="../js/cadastroSubatividade/cadastroSubatividadeTemplate.js"></script>
-	<script src="../js/cadastroSubatividade/cadastroSubatividadeController.js"></script>
+	<script src="../js/cadastroSubAtividade/cadastroSubAtividadeTemplate.js"></script>
+	<script src="../js/cadastroSubAtividade/cadastroSubAtividadeController.js"></script>
 </body>
 </html>

@@ -2,6 +2,7 @@ package com.totem.entity;
 
 
 import java.util.Date;
+import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -9,6 +10,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Lob;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
@@ -47,6 +49,17 @@ public class Barco {
 	@Size(min = 3 , max = 250, message = "descrição deve conter minimo de 3 caracter")
 	private String descricao;
 	
+	@ManyToMany(targetEntity=Monitoracao.class)
+	private Set<?> Monitoracao;
+	
+	public Set<?> getMonitoracao() {
+		return Monitoracao;
+	}
+
+	public void setMonitoracao(Set<?> monitoracao) {
+		Monitoracao = monitoracao;
+	}
+
 	public Long getId() {
 		return id;
 	}

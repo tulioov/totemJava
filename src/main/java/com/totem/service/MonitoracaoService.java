@@ -1,13 +1,22 @@
 package com.totem.service;
 
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
+import com.sun.xml.bind.v2.runtime.unmarshaller.XsiNilLoader.Array;
+import com.totem.dto.BarcoMonitoracaoDTO;
 import com.totem.entity.Barco;
+import com.totem.entity.Etapa;
 import com.totem.entity.Monitoracao;
+import com.totem.entity.SubAtividade;
+import com.totem.entity.Usuario;
 import com.totem.exception.CustomErrorException;
 import com.totem.repository.MonitoracaoRepository;
 
@@ -22,6 +31,9 @@ public class MonitoracaoService {
 	BarcoService barcoService;
 	
 	@Autowired
+	SubAtividadeService subAtividadeService;
+	
+	@Autowired
     private MonitoracaoRepository monitoracaoRepository;
 	
 	private static final String ERRO_PERMISSAO = "Usuário sem permissão";  
@@ -29,9 +41,9 @@ public class MonitoracaoService {
 
 	public List<Monitoracao> listar(String emailUsuario) {
 		
-		if(!usuarioService.isAdm(emailUsuario)) {
-			throw new CustomErrorException(HttpStatus.UNAUTHORIZED, ERRO_PERMISSAO);
-		}
+//		if(!usuarioService.isAdm(emailUsuario)) {
+//			throw new CustomErrorException(HttpStatus.UNAUTHORIZED, ERRO_PERMISSAO);
+//		}
 		
 		return monitoracaoRepository.findAll();
 	}
@@ -64,14 +76,23 @@ public class MonitoracaoService {
 		return monitoracao;
 	}
 
-	public Monitoracao findByBarco(Long idBarco, String emailUsuario) {
-		if(!usuarioService.isAdm(emailUsuario)) {
-			throw new CustomErrorException(HttpStatus.UNAUTHORIZED, ERRO_PERMISSAO);
-		}
+	public Barco salvarBarcoMonitoracao(BarcoMonitoracaoDTO monitoracaoDTO, String emailUsuario) {
 		
-		Barco barco = barcoService.findById(idBarco, emailUsuario);
+		Barco barco = barcoService.findById(monitoracaoDTO.getIdBarco(), emailUsuario);
+		Usuario usuario = usuarioService.buscarUsuarioPorNFC(monitoracaoDTO.getNfcId());
+		SubAtividade subAtividade = subAtividadeService.findById(monitoracaoDTO.getIdSubAtividade(), emailUsuario);
 		
-		return monitoracaoRepository.findByBarco(barco);
+		Monitoracao monitoracao = new Monitoracao();
+		monitoracao.setUsuario(usuario);
+		monitoracao.setSubAtividade(subAtividade);
+		monitoracao.setDtInicioAtividade(new Date());
+		Set<Monitoracao> lstMonitoracao = new HashSet<>();
+		lstMonitoracao.add(monitoracao);
+		barco.setMonitoracao(lstMonitoracao);
+		
+		this.salvar(monitoracao, emailUsuario);
+		barcoService.salvar(barco, emailUsuario);
+		
+		return barco;
 	}
-
 }

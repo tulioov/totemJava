@@ -1,6 +1,27 @@
 
 const MonitorUserController = {
 		
+	erro(data, alertComponent){
+		$("#myModal").scrollTop(0);
+    	$("#"+alertComponent).find('div').html("");
+    	if(data.responseJSON.statusCode === 404){
+    		$("#"+alertComponent).removeClass("oculta").addClass("alert-danger").find('div').append(data.responseJSON.response+"<br>");
+    		return;
+    	}
+    	if(data.responseJSON.statusCode === 401){
+    		$("#"+alertComponent).removeClass("oculta").addClass("alert-danger").find('div').append(data.responseJSON.response.message+"<br>");
+    		return;
+    	}
+    	retorno = data.responseJSON.response;
+    	for (const property in retorno) {
+    		if(property == 'stackTrace'){
+    			return;
+    		}
+    		$("#"+property+"Id").addClass("errorInput");
+    		$("#alertMsgId").removeClass("oculta").addClass("alert-danger").find('div').append(retorno[property]+"<br>");
+		}
+	},
+		
 	reproduzirListaBarcos(barcosList){
 		
 		$(barcosList).each(function(index, data) {
@@ -8,6 +29,11 @@ const MonitorUserController = {
 			setTimeout(function () {
 				$('#contentId').html(MonitorUserTemplate.monitoracao(data));
 				$('#tableMonitorUser').DataTable().destroy();
+				
+				$(data.monitoracao).each(function(index, data) {
+					$("#tableMonitorUser").find('tbody').append(MonitorUserTemplate.itemLinha(data));
+				});
+				
 				$('#tableMonitorUser').DataTable( {
 	    		    language: {
 	    		        url: '//cdn.datatables.net/plug-ins/1.11.3/i18n/pt_br.json'
@@ -29,7 +55,7 @@ const MonitorUserController = {
 	        },
 	        type: "GET",
 	        contentType: "application/json",
-	        url: "monitoracao/listar",
+	        url: "barco/listar",
 	        success: function(retorno) {
 	        	MonitorUserController.reproduzirListaBarcos(retorno.response);
 	        }
@@ -50,24 +76,71 @@ const MonitorUserController = {
 	        contentType: "application/json",
 	        url: "/barco/listar",
 	        success: function(retorno) {
-	        	$(retorno.response).each(function(index, data) {
+        		for (const barco of retorno.response){	
+	        		
+        			for (const monitoracao of barco.monitoracao){
+	        			if(monitoracao.usuario.codRfid == $('#nfcId').val()){
+	        				$('#imgEscolhaBarco').append(
+    						`<div class="col-md-4 mt15">
+    							<h4>Voc&ecirc; j&aacute; est&aacute; contando hora no barco ${barco.descricao}</h4>
+        					</div>`);
+	        				return;
+	        			}
+	        		}
+	        		
 	        		$('#imgEscolhaBarco').append(
         				`<div class="col-md-4 mt15">
         					<img 
         						style='display:block; width:16em;height:9em;cursor:pointer;' 
-        						id='base64image-${data.id}' 
-        						src='${data.imagem}'
-        						onClick=MonitorUserController.abrirEscolhaEtapa()
+        						id='base64image-${barco.id}' 
+        						src='${barco.imagem}'
+        						onClick=MonitorUserController.abrirEscolhaEtapa(${barco.id})
         						class="btn btn-primary" data-toggle="modal" data-target="#myModal"
     						/>
         				</div>`);
-        		});
+        		}
 	        }
 	    });
 		
 		setTimeout(function() { 
 			$('#contentIdBarco').html("");
 	    }, tempoEscolhaBarco);
+	},
+	
+	salvarSubAtividadeEscolhida(idSubAtividade){
+		
+		let formControl = new Object();
+		formControl  = $('#formId').serializeJSON();
+		formControl.idBarco = $('#barcoId').val();
+		formControl.idSubAtividade = idSubAtividade;
+		formControl.nfcId = $('#nfcId').val();
+		
+		let myJsonData = JSON.stringify(formControl);
+		
+		$.ajax({
+			headers: {
+	            'Authorization': email,
+	            'Content-Type':'application/json'
+	        },
+	        type: "POST",
+	        url: "/monitoracao/salvarBarcoMonitoracao",
+	        dataType: "json",
+	        cache: false,
+	        data : myJsonData,
+	        success: function(retorno) {
+	        	window.location.reload(true)
+	        	$("#myModal").scrollTop(0);
+	        	$("#alertMsgId").removeClass("oculta").addClass("alert-success").find('div').append("Salvo com sucesso!");
+	        	setTimeout(function(){
+	        		$("#alertMsgId").addClass("oculta").find('div').removeClass("alert-success").html("");
+	        		$('#myModal').modal('hide');
+	        		CadastroUsuarioController.listar();
+        		},2000); 
+	        },
+	        error: function (data) {   
+	        	CadastroUsuarioController.erro(data,"alertMsgId");
+	        },
+	    });
 	},
 	
 	
@@ -89,9 +162,42 @@ const MonitorUserController = {
 		
 	},
 	
-	abrirEscolhaEtapa(){
-		$('#myModal').html(MonitorUserTemplate.abrirEscolhaEtapa());
+	carregarAtividadesUsuario(){
 		
+		$.ajax({
+			headers: {
+	            'Authorization': email,
+	            'Content-Type':'application/json'
+	        },
+	        type: "GET",
+	        contentType: "application/json",
+	        url: "/usuario/findByNFC/"+$('#nfcId').val(),
+	        success: function(retorno) {
+	        	$(retorno.response).each(function(index, usuario) {
+	        		$(usuario.etapa).each(function(index, etapa) {
+	        			$(etapa.atividadeList).each(function(index, atividade) {
+	        				let atividadeHTML = MonitorUserTemplate.contentAtividade(index,atividade);
+	        				$('#contentAtividadeId'+etapa.id).html(atividadeHTML);
+	        			});
+	        		});
+        		});
+	        },
+	        error: function (data) {  
+	        	MonitorUserController.erro(data,'alertMsgIdTable');
+	        },
+	        complete: function(data) { 
+	        	$('#tableAtividade').DataTable( {
+	        	    language: {
+	        	        url: '//cdn.datatables.net/plug-ins/1.11.3/i18n/pt_br.json'
+	        	    }
+	        	});
+	        }
+	    });
+	},
+	
+	abrirEscolhaEtapa(idBarco){
+		
+		$('#myModal').html(MonitorUserTemplate.abrirEscolhaEtapa(idBarco));
 		
 		$.ajax({
 			headers: {
@@ -105,11 +211,11 @@ const MonitorUserController = {
 	        	$(retorno.response).each(function(index, etapa) {
 	        		$('#rowEtapasId').append(MonitorUserTemplate.rowEtapas(index,etapa));
 	        		$('#contentEtapasId').append(MonitorUserTemplate.contentEtapas(index,etapa));
-	        		$('#contentAtividadeId'+etapa.id).html(MonitorUserTemplate.contentAtividade(index,etapa));
         		});
+	        	MonitorUserController.carregarAtividadesUsuario();
 	        },
 	        error: function (data) {  
-	        	CadastroAtividadeController.erro(data,'alertMsgIdTable');
+	        	MonitorUserController.erro(data,'alertMsgIdTable');
 	        },
 	        complete: function(data) { 
 	        	$('#tableAtividade').DataTable( {
@@ -121,10 +227,15 @@ const MonitorUserController = {
 	    });
 		
 		
-//		MonitorUserController.tempoProgressbar();
+		MonitorUserController.tempoProgressbar();
 	}
 };
 
 $( document ).ready(function() {
 	MonitorUserController.abrirMonitoracao();
+	
+	$("#formNCId").on("submit", function(e){
+		e.preventDefault();
+	});
+	
 });

@@ -18,7 +18,7 @@ import javax.validation.constraints.Size;
 public class Etapa {
 
 	@Id
-	@GeneratedValue( strategy = GenerationType.AUTO )
+	@GeneratedValue(strategy = GenerationType.IDENTITY, generator = "native")
 	@Column(name = "COD_ETAPA")
 	private Long id;
 	
