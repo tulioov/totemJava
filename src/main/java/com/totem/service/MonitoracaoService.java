@@ -12,11 +12,11 @@ import org.springframework.stereotype.Service;
 import com.totem.dto.BarcoMonitoracaoDTO;
 import com.totem.entity.Barco;
 import com.totem.entity.Monitoracao;
-import com.totem.entity.MonitoracaoAtividade;
 import com.totem.entity.SubAtividade;
 import com.totem.entity.Usuario;
 import com.totem.exception.CustomErrorException;
 import com.totem.repository.MonitoracaoRepository;
+import com.totem.util.UtilDate;
 
 @Service
 public class MonitoracaoService {
@@ -31,9 +31,6 @@ public class MonitoracaoService {
 	SubAtividadeService subAtividadeService;
 	
 	@Autowired
-	MonitoracaoAtividadeService monitoracaoAtividadeService;
-
-	@Autowired
 	private MonitoracaoRepository monitoracaoRepository;
 
 	private static final String ERRO_PERMISSAO = "Usuário sem permissão";
@@ -47,22 +44,32 @@ public class MonitoracaoService {
 		return monitoracaoRepository.findAll();
 	}
 
-	public boolean isUsuarioTrabalhando(String nfc) {
+	public Monitoracao isUsuarioTrabalhando(String nfc) {
 
 		Usuario usuario = usuarioService.buscarUsuarioPorNFC(nfc);
 		List<Monitoracao> lstMonitoracao = monitoracaoRepository.findByUsuario(usuario);
 
 		for (Monitoracao monitoracao : lstMonitoracao) {
-			if (monitoracao.getMonitoracaoAtividade() != null) {
-				for (MonitoracaoAtividade monitoracaoAtividade : monitoracao.getMonitoracaoAtividade()) {
-					if (monitoracaoAtividade.getDtFimAtividade() == null) {
-						return true;
-					}
-				}
+			if (monitoracao.getDtFimAtividade() == null) {
+				return monitoracao;
 			}
 		}
 
-		return false;
+		return null;
+	}
+	
+	public Monitoracao isUsuarioPausado(String nfc) {
+
+		Usuario usuario = usuarioService.buscarUsuarioPorNFC(nfc);
+		List<Monitoracao> lstMonitoracao = monitoracaoRepository.findByUsuario(usuario);
+
+		for (Monitoracao monitoracao : lstMonitoracao) {
+			if (monitoracao.getDtFimAtividadeTotal() == null) {
+				return monitoracao;
+			}
+		}
+
+		return null;
 	}
 
 	public Monitoracao findById(Long id, String emailUsuario) {
@@ -99,25 +106,48 @@ public class MonitoracaoService {
 		Usuario usuario = usuarioService.buscarUsuarioPorNFC(monitoracaoDTO.getNfcId());
 		SubAtividade subAtividade = subAtividadeService.findById(monitoracaoDTO.getIdSubAtividade(), emailUsuario);
 
-		MonitoracaoAtividade monitoracaoAtividade = new MonitoracaoAtividade();
-		Set<MonitoracaoAtividade> lstMonitoracaoAtividade = new HashSet<>();
-		lstMonitoracaoAtividade.add(monitoracaoAtividade);
-		monitoracaoAtividade.setDtInicioAtividade(new Date());
-		monitoracaoAtividadeService.salvar(monitoracaoAtividade, emailUsuario);
-
 		Monitoracao monitoracao = new Monitoracao();
+		monitoracao.setDtInicioAtividade(new Date());
 		monitoracao.setUsuario(usuario);
 		monitoracao.setSubAtividade(subAtividade);
-		monitoracao.setMonitoracaoAtividade(lstMonitoracaoAtividade);
 
 		Set<Monitoracao> lstMonitoracao = new HashSet<>();
 		lstMonitoracao.add(monitoracao);
 
 		barco.setMonitoracao(lstMonitoracao);
+		if(barco.getDtInicio() == null) {
+			barco.setDtInicio(new Date());
+			barco.setDtFim(UtilDate.somarDiasData(barco.getDtInicio(), barco.getTempoDiasFabricao().intValue()));
+		}
 
 		this.salvar(monitoracao, emailUsuario);
-		barcoService.salvar(barco, emailUsuario);
+		barcoService.salvarBarcoMonitor(barco, emailUsuario);
 
 		return barco;
+	}
+
+	public Object pausarFinalizar(BarcoMonitoracaoDTO monitoracaoDTO, String emailUsuario) {
+		
+		Usuario usuario = usuarioService.buscarUsuarioPorNFC(monitoracaoDTO.getNfcId());
+		List<Monitoracao> lstMonitoracao = monitoracaoRepository.findByUsuario(usuario);
+		Monitoracao monitoracao = null;
+		
+		for (Monitoracao monitoracaoVarr : lstMonitoracao) {
+			if (monitoracaoVarr.getDtFimAtividade() == null) {
+				monitoracao = monitoracaoVarr;
+				break;
+			}
+		}
+		
+		if(monitoracaoDTO.getAcao().equals("pausar")){
+			monitoracao.setDtFimAtividade(new Date());
+			monitoracaoRepository.save(monitoracao);
+			return monitoracao;
+		}
+		
+		monitoracao.setDtFimAtividade(new Date());
+		monitoracao.setDtFimAtividadeTotal(new Date());
+		monitoracaoRepository.save(monitoracao);
+		return monitoracao;
 	}
 }

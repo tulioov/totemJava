@@ -18,6 +18,7 @@
 	<jsp:include page="./header.jsp"></jsp:include>
 
 	<input type="hidden" name="action" id="action">
+	<input type="hidden" name="action" id="nfcIdCache">
 	
 	<div class="container">
 		<div class="modal" id="myModal"></div>

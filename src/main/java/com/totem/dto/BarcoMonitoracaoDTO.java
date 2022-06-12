@@ -6,6 +6,14 @@ public class BarcoMonitoracaoDTO {
 	private Long idBarco;
 	private Long idSubAtividade;
 	private String nfcId;
+	private String acao;
+	
+	public String getAcao() {
+		return acao;
+	}
+	public void setAcao(String acao) {
+		this.acao = acao;
+	}
 	public Long getIdBarco() {
 		return idBarco;
 	}

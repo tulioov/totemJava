@@ -31,6 +31,15 @@ public class MonitoracaoController {
 
 		return ResponseEntityUtil.defaultResponse(monitoracaoService.salvarBarcoMonitoracao(monitoracaoDTO, emailUsuario));
 	}
+	
+	
+	@PostMapping("/pausarFinalizar")
+	public @ResponseBody ResponseEntity<RetornoDTO> pausarFinalizar(
+			@RequestHeader(name = "Authorization", required = true) String emailUsuario,
+			@Valid @RequestBody BarcoMonitoracaoDTO monitoracaoDTO) {
+
+		return ResponseEntityUtil.defaultResponse(monitoracaoService.pausarFinalizar(monitoracaoDTO, emailUsuario));
+	}
 
 //	@GetMapping("/findByBarcoId/{id}")
 //	public @ResponseBody ResponseEntity<RetornoDTO> buscarDadosPorBarcoId(

@@ -9,9 +9,13 @@ const MonitorUserTemplate = {
 					<img style='width:16em;height:9em;' src='${barco.imagem}'/>
 				</div>
 				<div class="col-md-6 mt3em">
-					<h4>Data de inicio = ${barco.dtInicio}</h4> 
-					<h4>Data de Termino previsto = ${barco.fim==undefined?'Sem previsao':barco.fim}</h4> 
+					<h4>Data de inicio Previsto= ${barco.dtInicioPrevisto}</h4> 
+					<h4>Data de Termino Previsto = ${barco.dtFimPrevisto}</h4> 
 				</div>
+			</div>
+			<div class="row mt15">
+				<h4 class="col-md-6">${barco.dtInicio==undefined?'Aguardando Inicio':barco.dtInicio}</h4> 
+				<h4 class="col-md-6 text-right">${barco.dtFim==undefined?'Aguardando Inicio':barco.dtFim}</h4> 
 			</div>
 			<div class="progress mt15">
 			  	<div class="progress-bar bg-success" role="progressbar" style="width: 25%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">25%</div>
@@ -54,7 +58,7 @@ const MonitorUserTemplate = {
 				    <div class="panel panel-default">
 				        <div class="panel-heading">
 				            <h4 class="panel-title">
-								Escolha sua Embarca\u00e7\u00e3o					            
+								Escolha sua A\u00e7\u00e3o					            
 							</h4>
 				        </div>
 		            	<div class="card card-body">

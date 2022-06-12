@@ -43,6 +43,16 @@ const CadastroBarcoTemplate = {
 										<input type="text" name="descricao" class="form-control" id="descricaoId">
 									</div>
 								</div>
+								<div class="row mt15">
+									<div class="col-md-6">
+										<div>Data Prevista In&iacute;cio: </div>
+										<input type="date" name="dtInicioPrevisto" class="form-control" id="dtInicioPrevistoId">
+									</div>
+									<div class="col-md-6">
+										<div>Data Prevista Fim: </div>
+										<input type="date" name="dtFimPrevisto" class="form-control" id="dtFimPrevistoId">
+									</div>
+								</div>
 							</div>
 						</div>
 			        </form>

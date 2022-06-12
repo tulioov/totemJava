@@ -32,10 +32,9 @@ public class Usuario {
 	@Size(min = 3 , max = 250, message = "Especialidade deve conter minimo de 3 caracter")
 	private String especialidade;
 	
-	@Column(name = "EMAIL", unique=true)
 	private String email;
 	
-	@Column(name = "COD_RFID")
+	@Column(name = "COD_RFID", unique=true)
 	private String codRfid;
 	
 	@Column(name = "isAdmin")

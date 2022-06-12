@@ -12,6 +12,7 @@ import javax.persistence.Id;
 import javax.persistence.Lob;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
 
@@ -27,13 +28,21 @@ public class Barco {
 	@Column(name = "COD_BARCO")
 	private Long id;
 	
-	@JsonFormat(pattern="dd/MM/yyyy HH:mm")
+	@JsonFormat(pattern="dd/MM/yyyy")
 	@Column(name = "DT_INICIO")
 	private Date dtInicio;
 
-	@JsonFormat(pattern="dd/MM/yyyy HH:mm")
+	@JsonFormat(pattern="dd/MM/yyyy")
 	@Column(name = "DT_FIM")
 	private Date dtFim;
+	
+	@JsonFormat(pattern="dd/MM/yyyy")
+	@Column(name = "DT_INICIO_PREVISTO")
+	private Date dtInicioPrevisto;
+
+	@JsonFormat(pattern="dd/MM/yyyy")
+	@Column(name = "DT_FIM_PREVISTO")
+	private Date dtFimPrevisto;
 	
 	@Lob
 	@Column(name = "imagem")
@@ -50,14 +59,45 @@ public class Barco {
 	private String descricao;
 	
 	@ManyToMany(targetEntity=Monitoracao.class)
-	private Set<?> Monitoracao;
+	private Set<?> monitoracao;
 	
+	@Transient
+	private Long tempoDiasFabricao;
+	
+	public Long getTempoDiasFabricao() {
+		if(dtInicioPrevisto == null || dtFimPrevisto == null) {
+			return null;
+		}
+		long dt = (dtFimPrevisto.getTime() - dtInicioPrevisto.getTime());
+		return dt / 86400000L;
+	}
+
+	public void setTempoDiasFabricao(Long tempoDiasFabricao) {
+		this.tempoDiasFabricao = tempoDiasFabricao;
+	}
+
 	public Set<?> getMonitoracao() {
-		return Monitoracao;
+		return monitoracao;
 	}
 
 	public void setMonitoracao(Set<?> monitoracao) {
-		Monitoracao = monitoracao;
+		this.monitoracao = monitoracao;
+	}
+
+	public Date getDtInicioPrevisto() {
+		return dtInicioPrevisto;
+	}
+
+	public void setDtInicioPrevisto(Date dtInicioPrevisto) {
+		this.dtInicioPrevisto = dtInicioPrevisto;
+	}
+
+	public Date getDtFimPrevisto() {
+		return dtFimPrevisto;
+	}
+
+	public void setDtFimPrevisto(Date dtFimPrevisto) {
+		this.dtFimPrevisto = dtFimPrevisto;
 	}
 
 	public Long getId() {

@@ -12,7 +12,7 @@ const MonitorUserController = {
     		$("#"+alertComponent).removeClass("oculta").addClass("alert-danger").find('div').append(data.responseJSON.response.message+"<br>");
     		return;
     	}
-    	retorno = data.responseJSON.response;
+    	let retorno = data.responseJSON.response;
     	for (const property in retorno) {
     		if(property == 'stackTrace'){
     			return;
@@ -30,8 +30,8 @@ const MonitorUserController = {
 				$('#contentId').html(MonitorUserTemplate.monitoracao(data));
 				$('#tableMonitorUser').DataTable().destroy();
 				
-				$(data.monitoracao).each(function(index, data) {
-					$("#tableMonitorUser").find('tbody').append(MonitorUserTemplate.itemLinha(data));
+				$(data.monitoracao).each(function(inde, dat) {
+					$("#tableMonitorUser").find('tbody').append(MonitorUserTemplate.itemLinha(dat));
 				});
 				
 				$('#tableMonitorUser').DataTable( {
@@ -67,6 +67,9 @@ const MonitorUserController = {
 		var tempoEscolhaBarco = 5000;
 		$('#contentIdBarco').html(MonitorUserTemplate.modalEscolhaBarco());
 		
+		 $('#nfcIdCache').val($('#nfcId').val());
+		 $('#nfcId').val('');
+		
 		$.ajax({
 			headers: {
 	            'Authorization': email,
@@ -74,8 +77,28 @@ const MonitorUserController = {
 	        },
 	        type: "GET",
 	        contentType: "application/json",
-	        url: "/barco/escolhaBarco/"+$('#nfcId').val(),
+	        url: "/barco/escolhaBarco/"+$('#nfcIdCache').val(),
 	        success: function(retorno) {
+	        	
+	        	if(retorno.response.status == "Trabalhando"){
+	        		$('#imgEscolhaBarco').append(
+	    					`<div class="col-md-12 mt15">
+	    						<button type="button" class="btn-lg btn-warning col-md-12 mt15" onclick="MonitorUserController.pausarFinalizar('pausar');">Pausar Atividade</button>
+	    						<button type="button" class="btn-lg btn-danger col-md-12 mt15" onclick="MonitorUserController.pausarFinalizar('finalizar');">Finalizar Atividade</button>
+	    					</div>`);
+	        		return;
+	        	}
+	        	
+        		if(retorno.response.status == "Pausa"){
+        			$('#imgEscolhaBarco').append(
+	    					`<h4>Deseja continuar o trabalho no barco ${retorno.response.barco.descricao} na SubAtividade: ${retorno.response.monitoracao.subAtividade.descricao}</h4>
+	    					<div class="col-md-12 mt15">
+	    						<button type="button" class="btn-lg btn-warning col-md-12 mt15" onclick="MonitorUserController.continuarTrabalho();">Sim</button>
+	    						<button type="button" class="btn-lg btn-danger col-md-12 mt15" onclick="MonitorUserController.pausarFinalizar('finalizar');">Finalizar Atividade</button>
+	    					</div>`);
+	        		return;
+	        	}
+	        	
         		for (const barco of retorno.response){	
 	        		$('#imgEscolhaBarco').append(
         				`<div class="col-md-4 mt15">
@@ -88,11 +111,8 @@ const MonitorUserController = {
     						/>
         				</div>`);
         		}
-	        },error: function (data) {   
-	        	$('#imgEscolhaBarco').append(
-					`<div class="col-md-4 mt15">
-						<h4>Voc&ecirc; j&aacute; est&aacute; contando hora no barco</h4>
-					</div>`);
+	        },error: function (data) {  
+	        	
 	        }
 	    });
 		
@@ -101,13 +121,46 @@ const MonitorUserController = {
 	    }, tempoEscolhaBarco);
 	},
 	
+	pausarFinalizar(acao){
+		
+		let formControl = new Object();
+		formControl  = $('#formId').serializeJSON();
+		formControl.acao = acao;
+		formControl.nfcId = $('#nfcIdCache').val();
+		
+		let myJsonData = JSON.stringify(formControl);
+		
+		$.ajax({
+			headers: {
+	            'Authorization': email,
+	            'Content-Type':'application/json'
+	        },
+	        type: "POST",
+	        url: "/monitoracao/pausarFinalizar",
+	        dataType: "json",
+	        cache: false,
+	        data : myJsonData,
+	        success: function(retorno) {
+	        	window.location.reload(true)
+	        	$("#myModal").scrollTop(0);
+	        	$("#alertMsgId").removeClass("oculta").addClass("alert-success").find('div').append("Salvo com sucesso!");
+	        	setTimeout(function(){
+	        		$("#alertMsgId").addClass("oculta").find('div').removeClass("alert-success").html("");
+	        		$('#myModal').modal('hide');
+	        		CadastroUsuarioController.listar();
+        		},2000); 
+	        }
+	    });
+		
+	},
+	
 	salvarSubAtividadeEscolhida(idSubAtividade){
 		
 		let formControl = new Object();
 		formControl  = $('#formId').serializeJSON();
 		formControl.idBarco = $('#barcoId').val();
 		formControl.idSubAtividade = idSubAtividade;
-		formControl.nfcId = $('#nfcId').val();
+		formControl.nfcId = $('#nfcIdCache').val();
 		
 		let myJsonData = JSON.stringify(formControl);
 		
@@ -130,10 +183,7 @@ const MonitorUserController = {
 	        		$('#myModal').modal('hide');
 	        		CadastroUsuarioController.listar();
         		},2000); 
-	        },
-	        error: function (data) {   
-	        	
-	        },
+	        }
 	    });
 	},
 	
@@ -165,7 +215,7 @@ const MonitorUserController = {
 	        },
 	        type: "GET",
 	        contentType: "application/json",
-	        url: "/usuario/findByNFC/"+$('#nfcId').val(),
+	        url: "/usuario/findByNFC/"+$('#nfcIdCache').val(),
 	        success: function(retorno) {
 	        	$(retorno.response).each(function(index, usuario) {
 	        		$(usuario.etapa).each(function(index, etapa) {
