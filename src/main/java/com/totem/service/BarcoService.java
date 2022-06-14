@@ -82,7 +82,7 @@ public class BarcoService {
 //		}
 		
 		Barco barco = barcoRepository.findById(barcoDTO.getId()).get();
-		Set<?> monitor = barco.getMonitoracao();
+		Set<Monitoracao> monitor = barco.getMonitoracao();
 		BeanUtils.copyProperties(barcoDTO, barco);
 		if(barcoDTO.getMonitoracao() == null) {
 			barco.setMonitoracao(monitor);

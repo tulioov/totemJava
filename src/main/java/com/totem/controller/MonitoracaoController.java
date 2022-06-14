@@ -33,12 +33,12 @@ public class MonitoracaoController {
 	}
 	
 	
-	@PostMapping("/pausarFinalizar")
-	public @ResponseBody ResponseEntity<RetornoDTO> pausarFinalizar(
+	@PostMapping("/continuarPausarFinalizar")
+	public @ResponseBody ResponseEntity<RetornoDTO> continuarPausarFinalizar(
 			@RequestHeader(name = "Authorization", required = true) String emailUsuario,
 			@Valid @RequestBody BarcoMonitoracaoDTO monitoracaoDTO) {
 
-		return ResponseEntityUtil.defaultResponse(monitoracaoService.pausarFinalizar(monitoracaoDTO, emailUsuario));
+		return ResponseEntityUtil.defaultResponse(monitoracaoService.continuarPausarFinalizar(monitoracaoDTO, emailUsuario));
 	}
 
 //	@GetMapping("/findByBarcoId/{id}")

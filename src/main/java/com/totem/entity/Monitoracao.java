@@ -32,12 +32,15 @@ public class Monitoracao {
 	@Column(name = "DT_FIM_ATIVIDADE")
 	private Date dtFimAtividade;
 	
-	@Transient
-	private Long tempoTrabalho;
-	
 	@JsonFormat(pattern="dd/MM/yyyy HH:mm")
 	@Column(name = "DT_FIM_ATIVIDADE_TOTAL")
 	private Date dtFimAtividadeTotal;
+	
+	@Column(name = "STATUS")
+	private String status;
+	
+	@Column(name = "ID_BARCO")
+	private Long idBarco;
 
 	@OneToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "ID_USUARIO", referencedColumnName = "COD_USUARIO")
@@ -55,6 +58,19 @@ public class Monitoracao {
 	@JoinColumn(name = "ID_SUBATIVIDADE", referencedColumnName = "COD_SUB_ATIVIDADE")
 	private SubAtividade subAtividade;
 	
+	@Transient
+	private Long tempoTrabalho;
+	
+	
+	
+	public Long getIdBarco() {
+		return idBarco;
+	}
+
+	public void setIdBarco(Long idBarco) {
+		this.idBarco = idBarco;
+	}
+
 	public Etapa getEtapa() {
 		return etapa;
 	}
@@ -122,6 +138,14 @@ public class Monitoracao {
 
 	public void setDtFimAtividade(Date dtFimAtividade) {
 		this.dtFimAtividade = dtFimAtividade;
+	}
+
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
 	}
 
 }

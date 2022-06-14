@@ -83,8 +83,8 @@ const MonitorUserController = {
 	        	if(retorno.response.status == "Trabalhando"){
 	        		$('#imgEscolhaBarco').append(
 	    					`<div class="col-md-12 mt15">
-	    						<button type="button" class="btn-lg btn-warning col-md-12 mt15" onclick="MonitorUserController.pausarFinalizar('pausar');">Pausar Atividade</button>
-	    						<button type="button" class="btn-lg btn-danger col-md-12 mt15" onclick="MonitorUserController.pausarFinalizar('finalizar');">Finalizar Atividade</button>
+	    						<button type="button" class="btn-lg btn-warning col-md-12 mt15" onclick="MonitorUserController.continuarPausarFinalizar('pausar');">Pausar Atividade</button>
+	    						<button type="button" class="btn-lg btn-danger col-md-12 mt15" onclick="MonitorUserController.continuarPausarFinalizar('finalizar');">Finalizar Atividade</button>
 	    					</div>`);
 	        		return;
 	        	}
@@ -93,8 +93,8 @@ const MonitorUserController = {
         			$('#imgEscolhaBarco').append(
 	    					`<h4>Deseja continuar o trabalho no barco ${retorno.response.barco.descricao} na SubAtividade: ${retorno.response.monitoracao.subAtividade.descricao}</h4>
 	    					<div class="col-md-12 mt15">
-	    						<button type="button" class="btn-lg btn-warning col-md-12 mt15" onclick="MonitorUserController.continuarTrabalho();">Sim</button>
-	    						<button type="button" class="btn-lg btn-danger col-md-12 mt15" onclick="MonitorUserController.pausarFinalizar('finalizar');">Finalizar Atividade</button>
+	    						<button type="button" class="btn-lg btn-warning col-md-12 mt15" onclick="MonitorUserController.continuarPausarFinalizar();">Sim</button>
+	    						<button type="button" class="btn-lg btn-danger col-md-12 mt15" onclick="MonitorUserController.continuarPausarFinalizar('finalizar');">Finalizar Atividade</button>
 	    					</div>`);
 	        		return;
 	        	}
@@ -121,7 +121,7 @@ const MonitorUserController = {
 	    }, tempoEscolhaBarco);
 	},
 	
-	pausarFinalizar(acao){
+	continuarPausarFinalizar(acao){
 		
 		let formControl = new Object();
 		formControl  = $('#formId').serializeJSON();
@@ -136,7 +136,7 @@ const MonitorUserController = {
 	            'Content-Type':'application/json'
 	        },
 	        type: "POST",
-	        url: "/monitoracao/pausarFinalizar",
+	        url: "/monitoracao/continuarPausarFinalizar",
 	        dataType: "json",
 	        cache: false,
 	        data : myJsonData,

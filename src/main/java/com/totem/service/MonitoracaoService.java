@@ -107,6 +107,7 @@ public class MonitoracaoService {
 		SubAtividade subAtividade = subAtividadeService.findById(monitoracaoDTO.getIdSubAtividade(), emailUsuario);
 
 		Monitoracao monitoracao = new Monitoracao();
+		monitoracao.setIdBarco(barco.getId());
 		monitoracao.setDtInicioAtividade(new Date());
 		monitoracao.setUsuario(usuario);
 		monitoracao.setSubAtividade(subAtividade);
@@ -126,28 +127,54 @@ public class MonitoracaoService {
 		return barco;
 	}
 
-	public Object pausarFinalizar(BarcoMonitoracaoDTO monitoracaoDTO, String emailUsuario) {
+	public Object continuarPausarFinalizar(BarcoMonitoracaoDTO monitoracaoDTO, String emailUsuario) {
 		
 		Usuario usuario = usuarioService.buscarUsuarioPorNFC(monitoracaoDTO.getNfcId());
 		List<Monitoracao> lstMonitoracao = monitoracaoRepository.findByUsuario(usuario);
 		Monitoracao monitoracao = null;
 		
 		for (Monitoracao monitoracaoVarr : lstMonitoracao) {
-			if (monitoracaoVarr.getDtFimAtividade() == null) {
+			if (monitoracaoVarr.getDtFimAtividade() == null || monitoracaoVarr.getDtFimAtividadeTotal() == null) {
 				monitoracao = monitoracaoVarr;
 				break;
 			}
 		}
+		if(monitoracao == null) {
+			return null;
+		}
 		
-		if(monitoracaoDTO.getAcao().equals("pausar")){
+		if("pausar".equals(monitoracaoDTO.getAcao())){
 			monitoracao.setDtFimAtividade(new Date());
+			monitoracao.setStatus("Pausa");
+			monitoracaoRepository.save(monitoracao);
+			return monitoracao;
+		}
+		if("finalizar".equals(monitoracaoDTO.getAcao())){
+			monitoracao.setDtFimAtividade(new Date());
+			monitoracao.setDtFimAtividadeTotal(new Date());
+			monitoracao.setStatus("Conluído");
 			monitoracaoRepository.save(monitoracao);
 			return monitoracao;
 		}
 		
+		Barco barco = barcoService.findById(monitoracao.getIdBarco(), emailUsuario);
+		
+		Monitoracao monitoracaoNova = new Monitoracao();
+		monitoracaoNova.setDtInicioAtividade(monitoracao.getDtInicioAtividade());
+		monitoracaoNova.setUsuario(monitoracao.getUsuario());
+		monitoracaoNova.setSubAtividade(monitoracao.getSubAtividade());
+		monitoracaoNova.setStatus("Trabalhando");
+		monitoracaoRepository.save(monitoracaoNova);
+		
+		Set<Monitoracao> monitor = barco.getMonitoracao();
+		monitor.add(monitoracaoNova);
+		barcoService.salvarBarcoMonitor(barco, emailUsuario);
+		
 		monitoracao.setDtFimAtividade(new Date());
 		monitoracao.setDtFimAtividadeTotal(new Date());
 		monitoracaoRepository.save(monitoracao);
+		
 		return monitoracao;
+		
 	}
 }

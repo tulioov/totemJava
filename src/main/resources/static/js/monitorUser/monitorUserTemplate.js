@@ -30,6 +30,7 @@ const MonitorUserTemplate = {
 				        <th>Trabalhando em</th>
 				        <th>Hr. Entrada</th>
 				        <th>Tempo (dias)</th>
+				        <th>Status</th>
 				    </tr>
 					</thead>
 					<tbody>
@@ -47,6 +48,7 @@ const MonitorUserTemplate = {
 				<td>${data.subAtividade.descricao}</td>
 				<td>${data.dtInicioAtividade}</td>
 				<td>${data.tempoTrabalho}</td>
+				<td>${data.status}</td>
 			</tr>
 		`;
 	},

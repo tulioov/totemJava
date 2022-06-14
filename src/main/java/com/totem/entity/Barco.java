@@ -59,7 +59,7 @@ public class Barco {
 	private String descricao;
 	
 	@ManyToMany(targetEntity=Monitoracao.class)
-	private Set<?> monitoracao;
+	private Set<Monitoracao> monitoracao;
 	
 	@Transient
 	private Long tempoDiasFabricao;
@@ -76,11 +76,11 @@ public class Barco {
 		this.tempoDiasFabricao = tempoDiasFabricao;
 	}
 
-	public Set<?> getMonitoracao() {
+	public Set<Monitoracao> getMonitoracao() {
 		return monitoracao;
 	}
 
-	public void setMonitoracao(Set<?> monitoracao) {
+	public void setMonitoracao(Set<Monitoracao> monitoracao) {
 		this.monitoracao = monitoracao;
 	}
 
