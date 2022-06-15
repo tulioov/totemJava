@@ -29,9 +29,9 @@ public class SubAtividadeService {
 	}
 
 	public SubAtividade findById(Long id, String emailUsuario) {
-		if (!usuarioService.isAdm(emailUsuario)) {
-			throw new CustomErrorException(HttpStatus.UNAUTHORIZED, ERRO_PERMISSAO);
-		}
+//		if (!usuarioService.isAdm(emailUsuario)) {
+//			throw new CustomErrorException(HttpStatus.UNAUTHORIZED, ERRO_PERMISSAO);
+//		}
 		return subAtividadeRepository.findById(id).get();
 	}
 

@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.totem.entity.Etapa;
+import com.totem.dto.EtapaDTO;
 import com.totem.service.EtapaService;
 import com.totem.util.ResponseEntityUtil;
 import com.totem.util.RetornoDTO;
@@ -28,9 +28,9 @@ public class EtapaController {
 
 	@PostMapping("/salvar")
 	public @ResponseBody ResponseEntity<RetornoDTO> salvar(
-			@RequestHeader(name = "Authorization", required = true) String emailUsuario, @Valid @RequestBody Etapa etapa) {
+			@RequestHeader(name = "Authorization", required = true) String emailUsuario, @Valid @RequestBody EtapaDTO etapaDTO) {
 
-		return ResponseEntityUtil.defaultResponse(etapaService.salvar(etapa, emailUsuario));
+		return ResponseEntityUtil.defaultResponse(etapaService.salvar(etapaDTO, emailUsuario));
 	}
 
 	@GetMapping("/findById/{id}")

@@ -27,13 +27,13 @@
 				<button onclick="ControlTotensController.abrirModal();" data-toggle="modal" data-target="#myModal" type="button" class="btn btn-primary" style="width: 18rem;">
 		  			<div class="card-body">
 		    		<h5 class="card-title">Embarcação A1</h5>
-		    		<p class="card-text">
-			    		<td>
+		    		<div class="card-text">
+			    		<div>
 							<div class="progress">
 							  <div class="progress-bar bg-danger" role="progressbar" style="width: 25%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
 							</div>
-						</td>
-					</p>
+						</div>
+					</div>
 					</div>
 				</button>
 			</div>
@@ -41,13 +41,13 @@
 				<button data-toggle="modal" data-target="#myModal" type="button" class="btn btn-primary" style="width: 18rem;">
 		  			<div class="card-body">
 		    		<h5 class="card-title">Embarcação A2</h5>
-			    		<p class="card-text">
-			    			<td>
+			    		<div class="card-text">
+			    			<div>
 								<div class="progress">
 								  <div class="progress-bar bg-warning" role="progressbar" style="width: 60%" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100"></div>
 								</div>
-							</td>
-						</p>
+							</div>
+						</div>
 					</div>
 				</button>
 			</div>

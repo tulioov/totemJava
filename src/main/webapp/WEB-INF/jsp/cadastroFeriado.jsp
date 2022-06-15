@@ -11,7 +11,7 @@
 	<link href="../externo/dual-list/bootstrap-duallistbox.css" rel="stylesheet" />
 	
 	
-	<title>Cadastro de Atividade</title>
+	<title>Cadastro de Feriado</title>
 </head>
 <body>
 
@@ -23,8 +23,8 @@
 	<input type="hidden" name="localizacao" id="localizacao">
 	<div class="container">
 		<div class="row">
-			<button type="submit" onclick="CadastroAtividadeController.addUser();" class="btn btn-primary" data-toggle="modal" data-target="#myModal">
-				Add Atividade
+			<button type="submit" onclick="CadastroFeriadoController.addUser();" class="btn btn-primary" data-toggle="modal" data-target="#myModal">
+				Add Feriado
 			</button>
 			<div id="alertMsgIdTable" class=" mt15 alert fade in oculta ">
               	<a onclick="$('#alertMsgIdTable').addClass('oculta');" class="close">&times;</a>
@@ -35,10 +35,11 @@
 		<div class="modal scroll" id="myModal">
 		</div>
 		<div class="row">
-			<table id="tableAtividade" class="display">
+			<table id="tableFeriado" class="display">
 				<thead>
 			    <tr>
 			        <th>ID</th>
+			        <th>Data</th>
 			        <th>Descri&ccedil;&atilde;o</th>
 			        <th>Constante Campo</th>
 			        <th>A&ccedil;&atilde;o</th>
@@ -51,7 +52,7 @@
 	<script src="../externo/serializejson/serializejson.js"></script>
 	<script src="../externo/dual-list/jquery.bootstrap-duallistbox.js"></script>
 	<script src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.js"></script>
-	<script src="../js/cadastroAtividade/cadastroAtividadeTemplate.js"></script>
-	<script src="../js/cadastroAtividade/cadastroAtividadeController.js"></script>
+	<script src="../js/cadastroFeriado/cadastroFeriadoTemplate.js"></script>
+	<script src="../js/cadastroFeriado/cadastroFeriadoController.js"></script>
 </body>
 </html>

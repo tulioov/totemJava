@@ -22,7 +22,10 @@
 }
 .oculta{
     display: none !important;
-}	
+}
+.bg-white{
+	background-color: white !important;
+}
 .bg-success{
 	background-color: #28a745 !important;
 }
@@ -61,6 +64,10 @@
 }
 .mt15{
     margin-top: 15px;
+}
+
+.mt3em{
+    margin-top: 3em;
 }
 
 body {

@@ -1,25 +1,25 @@
 package com.totem.entity;
 
-import java.util.List;
+import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 @Entity
-@Table(name = "ETAPA")
-public class Etapa {
+@Table(name = "FERIADO")
+public class Feriado {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY, generator = "native")
-	@Column(name = "COD_ETAPA")
+	@Column(name = "COD_FERIADO")
 	private Long id;
 	
 	@Column(name = "DESCRICAO")
@@ -32,11 +32,10 @@ public class Etapa {
 	@Size(min = 3 , max = 250, message = "Constante campo deve conter minimo de 3 caracter")
 	private String constanteCampo;
 	
-	
-	@JoinColumn(name = "ID_ATIVIDADE")
-	@OneToMany
-	private List<Atividade> atividadeList;
-	
+	@JsonFormat(pattern="dd/MM/yyyy")
+	@Column(name = "DT_FERIADO")
+	private Date dtFeriado;
+
 	public Long getId() {
 		return id;
 	}
@@ -61,12 +60,12 @@ public class Etapa {
 		this.constanteCampo = constanteCampo;
 	}
 
-	public List<Atividade> getAtividadeList() {
-		return atividadeList;
+	public Date getDtFeriado() {
+		return dtFeriado;
 	}
 
-	public void setAtividadeList(List<Atividade> atividadeList) {
-		this.atividadeList = atividadeList;
+	public void setDtFeriado(Date dtFeriado) {
+		this.dtFeriado = dtFeriado;
 	}
 	
 }

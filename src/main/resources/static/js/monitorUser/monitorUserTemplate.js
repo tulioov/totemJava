@@ -1,330 +1,168 @@
 
 const MonitorUserTemplate = {
-		
+	
+	monitoracao(barco){
+		return `
+			<h3>Processo de fabrica\u00e7\u00e3o do barco ${barco.nome}</h3>
+			<div class="row">
+				<div class="col-md-4 ">
+					<img style='width:16em;height:9em;' src='${barco.imagem}'/>
+				</div>
+				<div class="col-md-6 mt3em">
+					<h4>Data de inicio Previsto= ${barco.dtInicioPrevisto}</h4> 
+					<h4>Data de Termino Previsto = ${barco.dtFimPrevisto}</h4> 
+				</div>
+			</div>
+			<div class="row mt15">
+				<h4 class="col-md-6">${barco.dtInicio==undefined?'Aguardando Inicio':barco.dtInicio}</h4> 
+				<h4 class="col-md-6 text-right">${barco.dtFim==undefined?'Aguardando Inicio':barco.dtFim}</h4> 
+			</div>
+			<div class="progress mt15">
+			  	<div class="progress-bar bg-success" role="progressbar" style="width: 25%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">25%</div>
+			</div>
+			<hr/>
+			<div class="row">
+				<table id="tableMonitorUser">
+					<thead>
+				    <tr>
+				        <th>ID</th>
+				        <th>Nome</th>
+				        <th>Trabalhando em</th>
+				        <th>Hr. Entrada</th>
+				        <th>Tempo (dias)</th>
+				        <th>Status</th>
+				    </tr>
+					</thead>
+					<tbody>
+					</tbody>
+				</table>
+			</div>
+		`;
+	},
+	
+	itemLinha(data){
+		return `
+			<tr>
+				<td>${data.id}</td>
+				<td>${data.usuario.nome}</td>
+				<td>${data.subAtividade.descricao}</td>
+				<td>${data.dtInicioAtividade}</td>
+				<td>${data.tempoTrabalho}</td>
+				<td>${data.status}</td>
+			</tr>
+		`;
+	},
 		
 	modalEscolhaBarco(){
 		return`
-			<div class="modal-dialog modal-lg">
-		        <div class="modal-content">
-		            <div class="modal-header">
-		                <h4 class="modal-title">Escolha sua Embarca\u00e7\u00e3o</h4>
-		            </div>
-		            <div class="modal-body">
-		            
-		            	<h2>Bem vindo NOME.</h2>
-		            
-						<div class="panel-group" >
-						    <div class="panel panel-default">
-						        <div class="panel-heading">
-						            <h4 class="panel-title">
-										Embarca\u00e7\u00e3o					            
-									</h4>
-						        </div>
-				            	<div class="card card-body">
-					            	<div id="imgEscolhaBarco" class="row">
-									</div>
-							    </div>
-						    </div>
-						</div>
-		            </div>
-		            <div class="modal-footer">
-		                <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-		            </div>
-		        </div>
+			<div>
+				<div class="panel-group" >
+				    <div class="panel panel-default">
+				        <div class="panel-heading">
+				            <h4 class="panel-title">
+								Escolha sua A\u00e7\u00e3o					            
+							</h4>
+				        </div>
+		            	<div class="card card-body">
+			            	<div id="imgEscolhaBarco" class="row">
+							</div>
+					    </div>
+				    </div>
+				</div>
 		    </div>
 		`
 	},
-		
-		
-	abrirEscolhaEtapa(){
-		return`
-				<div class="modal-dialog modal-lg">
-			        <div class="modal-content">
-			            <div class="modal-header">
-			                <h4 class="modal-title">Escolha sua atividade</h4>
-			            </div>
-			            <div class="modal-body">
-			            <h2>Bem vindo NOME, Estamos ta etapa 0</h2>
-			            
-			            <div class="col-md-12">
-				            <div class="panel with-nav-tabs panel-primary">
-				                <div class="panel-heading">
-			                        <ul class="nav nav-tabs">
-			                            <li class="active"><a href="#tab0primary" data-toggle="tab">Etapa 0</a></li>
-			                            <li><a href="#tab1primary" data-toggle="tab">Etapa 1</a></li>
-			                            <li><a href="#tab2primary" data-toggle="tab">Etapa 2</a></li>
-			                            <li><a href="#tab3primary" data-toggle="tab">Etapa 3</a></li>
-			                            <li><a href="#tab4primary" data-toggle="tab">Etapa 4</a></li>
-			                        </ul>
-				                </div>
-				                <div class="panel-body">
-				                	<div class="panel-group" id="accordion">
-					                    <div class="tab-content">
-					                        <div class="tab-pane fade in active" id="tab0primary">
-										    	<div class="panel panel-default">
-											        <div class="panel-heading">
-											            <h4 class="panel-title">
-											                <button type="button" class="btn btn-primary btn-lg btn-block" data-toggle="collapse" data-parent="#accordion" href="#collapse1">Fibra</button>
-											            </h4>
-													</div>
-											        <div id="collapse1" class="panel-collapse collapse">
-										            	<div class="card card-body">
-													    	<div class="panel-body">
-																<button type="button" class="btn btn-success btn-lg btn-block">Sub atividade fibra 1</button>
-																<button type="button" class="btn btn-success btn-lg btn-block">Sub atividade fibra 2</button>
-																<button type="button" class="btn btn-success btn-lg btn-block">Sub atividade fibra 3</button>
-															</div>
-													    </div>
-											        </div>
-												</div>
-												<div class="panel panel-default">
-											        <div class="panel-heading">
-											            <h4 class="panel-title">
-											                <button type="button" class="btn btn-primary btn-lg btn-block" data-toggle="collapse" data-parent="#accordion" href="#collapse2">Eletrica</button>
-											            </h4>
-											        </div>
-											        <div id="collapse2" class="panel-collapse collapse">
-										            	<div class="card card-body">
-													    	<div class="panel-body">
-																<button type="button" class="btn btn-success btn-lg btn-block">Sub atividade eletrica 1</button>
-																<button type="button" class="btn btn-success btn-lg btn-block">Sub atividade eletrica 2</button>
-																<button type="button" class="btn btn-success btn-lg btn-block">Sub atividade eletrica 3</button>
-															</div>
-													    </div>
-											        </div>
-											    </div>
-											</div>
-					                        <div class="tab-pane fade" id="tab1primary">
-					                        	
-
-												<div class="panel panel-default">
-											        <div class="panel-heading">
-											            <h4 class="panel-title">
-											                <button type="button" class="btn btn-primary btn-lg btn-block" data-toggle="collapse" data-parent="#accordion" href="#collapse3">Fibra</button>
-											            </h4>
-													</div>
-											        <div id="collapse3" class="panel-collapse collapse">
-										            	<div class="card card-body">
-													    	<div class="panel-body">
-																<button type="button" class="btn btn-success btn-lg btn-block">Sub atividade fibra 1</button>
-																<button type="button" class="btn btn-success btn-lg btn-block">Sub atividade fibra 2</button>
-																<button type="button" class="btn btn-success btn-lg btn-block">Sub atividade fibra 3</button>
-															</div>
-													    </div>
-											        </div>
-												</div>
-												<div class="panel panel-default">
-											        <div class="panel-heading">
-											            <h4 class="panel-title">
-											                <button type="button" class="btn btn-primary btn-lg btn-block" data-toggle="collapse" data-parent="#accordion" href="#collapse4">Eletrica</button>
-											            </h4>
-											        </div>
-											        <div id="collapse4" class="panel-collapse collapse">
-										            	<div class="card card-body">
-													    	<div class="panel-body">
-																<button type="button" class="btn btn-success btn-lg btn-block">Sub atividade eletrica 1</button>
-																<button type="button" class="btn btn-success btn-lg btn-block">Sub atividade eletrica 2</button>
-																<button type="button" class="btn btn-success btn-lg btn-block">Sub atividade eletrica 3</button>
-															</div>
-													    </div>
-											        </div>
-											    </div>
-
-
-
-
-
-											</div>
-					                        <div class="tab-pane fade" id="tab2primary">
-					                        	<div class="panel panel-default">
-											        <div class="panel-heading">
-											            <h4 class="panel-title">
-											                <button type="button" class="btn btn-primary btn-lg btn-block" data-toggle="collapse" data-parent="#accordion" href="#collapse5">Fibra</button>
-											            </h4>
-													</div>
-											        <div id="collapse5" class="panel-collapse collapse">
-										            	<div class="card card-body">
-													    	<div class="panel-body">
-																<button type="button" class="btn btn-success btn-lg btn-block">Sub atividade fibra 1</button>
-																<button type="button" class="btn btn-success btn-lg btn-block">Sub atividade fibra 2</button>
-																<button type="button" class="btn btn-success btn-lg btn-block">Sub atividade fibra 3</button>
-															</div>
-													    </div>
-											        </div>
-												</div>
-												<div class="panel panel-default">
-											        <div class="panel-heading">
-											            <h4 class="panel-title">
-											                <button type="button" class="btn btn-primary btn-lg btn-block" data-toggle="collapse" data-parent="#accordion" href="#collapse6">Eletrica</button>
-											            </h4>
-											        </div>
-											        <div id="collapse6" class="panel-collapse collapse">
-										            	<div class="card card-body">
-													    	<div class="panel-body">
-																<button type="button" class="btn btn-success btn-lg btn-block">Sub atividade eletrica 1</button>
-																<button type="button" class="btn btn-success btn-lg btn-block">Sub atividade eletrica 2</button>
-																<button type="button" class="btn btn-success btn-lg btn-block">Sub atividade eletrica 3</button>
-															</div>
-													    </div>
-											        </div>
-											    </div>
-											</div>
-					                        <div class="tab-pane fade" id="tab3primary">
-					                        	<div class="panel panel-default">
-											        <div class="panel-heading">
-											            <h4 class="panel-title">
-											                <button type="button" class="btn btn-primary btn-lg btn-block" data-toggle="collapse" data-parent="#accordion" href="#collapse7">Fibra</button>
-											            </h4>
-													</div>
-											        <div id="collapse7" class="panel-collapse collapse">
-										            	<div class="card card-body">
-													    	<div class="panel-body">
-																<button type="button" class="btn btn-success btn-lg btn-block">Sub atividade fibra 1</button>
-																<button type="button" class="btn btn-success btn-lg btn-block">Sub atividade fibra 2</button>
-																<button type="button" class="btn btn-success btn-lg btn-block">Sub atividade fibra 3</button>
-															</div>
-													    </div>
-											        </div>
-												</div>
-												<div class="panel panel-default">
-											        <div class="panel-heading">
-											            <h4 class="panel-title">
-											                <button type="button" class="btn btn-primary btn-lg btn-block" data-toggle="collapse" data-parent="#accordion" href="#collapse8">Eletrica</button>
-											            </h4>
-											        </div>
-											        <div id="collapse8" class="panel-collapse collapse">
-										            	<div class="card card-body">
-													    	<div class="panel-body">
-																<button type="button" class="btn btn-success btn-lg btn-block">Sub atividade eletrica 1</button>
-																<button type="button" class="btn btn-success btn-lg btn-block">Sub atividade eletrica 2</button>
-																<button type="button" class="btn btn-success btn-lg btn-block">Sub atividade eletrica 3</button>
-															</div>
-													    </div>
-											        </div>
-											    </div>
-				                        	</div>
-					                        <div class="tab-pane fade" id="tab4primary">
-					                        	<div class="panel panel-default">
-											        <div class="panel-heading">
-											            <h4 class="panel-title">
-											                <button type="button" class="btn btn-primary btn-lg btn-block" data-toggle="collapse" data-parent="#accordion" href="#collapse9">Fibra</button>
-											            </h4>
-													</div>
-											        <div id="collapse9" class="panel-collapse collapse">
-										            	<div class="card card-body">
-													    	<div class="panel-body">
-																<button type="button" class="btn btn-success btn-lg btn-block">Sub atividade fibra 1</button>
-																<button type="button" class="btn btn-success btn-lg btn-block">Sub atividade fibra 2</button>
-																<button type="button" class="btn btn-success btn-lg btn-block">Sub atividade fibra 3</button>
-															</div>
-													    </div>
-											        </div>
-												</div>
-												<div class="panel panel-default">
-											        <div class="panel-heading">
-											            <h4 class="panel-title">
-											                <button type="button" class="btn btn-primary btn-lg btn-block" data-toggle="collapse" data-parent="#accordion" href="#collapse10">Eletrica</button>
-											            </h4>
-											        </div>
-											        <div id="collapse10" class="panel-collapse collapse">
-										            	<div class="card card-body">
-													    	<div class="panel-body">
-																<button type="button" class="btn btn-success btn-lg btn-block">Sub atividade eletrica 1</button>
-																<button type="button" class="btn btn-success btn-lg btn-block">Sub atividade eletrica 2</button>
-																<button type="button" class="btn btn-success btn-lg btn-block">Sub atividade eletrica 3</button>
-															</div>
-													    </div>
-											        </div>
-											    </div>
-				                        	</div>
-					                    </div>
-				                    </div>
-				                </div>
-				            </div>
-				        </div>
-
-			            <div class="modal-footer">
-			                <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-			            </div>
-			        </div>
-			    </div>
-				`
+	
+	rowEtapas(index, etapa){
+		return `
+			<li role="presentation" class="${index==0?'active':'disabled'} bg-white">
+		        <a href="#step${index}" data-toggle="tab" aria-controls="step${index}" role="tab"><span class="round-tab">${index}</span> <i>${etapa.descricao}</i></a>
+		    </li>
+			`
 	},
 	
-	modalContinuar(){
+	contentEtapas(index, etapa){
 		return`
-				<div class="modal-dialog modal-lg">
-			        <div class="modal-content">
-			            <div class="modal-header">
-			                <h4 class="modal-title">Escolha sua atividade</h4>
-			            </div>
-			            <div class="modal-body">
-			            
-			            	<h2>Bem vindo NOME.</h2>
-			            
-							<div class="panel-group" id="accordion">
-							    <div class="panel panel-default">
-							        <div class="panel-heading">
-							            <h4 class="panel-title">
-							                <button type="button" class="btn btn-danger btn-lg btn-block" data-toggle="collapse" data-parent="#accordion" href="#collapse1">Continuar?</button>
-							            </h4>
-							        </div>
-							        <div id="collapse1" class="panel-collapse collapse">
-						            	<div class="card card-body">
-									    	<div class="panel-body">
-												<button type="button" class="btn btn-success btn-lg btn-block">Sim</button>
-												<button type="button" class="btn btn-warning btn-lg btn-block">Conclusao Parcial</button>
-											</div>
-									    </div>
-							        </div>
-							    </div>
-							</div>
-			            </div>
-			            <div class="modal-footer">
-			                <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-			            </div>
-			        </div>
-			    </div>
-				`
+			<div class="tab-pane ${index==0?'active':''}" role="tabpanel" id="step${index}">
+	            <h4 class="text-center">${etapa.descricao}</h4>
+	            <div id="contentAtividadeId${etapa.id}" class="col-md-12">
+	            </div>
+	        </div>					
+			`
 	},
 	
-	modalSaida(){
+	htmlSubAtividade(atividade){
+		let html = "";
+		$(atividade.subAtividadeList).each(function(index, subAtividade) {
+			html += `<button type="button" class="btn btn-success col-md-12 mt15" onclick="MonitorUserController.salvarSubAtividadeEscolhida(${subAtividade.id})">${subAtividade.descricao}</button>`
+		});
+		return html;
+	},
+	
+	contentAtividade(index,atividade){
+		
+		return` 
+			<div class="list-content">
+		        <a href="#cmb${index}${atividade.id}"  data-toggle="collapse" aria-expanded="false" aria-controls="cmb${index}${atividade.id}">${atividade.descricao}<i class="fa fa-chevron-down"></i></a>
+		        <div class="collapse" id="cmb${index}${atividade.id}">
+		            <div class="list-box">
+		                <div class="row">
+		                    <div class="col-md-12">
+		                        <div class="form-group">`+
+		                        MonitorUserTemplate.htmlSubAtividade(atividade);
+		                        +`</div>
+		                    </div>
+		                </div>
+		            </div>
+		        </div>
+		    </div>
+		`;
+	},
+	
+	
+		
+	abrirEscolhaEtapa(idBarco){
 		return`
 				<div class="modal-dialog modal-lg">
 			        <div class="modal-content">
 			            <div class="modal-header">
 			                <h4 class="modal-title">Escolha sua atividade</h4>
-			            </div>
-			            <div class="modal-body">
-			            
-			            	<h2>Bem vindo NOME.</h2>
-			            
-							<div class="panel-group" id="accordion">
-							    <div class="panel panel-default">
-							        <div class="panel-heading">
-							            <h4 class="panel-title">
-							                <button type="button" class="btn btn-danger btn-lg btn-block" data-toggle="collapse" data-parent="#accordion" href="#collapse1">Saida</button>
-							            </h4>
-							        </div>
-							        <div id="collapse1" class="panel-collapse collapse">
-						            	<div class="card card-body">
-									    	<div class="panel-body">
-												<button type="button" class="btn btn-primary btn-lg btn-block">Pausa</button>
-												<button type="button" class="btn btn-warning btn-lg btn-block">Conclusao Parcial</button>
-												<button type="button" class="btn btn-success btn-lg btn-block">Conclusao</button>
-											</div>
-									    </div>
-							        </div>
-							    </div>
+			                <div class="progress">
+								<div id="progressBarEtapaId" class="progress-bar bg-success" role="progressbar" style="width: 100%" value=100 aria-valuemin="0" aria-valuemax="100">Tempo de espera</div>
 							</div>
 			            </div>
+			            <input type="hidden" value="${idBarco}" id="barcoId">
+			            <div class="modal-body">
+			            	<section>
+						        <div>
+						            <div class="row d-flex justify-content-center">
+						                <div class="col-md-12">
+						                    <div class="wizard">
+						                        <div class="wizard-inner">
+						                            <div class="connecting-line"></div>
+						                            <ul class="nav nav-tabs" role="tablist" id="rowEtapasId">
+						                                
+						                            </ul>
+						                        </div>
+						                        <form role="form"  class="login-box">
+						                            <div class="tab-content" id="contentEtapasId">
+						                            </div>
+						                        </form>
+						                    </div>
+						                </div>
+						            </div>
+						        </div>
+						    </section>
+			            	
+			            </div>
 			            <div class="modal-footer">
-			                <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+			                <button id="modalCloseId" type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
 			            </div>
 			        </div>
 			    </div>
-				`
-	}
+			    <script src="../js/monitorUser/steps.js"></script>
+			`
+	},
 	
 };
 

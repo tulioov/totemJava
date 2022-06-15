@@ -23,6 +23,12 @@ public class PaginasController {
 		return "login";
 	}
 	
+	@GetMapping("/cadastroFeriado")
+	public String cadastroFeriado(Model model, @AuthenticationPrincipal OidcUser principal){
+		paginaService.control(principal, model);
+		return "cadastroFeriado";
+	}
+	
 	@GetMapping("/cadastroUsuario")
 	public String cadastroUsuario(Model model, @AuthenticationPrincipal OidcUser principal){
 		paginaService.control(principal, model);
@@ -32,9 +38,7 @@ public class PaginasController {
 	
 	@GetMapping(value = {"/", "/monitoramento"})
 	public String home(Model model, @AuthenticationPrincipal OidcUser principal){
-		System.out.println("entrei em paginas");
 		paginaService.control(principal, model);
-		System.out.println("redirecionei");
 		return "monitoramento";
 	}
 	

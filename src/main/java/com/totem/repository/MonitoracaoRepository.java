@@ -5,14 +5,15 @@ import java.util.List;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
-import com.totem.entity.Barco;
 import com.totem.entity.Monitoracao;
+import com.totem.entity.Usuario;
 
 @Repository
-public interface BarcoRepository extends CrudRepository<Barco, Long> {
+public interface MonitoracaoRepository extends CrudRepository<Monitoracao, Long> {
 
-	List<Barco> findAll();
+	List<Monitoracao> findAll();
 	
-	Barco findByMonitoracao(Monitoracao monitoracao);
-
+	List<Monitoracao> findByUsuario(Usuario usuario);
+	
 }
+

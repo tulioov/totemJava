@@ -21,8 +21,41 @@ const CadastroEtapaController = {
     		$("#"+alertComponent).removeClass("oculta").addClass("alert-danger").find('div').append(retorno[property]+"<br>");
 		}
 	},
+	
+	carregarDualList(atividadeList){
+		$.ajax({
+			headers: {
+	            'Authorization': email,
+	            'Content-Type':'application/json'
+	        },
+	        type: "GET",
+	        contentType: "application/json",
+	        url: "/atividade/listar",
+	        success: function(retorno) {
+	        	$(retorno.response).each(function(index, data) {
+	        		if (atividadeList != undefined){
+        				if(atividadeList.some(atividade => atividade.id === data.id)){
+	        				$("#duallistboxId").append(`<option value="${data.id}" selected="selected" >${data.descricao}</option>`);
+        				}else{
+        					$("#duallistboxId").append(`<option value="${data.id}">${data.descricao}</option>`);
+        				}
+	        		}else{
+	        			$("#duallistboxId").append(`<option value="${data.id}">${data.descricao}</option>`);
+	        		}
+        		});
+	        },complete: function(data) { 
+	        	$("#duallistboxId").bootstrapDualListbox('refresh');
+	        }
+	    });
+	},
 		
 	salvar(){
+		
+		let formControl = new Object();
+		formControl  = $('#formId').serializeJSON();
+		formControl.atividadeList = $('#duallistboxId').val();
+		let myJsonData = JSON.stringify(formControl);
+		
 		$.ajax({
 			headers: {
 	            'Authorization': email,
@@ -32,7 +65,7 @@ const CadastroEtapaController = {
 	        url: "/etapa/salvar",
 	        dataType: "json",
 	        cache: false,
-	        data : JSON.stringify($('#formId').serializeJSON()),
+	        data : myJsonData,
 	        success: function(retorno) {
 	        	$("#myModal").scrollTop(0);
 	        	$("#alertMsgId").removeClass("oculta").addClass("alert-success").find('div').append("Salvo com sucesso!");
@@ -119,12 +152,20 @@ const CadastroEtapaController = {
 		
 		$('#myModal').html(CadastroEtapaTemplate.add()).show();
 		
+		$("#duallistboxId").bootstrapDualListbox({
+			nonSelectedListLabel: 'N\u00e3o Selecionadas',
+			selectedListLabel: 'Selecionadas'
+		});
+		
 		if(etapa != undefined){
 			$('#campoId').val(etapa.id);
 			$('#nomeId').val(etapa.nome);
 			$('#descricaoId').val(etapa.descricao);
 			$('#constanteCampoId').val(etapa.constanteCampo);
+			CadastroEtapaController.carregarDualList(etapa.atividadeList);
+			return;
 		}
+		CadastroEtapaController.carregarDualList();
 	}
 };
 

@@ -1,14 +1,13 @@
 package com.totem.entity;
 
-import java.util.List;
+import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToMany;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
@@ -18,7 +17,7 @@ import javax.validation.constraints.Size;
 public class Usuario {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY, generator = "native")
+	@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	@Column(name = "COD_USUARIO")
 	private Long id;
 
@@ -33,25 +32,24 @@ public class Usuario {
 	@Size(min = 3 , max = 250, message = "Especialidade deve conter minimo de 3 caracter")
 	private String especialidade;
 	
-	@Column(name = "EMAIL", unique=true)
 	private String email;
 	
-	@Column(name = "COD_RFID")
+	@Column(name = "COD_RFID", unique=true)
 	private String codRfid;
 	
 	@Column(name = "isAdmin")
 	private Boolean isAdmin;
 	
-	@JoinColumn(name = "ID_ETAPA")
-	@OneToMany
-	private List<Etapa> etapaList;
+	@ManyToMany(targetEntity=Etapa.class)
+	private Set<?> Etapa;
 	
-	public List<Etapa> getEtapaList() {
-		return etapaList;
+	
+	public Set<?> getEtapa() {
+		return Etapa;
 	}
 
-	public void setEtapaList(List<Etapa> etapaList) {
-		this.etapaList = etapaList;
+	public void setEtapa(Set<?> etapa) {
+		Etapa = etapa;
 	}
 
 	public Boolean getIsAdmin() {

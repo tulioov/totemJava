@@ -1,7 +1,8 @@
 package com.totem.service;
 
-import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,10 +48,8 @@ public class UsuarioService {
 		}
 
 		Usuario usuario = new Usuario();
-
-		addListEtapaInUsuario(usuarioDTO, usuario);
-
 		BeanUtils.copyProperties(usuarioDTO, usuario);
+		addListEtapaInUsuario(usuarioDTO, usuario);
 
 		usuarioRepository.save(usuario);
 		return usuario;
@@ -66,19 +65,16 @@ public class UsuarioService {
 
 	private void addListEtapaInUsuario(UsuarioDTO usuarioDTO, Usuario usuario) {
 		
-		if(!isAdm(usuario.getEmail())) {
-			throw new CustomErrorException(HttpStatus.UNAUTHORIZED, ERRO_PERMISSAO);
-		}
-		
 		if (usuarioDTO.getEtapaList() == null || usuarioDTO.getEtapaList().isEmpty()) {
 			return;
 		}
-		List<Etapa> etapaList = new ArrayList<>();
+		
+		Set<Etapa> etapaList = new HashSet<>();
 
 		for (Long codEtapa : usuarioDTO.getEtapaList()) {
 			etapaList.add(etapaService.findById(codEtapa));
 		}
-		usuario.setEtapaList(etapaList);
+		usuario.setEtapa(etapaList);
 	}
 
 	public Usuario delete(Long id, String emailUsuario) {
@@ -97,6 +93,10 @@ public class UsuarioService {
 			return false;
 		}
 		return usuario.getIsAdmin()==null?Boolean.FALSE:usuario.getIsAdmin();
+	}
+
+	public Usuario buscarUsuarioPorNFC(String nfc) {
+		return usuarioRepository.findByCodRfid(nfc);
 	}
 
 }

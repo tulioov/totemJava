@@ -1,5 +1,5 @@
 
-const CadastroUsuarioController = {
+const CadastroFeriadoController = {
 		
 	erro(data, alertComponent){
 		$("#myModal").scrollTop(0);
@@ -12,7 +12,7 @@ const CadastroUsuarioController = {
     		$("#"+alertComponent).removeClass("oculta").addClass("alert-danger").find('div').append(data.responseJSON.response.message+"<br>");
     		return;
     	}
-    	retorno = data.responseJSON.response;
+    	let retorno = data.responseJSON.response;
     	for (const property in retorno) {
     		if(property == 'stackTrace'){
     			return;
@@ -21,42 +21,11 @@ const CadastroUsuarioController = {
     		$("#"+alertComponent).removeClass("oculta").addClass("alert-danger").find('div').append(retorno[property]+"<br>");
 		}
 	},
-		
-	carregarDualList(etapaList){
-		$.ajax({
-			headers: {
-	            'Authorization': email,
-	            'Content-Type':'application/json'
-	        },
-	        type: "GET",
-	        contentType: "application/json",
-	        url: "/etapa/listar",
-	        success: function(retorno) {
-	        	$(retorno.response).each(function(index, data) {
-	        		if (etapaList != undefined){
-        				if(etapaList.some(etapa => etapa.id === data.id)){
-	        				$("#duallistboxId").append(`<option value="${data.id}" selected="selected" >${data.descricao}</option>`);
-        				}else{
-        					$("#duallistboxId").append(`<option value="${data.id}">${data.descricao}</option>`);
-        				}
-	        		}else{
-	        			$("#duallistboxId").append(`<option value="${data.id}">${data.descricao}</option>`);
-	        		}
-        		});
-	        },complete: function(data) { 
-	        	$("#duallistboxId").bootstrapDualListbox('refresh');
-	        }
-	    });
-	},
-		
+	
 	salvar(){
 		
-		let formControl = new Object();
-		formControl  = $('#formId').serializeJSON();
-		formControl.etapaList = $('#duallistboxId').val();
-		formControl.isAdmin = $('#isAdminId').prop('checked');
-		formControl.email = $('#emailId').val();
-		
+		let formControl  = $('#formId').serializeJSON();
+		formControl.dtFeriado = $("#dtFeriadoId").val().split('-').reverse().join('/');
 		let myJsonData = JSON.stringify(formControl);
 		
 		$.ajax({
@@ -65,7 +34,7 @@ const CadastroUsuarioController = {
 	            'Content-Type':'application/json'
 	        },
 	        type: "POST",
-	        url: "/usuario/salvar",
+	        url: "/feriado/salvar",
 	        dataType: "json",
 	        cache: false,
 	        data : myJsonData,
@@ -75,11 +44,11 @@ const CadastroUsuarioController = {
 	        	setTimeout(function(){
 	        		$("#alertMsgId").addClass("oculta").find('div').removeClass("alert-success").html("");
 	        		$('#myModal').modal('hide');
-	        		CadastroUsuarioController.listar();
+	        		CadastroFeriadoController.listar();
         		},2000); 
 	        },
 	        error: function (data) {   
-	        	CadastroUsuarioController.erro(data,"alertMsgId");
+	        	CadastroFeriadoController.erro(data,"alertMsgId");
 	        },
 	    });
 	},
@@ -92,12 +61,11 @@ const CadastroUsuarioController = {
 	        },
 	        type: "GET",
 	        contentType: "application/json",
-	        url: "/usuario/findById/"+id,
+	        url: "/feriado/findById/"+id,
 	        success: function(retorno) {
-	        	CadastroUsuarioController.addUser(retorno.response)
-	        }, 
-	        error: function (data) {   
-	        	CadastroUsuarioController.erro(data,"alertMsgId");
+	        	CadastroFeriadoController.addUser(retorno.response)
+	        }, error: function (data) {   
+	        	CadastroFeriadoController.erro(data,"alertMsgId");
 	        }
 	    });
 	},
@@ -110,24 +78,23 @@ const CadastroUsuarioController = {
 	        },
 	        type: "DELETE",
 	        contentType: "application/json",
-	        url: "/usuario/deletar/"+id,
+	        url: "/feriado/deletar/"+id,
 	        success: function(retorno) {
 	        	$("#myModal").scrollTop(0);
 	        	$("#alertMsgIdTable").removeClass("oculta").addClass("alert-success").find('div').append("Deletado com sucesso!");
 	        	setTimeout(function(){
 	        		$("#alertMsgIdTable").addClass("oculta").removeClass("alert-success").find('div').html("");
-	        		CadastroUsuarioController.listar();
+	        		CadastroFeriadoController.listar();
         		},2000); 
-	        }, 
-	        error: function (data) {  
-	        	CadastroUsuarioController.erro(data,"alertMsgIdTable");
+	        }, error: function (data) {  
+	        	CadastroFeriadoController.erro(data,"alertMsgIdTable");
 	        }
 	    });
 	},
 		
 	listar(){
-		$('#tableUsuario').dataTable().fnClearTable();
-	    $('#tableUsuario').dataTable().fnDestroy();
+		$('#tableFeriado').dataTable().fnClearTable();
+	    $('#tableFeriado').dataTable().fnDestroy();
 		$.ajax({
 			headers: {
 	            'Authorization': email,
@@ -135,17 +102,16 @@ const CadastroUsuarioController = {
 	        },
 	        type: "GET",
 	        contentType: "application/json",
-	        url: "/usuario/listar",
+	        url: "/feriado/listar",
 	        success: function(retorno) {
 	        	$(retorno.response).each(function(index, data) {
-	        		$("#tableUsuario").find('tbody').append(CadastroUsuarioTemplate.itemLinha(data));
+	        		$("#tableFeriado").find('tbody').append(CadastroFeriadoTemplate.itemLinha(data));
         		});
-	        },
-	        error: function (data) {  
-	        	CadastroUsuarioController.erro(data,"alertMsgIdTable");
+	        },error: function (data) {   
+	        	CadastroFeriadoController.erro(data,"alertMsgIdTable");
 	        },
 	        complete: function(data) { 
-	        	$('#tableUsuario').DataTable( {
+	        	$('#tableFeriado').DataTable( {
 	        	    language: {
 	        	        url: '//cdn.datatables.net/plug-ins/1.11.3/i18n/pt_br.json'
 	        	    }
@@ -154,31 +120,27 @@ const CadastroUsuarioController = {
 	    });
 	},
 	
-	addUser(usuario){
+	addUser(Feriado){
 		
-		$('#myModal').html(CadastroUsuarioTemplate.addUser()).show();
-		$('#duallistboxId').bootstrapDualListbox({
+		$('#myModal').html(CadastroFeriadoTemplate.add()).show();
+		
+		$("#duallistboxId").bootstrapDualListbox({
 			nonSelectedListLabel: 'N\u00e3o Selecionadas',
 			selectedListLabel: 'Selecionadas'
 		});
 		
-		if(usuario != undefined){
-			$('#campoId').val(usuario.id);
-			$('#nomeId').val(usuario.nome);
-			$('#especialidadeId').val(usuario.especialidade);
-			$('#emailId').val(usuario.email);
-			$('#codRfidId').val(usuario.codRfid);
-			$('#isAdminId').prop('checked', usuario.isAdmin);
-			CadastroUsuarioController.carregarDualList(usuario.etapaList);
-			return;
+		if(Feriado != undefined){
+			$('#campoId').val(Feriado.id);
+			$('#nomeId').val(Feriado.nome);
+			$('#dtFeriadoId').val(Feriado.dtFeriado.split('/').reverse().join('-'));
+			$('#descricaoId').val(Feriado.descricao);
+			$('#constanteCampoId').val(Feriado.constanteCampo);
 		}
-		CadastroUsuarioController.carregarDualList();
 	}
-	
 };
 
 $( document ).ready(function() {
-	CadastroUsuarioController.listar();
+	CadastroFeriadoController.listar();
 });
 
 

@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.totem.entity.Barco;
+import com.totem.dto.BarcoDTO;
 import com.totem.service.BarcoService;
 import com.totem.util.ResponseEntityUtil;
 import com.totem.util.RetornoDTO;
@@ -28,9 +28,9 @@ public class BarcoController {
 
 	@PostMapping("/salvar")
 	public @ResponseBody ResponseEntity<RetornoDTO> salvar(
-			@RequestHeader(name = "Authorization", required = true) String emailUsuario, @Valid @RequestBody Barco barco) {
+			@RequestHeader(name = "Authorization", required = true) String emailUsuario, @Valid @RequestBody BarcoDTO barcoDTO) {
 
-		return ResponseEntityUtil.defaultResponse(barcoService.salvar(barco, emailUsuario));
+		return ResponseEntityUtil.defaultResponse(barcoService.salvar(barcoDTO, emailUsuario));
 	}
 
 	@GetMapping("/findById/{id}")
@@ -43,6 +43,12 @@ public class BarcoController {
 	public @ResponseBody ResponseEntity<RetornoDTO> listar(
 			@RequestHeader(name = "Authorization", required = true) String emailUsuario) {
 		return ResponseEntityUtil.defaultResponse(barcoService.listar(emailUsuario));
+	}
+	
+	@GetMapping("/escolhaBarco/{nfc}")
+	public @ResponseBody ResponseEntity<RetornoDTO> buscarUsuarioPorNFC(
+			@RequestHeader(name = "Authorization", required = true) String emailUsuario, @PathVariable("nfc") String nfc) {
+		return ResponseEntityUtil.defaultResponse(barcoService.listar(emailUsuario, nfc));
 	}
 
 	@DeleteMapping("/deletar/{id}")

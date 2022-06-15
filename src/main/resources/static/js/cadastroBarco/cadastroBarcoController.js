@@ -29,6 +29,8 @@ const CadastroBarcoController = {
 		let formControl = new Object();
 		formControl  = $('#formId').serializeJSON();
 		formControl.imagem = $('#base64image').val();
+		formControl.dtInicioPrevisto = $("#dtInicioPrevistoId").val().split('-').reverse().join('/');
+		formControl.dtFimPrevisto = $("#dtFimPrevistoId").val().split('-').reverse().join('/');
 		let myJsonData = JSON.stringify(formControl);
 		
 		$.ajax({
@@ -137,6 +139,8 @@ const CadastroBarcoController = {
 		if(barco != undefined){
 			$('#campoId').val(barco.id);
 			$('#nomeId').val(barco.nome);
+			$('#dtInicioPrevistoId').val(barco.dtInicioPrevisto.split('/').reverse().join('-'));
+			$('#dtFimPrevistoId').val(barco.dtFimPrevisto.split('/').reverse().join('-'));
 			$('#descricaoId').val(barco.descricao);
 			$('#base64image').attr('src', barco.imagem); 
 			$('#base64image').val(barco.imagem);
@@ -185,6 +189,3 @@ const CadastroBarcoController = {
 $( document ).ready(function() {
 	CadastroBarcoController.listar();
 });
-
-
-
