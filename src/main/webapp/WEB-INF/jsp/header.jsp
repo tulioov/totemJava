@@ -62,6 +62,7 @@
 					Cadastro
 				</a>
                 <div class='dashboard-nav-dropdown-menu'>
+                    <a href="/cadastroFeriado" class="dashboard-nav-dropdown-item">Feriado</a>
 					<a href="/cadastroBarco" class="dashboard-nav-dropdown-item">Barco</a>
 					<a href="/cadastroUsuario" onclick="CadastroUsuarioController.listar();" class="dashboard-nav-dropdown-item">Usuario</a>
 					<a href="/cadasdroEtapas" class="dashboard-nav-dropdown-item">Etapa</a>
