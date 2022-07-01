@@ -16,7 +16,6 @@ import com.totem.entity.SubAtividade;
 import com.totem.entity.Usuario;
 import com.totem.exception.CustomErrorException;
 import com.totem.repository.MonitoracaoRepository;
-import com.totem.util.UtilDate;
 
 @Service
 public class MonitoracaoService {
@@ -114,12 +113,7 @@ public class MonitoracaoService {
 
 		Set<Monitoracao> lstMonitoracao = new HashSet<>();
 		lstMonitoracao.add(monitoracao);
-
 		barco.setMonitoracao(lstMonitoracao);
-		if(barco.getDtInicio() == null) {
-			barco.setDtInicio(new Date());
-			barco.setDtFim(UtilDate.somarDiasData(barco.getDtInicio(), barco.getTempoDiasFabricao().intValue()));
-		}
 
 		this.salvar(monitoracao, emailUsuario);
 		barcoService.salvarBarcoMonitor(barco, emailUsuario);

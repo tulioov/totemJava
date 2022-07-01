@@ -38,7 +38,7 @@ public class FeriadoController {
 			@RequestHeader(name = "Authorization", required = true) String emailUsuario, @PathVariable("id") Long id) {
 		return ResponseEntityUtil.defaultResponse(feriadoService.findById(id));
 	}
-
+	
 	@GetMapping("/listar")
 	public @ResponseBody ResponseEntity<RetornoDTO> listar(
 			@RequestHeader(name = "Authorization", required = true) String emailUsuario) {

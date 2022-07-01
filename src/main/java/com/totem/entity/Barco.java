@@ -58,12 +58,30 @@ public class Barco {
 	@Size(min = 3 , max = 250, message = "descrição deve conter minimo de 3 caracter")
 	private String descricao;
 	
+	@Column(name = "HRS_BARCO_PREVISTA")
+	private Long hrsBarcoPrevista;
+	
+	@Column(name = "HRS_BARCO_TRABALHADAS")
+	private Long hrsBarcoTrabalhadas;
+	
 	@ManyToMany(targetEntity=Monitoracao.class)
 	private Set<Monitoracao> monitoracao;
 	
 	@Transient
 	private Long tempoDiasFabricao;
 	
+	@Transient
+	private Long tempoHorasFabricao;
+	
+	public Long getTempoHorasFabricao() {
+		if(dtInicioPrevisto == null || dtFimPrevisto == null) {
+			return null;
+		}
+		long dt = (dtFimPrevisto.getTime() - dtInicioPrevisto.getTime());
+		return 24*(dt / 86400000L);
+	}
+	
+		
 	public Long getTempoDiasFabricao() {
 		if(dtInicioPrevisto == null || dtFimPrevisto == null) {
 			return null;
@@ -149,4 +167,23 @@ public class Barco {
 		this.imagem = imagem;
 	}
 
+
+	public Long getHrsBarcoPrevista() {
+		return hrsBarcoPrevista;
+	}
+
+
+	public void setHrsBarcoPrevista(Long hrsBarcoPrevista) {
+		this.hrsBarcoPrevista = hrsBarcoPrevista;
+	}
+
+
+	public Long getHrsBarcoTrabalhadas() {
+		return hrsBarcoTrabalhadas;
+	}
+
+
+	public void setHrsBarcoTrabalhadas(Long hrsBarcoTrabalhadas) {
+		this.hrsBarcoTrabalhadas = hrsBarcoTrabalhadas;
+	}
 }
