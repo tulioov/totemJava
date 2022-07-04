@@ -1,15 +1,23 @@
 
 const CadastroItemController = {
 		
+	tempoEspera(divId){
+		setTimeout(function () {
+			$('#'+divId).hide(); 
+		}, 1500); 
+	}
+		
 	erro(data, alertComponent){
 		$("#myModal").scrollTop(0);
     	$("#"+alertComponent).find('div').html("");
     	if(data.responseJSON.statusCode === 404){
     		$("#"+alertComponent).removeClass("oculta").addClass("alert-danger").find('div').append(data.responseJSON.response+"<br>");
+    		CadastroItemController.tempoEspera(alertComponent);
     		return;
     	}
     	if(data.responseJSON.statusCode === 401){
     		$("#"+alertComponent).removeClass("oculta").addClass("alert-danger").find('div').append(data.responseJSON.response.message+"<br>");
+    		CadastroItemController.tempoEspera(alertComponent);
     		return;
     	}
     	retorno = data.responseJSON.response;
@@ -19,6 +27,7 @@ const CadastroItemController = {
     		}
     		$("#"+property+"Id").addClass("errorInput");
     		$("#"+alertComponent).removeClass("oculta").addClass("alert-danger").find('div').append(retorno[property]+"<br>");
+    		CadastroItemController.tempoEspera(alertComponent);
 		}
 	},
 		

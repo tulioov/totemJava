@@ -100,7 +100,6 @@ public class BarcoService {
 			if(barcoDTO.getMonitoracao() == null) {
 				barco.setMonitoracao(monitor);
 			}
-			
 		}
 		BeanUtils.copyProperties(barcoDTO, barco);
 		barcoRepository.save(barco);
@@ -125,10 +124,10 @@ public class BarcoService {
 		
 		List<Feriado> lstFeriado = feriadoService.findByDtFeriadoBetween(barco.getDtInicio(), barco.getDtFim());
 		
-		if(barco.getDtFim() == null || barco.getHrsBarcoPrevista() == null) {
+		if(barco.getDtFim() == null || barco.getHrsBarcoAutomatizada() == null) {
 			barco.setDtFim(utilDate.somarDiasData(barco.getDtInicio(), barco.getTempoDiasFabricao().intValue()));
 			Long diasPrevistos = utilDate.getDiasUteisPrevistos(barco.getDtInicio(), barco.getDtFim(), lstFeriado);
-			barco.setHrsBarcoPrevista(diasPrevistos*8);
+			barco.setHrsBarcoAutomatizada(diasPrevistos*8);
 		}
 		
 		barcoRepository.save(barco);

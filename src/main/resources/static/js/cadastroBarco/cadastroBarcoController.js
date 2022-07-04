@@ -3,15 +3,23 @@ let imageUploadBarco;
 
 const CadastroBarcoController = {
 		
+	tempoEspera(divId){
+		setTimeout(function () {
+			$('#'+divId).hide(); 
+		}, 1500); 
+	},
+		
 	erro(data, alertComponent){
 		$("#myModal").scrollTop(0);
     	$("#"+alertComponent).find('div').html("");
     	if(data.responseJSON.statusCode === 404){
     		$("#"+alertComponent).removeClass("oculta").addClass("alert-danger").find('div').append(data.responseJSON.response+"<br>");
+    		CadastroBarcoController.tempoEspera(alertComponent);
     		return;
     	}
     	if(data.responseJSON.statusCode === 401){
     		$("#"+alertComponent).removeClass("oculta").addClass("alert-danger").find('div').append(data.responseJSON.response.message+"<br>");
+    		CadastroBarcoController.tempoEspera(alertComponent);
     		return;
     	}
     	retorno = data.responseJSON.response;
@@ -21,6 +29,7 @@ const CadastroBarcoController = {
     		}
     		$("#"+property+"Id").addClass("errorInput");
     		$("#"+alertComponent).removeClass("oculta").addClass("alert-danger").find('div').append(retorno[property]+"<br>");
+    		CadastroBarcoController.tempoEspera(alertComponent);
 		}
 	},
 		
@@ -31,6 +40,7 @@ const CadastroBarcoController = {
 		formControl.imagem = $('#base64image').val();
 		formControl.dtInicioPrevisto = $("#dtInicioPrevistoId").val().split('-').reverse().join('/');
 		formControl.dtFimPrevisto = $("#dtFimPrevistoId").val().split('-').reverse().join('/');
+		formControl.hrsBarcoPrevistaId = $('#hrsBarcoPrevistaId').val()*60;
 		let myJsonData = JSON.stringify(formControl);
 		
 		$.ajax({
@@ -139,6 +149,7 @@ const CadastroBarcoController = {
 		if(barco != undefined){
 			$('#campoId').val(barco.id);
 			$('#nomeId').val(barco.nome);
+			$('#hrsBarcoPrevistaId').val(barco.hrsBarcoPrevista/60);
 			$('#dtInicioPrevistoId').val(barco.dtInicioPrevisto.split('/').reverse().join('-'));
 			$('#dtFimPrevistoId').val(barco.dtFimPrevisto.split('/').reverse().join('-'));
 			$('#descricaoId').val(barco.descricao);

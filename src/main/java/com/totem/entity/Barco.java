@@ -61,6 +61,9 @@ public class Barco {
 	@Column(name = "HRS_BARCO_PREVISTA")
 	private Long hrsBarcoPrevista;
 	
+	@Column(name = "HRS_BARCO_AUTOMATIZADA")
+	private Long hrsBarcoAutomatizada;
+	
 	@Column(name = "HRS_BARCO_TRABALHADAS")
 	private Long hrsBarcoTrabalhadas;
 	
@@ -167,14 +170,13 @@ public class Barco {
 		this.imagem = imagem;
 	}
 
-
-	public Long getHrsBarcoPrevista() {
-		return hrsBarcoPrevista;
+	public Long getHrsBarcoAutomatizada() {
+		return hrsBarcoAutomatizada;
 	}
 
 
-	public void setHrsBarcoPrevista(Long hrsBarcoPrevista) {
-		this.hrsBarcoPrevista = hrsBarcoPrevista;
+	public void setHrsBarcoAutomatizada(Long hrsBarcoAutomatizada) {
+		this.hrsBarcoAutomatizada = hrsBarcoAutomatizada;
 	}
 
 
@@ -186,4 +188,15 @@ public class Barco {
 	public void setHrsBarcoTrabalhadas(Long hrsBarcoTrabalhadas) {
 		this.hrsBarcoTrabalhadas = hrsBarcoTrabalhadas;
 	}
+
+
+	public Long getHrsBarcoPrevista() {
+		return hrsBarcoPrevista;
+	}
+
+
+	public void setHrsBarcoPrevista(Long hrsBarcoPrevista) {
+		this.hrsBarcoPrevista = hrsBarcoPrevista;
+	}
+	
 }

@@ -110,6 +110,7 @@ public class MonitoracaoService {
 		monitoracao.setDtInicioAtividade(new Date());
 		monitoracao.setUsuario(usuario);
 		monitoracao.setSubAtividade(subAtividade);
+		monitoracao.setStatus("Trabalhando");
 
 		Set<Monitoracao> lstMonitoracao = new HashSet<>();
 		lstMonitoracao.add(monitoracao);
@@ -146,8 +147,11 @@ public class MonitoracaoService {
 		if("finalizar".equals(monitoracaoDTO.getAcao())){
 			monitoracao.setDtFimAtividade(new Date());
 			monitoracao.setDtFimAtividadeTotal(new Date());
-			monitoracao.setStatus("Conluído");
+			monitoracao.setStatus("Finalizado");
 			monitoracaoRepository.save(monitoracao);
+			Barco barco = barcoService.findById(monitoracao.getIdBarco(), emailUsuario);
+			barco.setHrsBarcoTrabalhadas(monitoracao.getTempoTrabalho());
+			barcoService.salvarBarcoMonitor(barco, emailUsuario);
 			return monitoracao;
 		}
 		

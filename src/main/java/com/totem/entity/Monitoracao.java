@@ -61,8 +61,6 @@ public class Monitoracao {
 	@Transient
 	private Long tempoTrabalho;
 	
-	
-	
 	public Long getIdBarco() {
 		return idBarco;
 	}
@@ -121,7 +119,7 @@ public class Monitoracao {
 	
 	public Long getTempoTrabalho() {
 		long dt = (new Date().getTime() - dtInicioAtividade.getTime());
-		return dt / 86400000L;
+		return (dt *24*60) / 86400000L;
 	}
 
 	public Date getDtInicioAtividade() {

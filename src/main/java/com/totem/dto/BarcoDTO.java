@@ -26,6 +26,8 @@ public class BarcoDTO {
 	
 	private String imagem;
 	
+	private Long hrsBarcoPrevista;
+	
 	@Size(min = 3 , max = 250, message = "Nome deve conter minimo de 3 caracter")
 	private String nome;
 	
@@ -34,6 +36,16 @@ public class BarcoDTO {
 	private String descricao;
 	
 	private Set<?> monitoracao;
+	
+	
+
+	public Long getHrsBarcoPrevista() {
+		return hrsBarcoPrevista;
+	}
+
+	public void setHrsBarcoPrevista(Long hrsBarcoPrevista) {
+		this.hrsBarcoPrevista = hrsBarcoPrevista;
+	}
 
 	public Long getId() {
 		return id;

@@ -26,7 +26,7 @@ const CadastroEtapaTemplate = {
 									</div>
 									<div class="col-md-4">
 										<div>Constante Campo: </div>
-										<input type="text" name="constanteCampo" class="form-control" id="constanteCampoId">
+										<input type="text" name="constanteCampo" oninput="this.value = this.value.replace(' ', '');" class="form-control uppercase" id="constanteCampoId">
 									</div>
 								</div>
 							</div>

@@ -18,7 +18,7 @@ const MonitorUserTemplate = {
 				<h4 class="col-md-6 text-right">${barco.dtFim==undefined?'Aguardando Inicio':barco.dtFim}</h4> 
 			</div>
 			<div class="progress mt15">
-			  	<div class="progress-bar bg-success" role="progressbar" style="width: 25%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">25%</div>
+			  	<div class="progress-bar bg-success" role="progressbar" style="width: ${(barco.hrsBarcoTrabalhadas*100/barco.hrsBarcoPrevista)}%"  aria-valuenow="25" aria-valuemin="0" aria-valuemax="${barco.hrsBarcoPrevista}">25%</div>
 			</div>
 			<hr/>
 			<div class="row">
@@ -29,7 +29,7 @@ const MonitorUserTemplate = {
 				        <th>Nome</th>
 				        <th>Trabalhando em</th>
 				        <th>Hr. Entrada</th>
-				        <th>Tempo (dias)</th>
+				        <th>Tempo(Minutos)</th>
 				        <th>Status</th>
 				    </tr>
 					</thead>
