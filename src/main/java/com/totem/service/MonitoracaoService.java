@@ -16,7 +16,6 @@ import com.totem.entity.SubAtividade;
 import com.totem.entity.Usuario;
 import com.totem.exception.CustomErrorException;
 import com.totem.repository.MonitoracaoRepository;
-import com.totem.util.UtilDate;
 
 @Service
 public class MonitoracaoService {
@@ -111,15 +110,11 @@ public class MonitoracaoService {
 		monitoracao.setDtInicioAtividade(new Date());
 		monitoracao.setUsuario(usuario);
 		monitoracao.setSubAtividade(subAtividade);
+		monitoracao.setStatus("Trabalhando");
 
 		Set<Monitoracao> lstMonitoracao = new HashSet<>();
 		lstMonitoracao.add(monitoracao);
-
 		barco.setMonitoracao(lstMonitoracao);
-		if(barco.getDtInicio() == null) {
-			barco.setDtInicio(new Date());
-			barco.setDtFim(UtilDate.somarDiasData(barco.getDtInicio(), barco.getTempoDiasFabricao().intValue()));
-		}
 
 		this.salvar(monitoracao, emailUsuario);
 		barcoService.salvarBarcoMonitor(barco, emailUsuario);
@@ -152,8 +147,11 @@ public class MonitoracaoService {
 		if("finalizar".equals(monitoracaoDTO.getAcao())){
 			monitoracao.setDtFimAtividade(new Date());
 			monitoracao.setDtFimAtividadeTotal(new Date());
-			monitoracao.setStatus("Conluído");
+			monitoracao.setStatus("Finalizado");
 			monitoracaoRepository.save(monitoracao);
+			Barco barco = barcoService.findById(monitoracao.getIdBarco(), emailUsuario);
+			barco.setHrsBarcoTrabalhadas(monitoracao.getTempoTrabalho());
+			barcoService.salvarBarcoMonitor(barco, emailUsuario);
 			return monitoracao;
 		}
 		

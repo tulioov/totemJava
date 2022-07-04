@@ -40,7 +40,9 @@ const MonitorUserController = {
 	    		    }
 	    		});
 				if(barcosList.length == index+1){
-					setTimeout(function () {MonitorUserController.reproduzirListaBarcos(barcosList);}, 5000);
+					setTimeout(function () {
+						MonitorUserController.abrirMonitoracao();
+					}, 5000);
 				}	
             }, 5000 * index);
 		});

@@ -34,13 +34,17 @@ const CadastroBarcoTemplate = {
 									</div>
 								</div>
 			                	<div class="row">
-									<div class="col-md-6">
+									<div class="col-md-4">
 										<div>Nome: </div>
 										<input type="text" name="nome" class="form-control" id="nomeId">
 									</div>
-									<div class="col-md-6">
+									<div class="col-md-4">
 										<div>Descri\u00e7\u00e3o: </div>
-										<input type="text" name="descricao" class="form-control" id="descricaoId">
+										<input type="text" name="descricao" oninput="this.value = this.value.replace(' ', '');" class="form-control uppercase" id="descricaoId">
+									</div>
+									<div class="col-md-4">
+										<div>Horas Total de Prevista: </div>
+										<input type="numer" name="hrsBarcoPrevista" class="form-control" id="hrsBarcoPrevistaId">
 									</div>
 								</div>
 								<div class="row mt15">
