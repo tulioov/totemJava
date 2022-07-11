@@ -1,16 +1,69 @@
 
 const ControlTotensTemplate = {
 		
-	modalToten(){
+		
+	carregarPainel(barco){
 		return`
-				<div class="modal-dialog modal-lg">
-			        <div class="modal-content">
-			            <div class="modal-header">
-			                <h4 class="modal-title">Apontamento de horas</h4>
-			                <button type="button" class="close" data-dismiss="modal">&times;</button>
-			            </div>
-			            <div class="modal-body">
-			                <div class="">
+				<div class="col-md-4">
+					<button onclick="ControlTotensController.abrirModal('${barco.nome}');" data-toggle="modal" data-target="#myModal" type="button" class="btn btn-primary" style="width: 30rem;">
+			  			<div class="card-body">
+			    		<h5 class="card-title">${barco.nome}</h5>
+			    		<div class="card-text">
+				    		<div>
+								<div class="progress">
+								  <div class="progress-bar bg-success" role="progressbar" style="width: ${(barco.hrsBarcoTrabalhadas*100/barco.hrsBarcoPrevista)}%"  aria-valuenow="25" aria-valuemin="0" aria-valuemax="${barco.hrsBarcoPrevista}">%</div>
+								</div>
+							</div>
+						</div>
+						</div>
+					</button>
+				</div>
+			`;
+	},
+	
+	itemLinha(data){
+		return `
+			<tr>
+				<td>${data.id}</td>
+				<td>${data.usuario.nome}</td>
+				<td>${data.subAtividade.descricao}</td>
+				<td>${data.dtInicioAtividade}</td>
+				<td>${data.tempoTrabalho}</td>
+				<td>${data.status}</td>
+			</tr>
+		`;
+	},
+		
+	modalToten(barco){
+		return`
+			<div class="modal-dialog modal-lg ">
+		        <div class="modal-content">
+		            <div class="modal-header">
+		                <h4 class="modal-title">Adicionar Feriado</h4>
+		            </div>
+		            <div class="modal-body">
+			            
+		                <form id="formId">
+
+				            <h3>Processo de fabrica\u00e7\u00e3o do barco ${barco.nome}</h3>
+							<div class="row">
+								<div class="col-md-4 ">
+									<img style='width:16em;height:9em;' src='${barco.imagem}'/>
+								</div>
+								<div class="col-md-6 mt3em">
+									<h4>Data de inicio Previsto= ${barco.dtInicioPrevisto}</h4> 
+									<h4>Data de Termino Previsto = ${barco.dtFimPrevisto}</h4> 
+								</div>
+							</div>
+							<div class="row mt15">
+								<h4 class="col-md-6">${barco.dtInicio==undefined?'Aguardando Inicio':barco.dtInicio}</h4> 
+								<h4 class="col-md-6 text-right">${barco.dtFim==undefined?'Aguardando Inicio':barco.dtFim}</h4> 
+							</div>
+							<div class="progress mt15">
+							  	<div class="progress-bar bg-success" role="progressbar" style="width: ${(barco.hrsBarcoTrabalhadas*100/barco.hrsBarcoPrevista)}%"  aria-valuenow="25" aria-valuemin="0" aria-valuemax="${barco.hrsBarcoPrevista}">%</div>
+							</div>
+							<hr/>
+							<div class="row">
 								<table id="tableMonitorUser">
 									<thead>
 								    <tr>
@@ -18,76 +71,23 @@ const ControlTotensTemplate = {
 								        <th>Nome</th>
 								        <th>Trabalhando em</th>
 								        <th>Hr. Entrada</th>
-								        <th>Tempo</th>
+								        <th>Tempo(Minutos)</th>
+								        <th>Status</th>
 								    </tr>
 									</thead>
 									<tbody>
-										<tr>
-											<td>01</td>
-											<td>Fernand</td>
-											<td>Fibra</td>
-											<td>08:00</td>
-											<td>
-												<div class="progress">
-												  <div class="progress-bar bg-success" role="progressbar" style="width: 25%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">03:00</div>
-												</div>
-											</td>
-										</tr>
-										<tr>
-											<td>01</td>
-											<td>maria</td>
-											<td>Eletrica</td>
-											<td>08:00</td>
-											<td>
-												<div class="progress">
-												  <div class="progress-bar bg-warning" role="progressbar" style="width: 75%" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100">5:00</div>
-												</div>
-											</td>
-										</tr>
-										<tr>
-											<td>01</td>
-											<td>Geraldo</td>
-											<td>Motor</td>
-											<td>08:00</td>
-											<td>
-												<div class="progress">
-												  <div class="progress-bar bg-danger" role="progressbar" style="width: 100%" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">13:00</div>
-												</div>
-											</td>
-										</tr>
-										<tr>
-											<td>01</td>
-											<td>Jose</td>
-											<td>Fibra</td>
-											<td>08:00</td>
-											<td>
-												<div class="progress">
-												  <div class="progress-bar bg-warning" role="progressbar" style="width: 75%" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100">5:00</div>
-												</div>
-											</td>
-										</tr>
-										<tr>
-											<td>01</td>
-											<td>Fulano</td>
-											<td>Fibra</td>
-											<td>08:00</td>
-											<td>
-												<div class="progress">
-												  <div class="progress-bar bg-success" role="progressbar" style="width: 25%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">03:00</div>
-												</div>
-											</td>
-										</tr>
 									</tbody>
 								</table>
-						 	 </div>	
-			            </div>
-			            <div class="modal-footer">
-			                <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-			            </div>
-			        </div>
-		    	</div>
-				`
+							</div>
+    			        </form>
+		            </div>
+		            <div class="modal-footer">
+		            	<button type="button" class="btn btn-success" onClick="CadastroFeriadoController.salvar()" >Salvar</button>
+		                <button type="button" class="btn btn-danger" onClick="$('#myModal').hide();" data-dismiss="modal">Fechar</button>
+		            </div>
+		        </div>
+		    </div>
+			`;
 	}
-	
 };
 
