@@ -19,66 +19,9 @@
 	<div class="container">
 	
 		<div class="modal" id="myModal">
-		    
 		</div>
 	
-		<div class="row">
-			<div class="col-md-3">
-				<button onclick="ControlTotensController.abrirModal();" data-toggle="modal" data-target="#myModal" type="button" class="btn btn-primary" style="width: 18rem;">
-		  			<div class="card-body">
-		    		<h5 class="card-title">Embarcação A1</h5>
-		    		<div class="card-text">
-			    		<div>
-							<div class="progress">
-							  <div class="progress-bar bg-danger" role="progressbar" style="width: 25%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
-							</div>
-						</div>
-					</div>
-					</div>
-				</button>
-			</div>
-			<div class="col-md-3">
-				<button data-toggle="modal" data-target="#myModal" type="button" class="btn btn-primary" style="width: 18rem;">
-		  			<div class="card-body">
-		    		<h5 class="card-title">Embarcação A2</h5>
-			    		<div class="card-text">
-			    			<div>
-								<div class="progress">
-								  <div class="progress-bar bg-warning" role="progressbar" style="width: 60%" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100"></div>
-								</div>
-							</div>
-						</div>
-					</div>
-				</button>
-			</div>
-			<div class="col-md-3">
-				<button data-toggle="modal" data-target="#myModal" type="button" class="btn btn-primary" style="width: 18rem;">
-		  			<div class="card-body">
-		    		<h5 class="card-title">Embarcação A3</h5>
-			    		<p class="card-text">
-			    			<td>
-								<div class="progress">
-								  <div class="progress-bar bg-warning" role="progressbar" style="width: 60%" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100"></div>
-								</div>
-							</td>
-						</p>
-					</div>
-				</button>
-			</div>
-			<div class="col-md-3">
-				<button data-toggle="modal" data-target="#myModal" type="button" class="btn btn-primary" style="width: 18rem;">
-		  			<div class="card-body">
-		    		<h5 class="card-title">Embarcação A4</h5>
-			    		<p class="card-text">
-			    			<td>
-								<div class="progress">
-								  <div class="progress-bar bg-warning" role="progressbar" style="width: 60%" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100"></div>
-								</div>
-							</td>
-						</p>
-					</div>
-				</button>
-			</div>
+		<div id="painelId" class="row">
 		</div>
 	</div>
 	
