@@ -22,7 +22,7 @@ const CadastroEtapaTemplate = {
 			                	<div class="row">
 									<div class="col-md-4">
 										<div>Descri\u00e7\u00e3o: </div>
-										<input type="text" name="descricao" class="form-control" id="descricaoId">
+										<input type="text" name="descricao" class="form-control uppercase" id="descricaoId">
 									</div>
 									<div class="col-md-4">
 										<div>Constante Campo: </div>

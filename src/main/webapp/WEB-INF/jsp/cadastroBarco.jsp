@@ -41,6 +41,7 @@
 			        <th>ID</th>
 			        <th>Nome</th>
 			        <th>Descri&ccedil;&atilde;o</th>
+			        <th>Horas previstas</th>
 			        <th>A&ccedil;&atilde;o</th>
 			    </tr>
 				</thead>

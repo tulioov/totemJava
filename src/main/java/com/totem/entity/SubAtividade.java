@@ -18,7 +18,7 @@ public class SubAtividade {
 	@Column(name = "COD_SUB_ATIVIDADE")
 	private Long id;
 
-	@Column(name = "DESCRICAO")
+	@Column(name = "DESCRICAO", unique=true)
 	@NotEmpty(message = "Barco deve conter uma descrição.")
 	@Size(min = 3, max = 250, message = "descrição deve conter minimo de 3 caracter")
 	private String descricao;

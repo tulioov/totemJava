@@ -12,6 +12,10 @@ const CadastroUsuarioController = {
     		$("#"+alertComponent).removeClass("oculta").addClass("alert-danger").find('div').append(data.responseJSON.response.message+"<br>");
     		return;
     	}
+    	if(data.responseJSON.statusCode === 500){
+    		$("#"+alertComponent).removeClass("oculta").addClass("alert-danger").find('div').append("Erro Interno"+"<br>");
+    		return;
+    	}
     	retorno = data.responseJSON.response;
     	for (const property in retorno) {
     		if(property == 'stackTrace'){

@@ -63,6 +63,9 @@ const MonitorUserTemplate = {
 								Escolha sua A\u00e7\u00e3o					            
 							</h4>
 				        </div>
+				        <div class="progress">
+							<div id="progressBarEscolhaBarcoId" class="progress-bar bg-success" role="progressbar" style="width: 100%" value=100 aria-valuemin="0" aria-valuemax="100">Tempo de espera</div>
+						</div>
 		            	<div class="card card-body">
 			            	<div id="imgEscolhaBarco" class="row">
 							</div>
@@ -103,7 +106,7 @@ const MonitorUserTemplate = {
 		
 		return` 
 			<div class="list-content">
-		        <a href="#cmb${index}${atividade.id}"  data-toggle="collapse" aria-expanded="false" aria-controls="cmb${index}${atividade.id}">${atividade.descricao}<i class="fa fa-chevron-down"></i></a>
+		        <a class="btn btn-info" href="#cmb${index}${atividade.id}"  data-toggle="collapse" aria-expanded="false" aria-controls="cmb${index}${atividade.id}">${atividade.descricao}<i class="fa fa-chevron-down"></i></a>
 		        <div class="collapse" id="cmb${index}${atividade.id}">
 		            <div class="list-box">
 		                <div class="row">
@@ -119,8 +122,6 @@ const MonitorUserTemplate = {
 		`;
 	},
 	
-	
-		
 	abrirEscolhaEtapa(idBarco){
 		return`
 				<div class="modal-dialog modal-lg">

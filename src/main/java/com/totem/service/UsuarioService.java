@@ -4,6 +4,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -46,7 +48,7 @@ public class UsuarioService {
 		if(!isAdm(emailUsuario)) {
 			throw new CustomErrorException(HttpStatus.UNAUTHORIZED, ERRO_PERMISSAO);
 		}
-
+		@Valid
 		Usuario usuario = new Usuario();
 		BeanUtils.copyProperties(usuarioDTO, usuario);
 		addListEtapaInUsuario(usuarioDTO, usuario);

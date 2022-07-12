@@ -21,7 +21,6 @@ public class Usuario {
 	@Column(name = "COD_USUARIO")
 	private Long id;
 
-	
 	@Column(name = "NOME")
 	@NotEmpty(message = "Usuario deve conter um nome.")	
 	@Size(min = 3 , max = 250, message = "Nome deve conter minimo de 3 caracter")
@@ -41,15 +40,15 @@ public class Usuario {
 	private Boolean isAdmin;
 	
 	@ManyToMany(targetEntity=Etapa.class)
-	private Set<?> Etapa;
+	private Set<?> etapa;
 	
 	
 	public Set<?> getEtapa() {
-		return Etapa;
+		return etapa;
 	}
 
 	public void setEtapa(Set<?> etapa) {
-		Etapa = etapa;
+		this.etapa = etapa;
 	}
 
 	public Boolean getIsAdmin() {

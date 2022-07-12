@@ -12,6 +12,10 @@ const MonitorUserController = {
     		$("#"+alertComponent).removeClass("oculta").addClass("alert-danger").find('div').append(data.responseJSON.response.message+"<br>");
     		return;
     	}
+    	if(data.responseJSON.statusCode === 500){
+    		$("#"+alertComponent).removeClass("oculta").addClass("alert-danger").find('div').append("Erro Interno"+"<br>");
+    		return;
+    	}
     	let retorno = data.responseJSON.response;
     	for (const property in retorno) {
     		if(property == 'stackTrace'){
@@ -66,11 +70,16 @@ const MonitorUserController = {
 		
 	abrirEscolhaBarco(){
 		
-		var tempoEscolhaBarco = 5000;
+		if($('#nfcId').val()===''){
+			return;
+		}
+		
+		$('#contentId').hide();
+		var tempoEscolhaBarco = 10000;
 		$('#contentIdBarco').html(MonitorUserTemplate.modalEscolhaBarco());
 		
-		 $('#nfcIdCache').val($('#nfcId').val());
-		 $('#nfcId').val('');
+		$('#nfcIdCache').val($('#nfcId').val());
+		$('#nfcId').val('');
 		
 		$.ajax({
 			headers: {
@@ -93,9 +102,9 @@ const MonitorUserController = {
 	        	
         		if(retorno.response.status == "Pausa"){
         			$('#imgEscolhaBarco').append(
-	    					`<h4>Deseja continuar o trabalho no barco ${retorno.response.barco.descricao} na SubAtividade: ${retorno.response.monitoracao.subAtividade.descricao}</h4>
+	    					`
 	    					<div class="col-md-12 mt15">
-	    						<button type="button" class="btn-lg btn-warning col-md-12 mt15" onclick="MonitorUserController.continuarPausarFinalizar();">Sim</button>
+	    						<button type="button" class="btn-lg btn-success col-md-12 mt15" onclick="MonitorUserController.continuarPausarFinalizar();">Continuar Trabalhando na ${retorno.response.barco.nome} na SubAtividade: ${retorno.response.monitoracao.subAtividade.descricao}</button>
 	    						<button type="button" class="btn-lg btn-danger col-md-12 mt15" onclick="MonitorUserController.continuarPausarFinalizar('finalizar');">Finalizar Atividade</button>
 	    					</div>`);
 	        		return;
@@ -113,14 +122,9 @@ const MonitorUserController = {
     						/>
         				</div>`);
         		}
-	        },error: function (data) {  
-	        	
 	        }
 	    });
-		
-		setTimeout(function() { 
-			$('#contentIdBarco').html("");
-	    }, tempoEscolhaBarco);
+		MonitorUserController.tempoProgressbar("progressBarEscolhaBarcoId", "escolhaBarco");
 	},
 	
 	continuarPausarFinalizar(acao){
@@ -190,20 +194,26 @@ const MonitorUserController = {
 	},
 	
 	
-	tempoProgressbar(){
+	tempoProgressbar(idProgress, acao){
 		
-		var valorBar = $('#progressBarEtapaId').attr("value");
+		var valorBar = $('#'+idProgress).attr("value");
 		
 		if(valorBar <= 0){
-			$("#modalCloseId").click();
+			if(acao == "escolhaEtapa"){
+				$("#modalCloseId").click();
+			}
+			if(acao == "escolhaBarco"){
+				$('#contentIdBarco').html("");
+				$('#contentId').show();
+			}
 			return;
 		}
 		
-		$('#progressBarEtapaId').attr("value",valorBar-10);
-		$('#progressBarEtapaId').css({"width": (valorBar-10)+"%"});
+		$('#'+idProgress).attr("value",valorBar-10);
+		$('#'+idProgress).css({"width": (valorBar-10)+"%"});
 		
 		setTimeout(function() { 
-			MonitorUserController.tempoProgressbar();
+			MonitorUserController.tempoProgressbar(idProgress, acao);
 	    }, 1000);
 		
 	},
@@ -271,9 +281,7 @@ const MonitorUserController = {
 	        	});
 	        }
 	    });
-		
-		
-		MonitorUserController.tempoProgressbar();
+		MonitorUserController.tempoProgressbar("progressBarEtapaId","escolhaEtapa")
 	}
 };
 

@@ -36,7 +36,7 @@ const CadastroBarcoTemplate = {
 			                	<div class="row">
 									<div class="col-md-4">
 										<div>Nome: </div>
-										<input type="text" name="nome" class="form-control" id="nomeId">
+										<input type="text" name="nome" class="form-control uppercase"  id="nomeId">
 									</div>
 									<div class="col-md-4">
 										<div>Descri\u00e7\u00e3o: </div>
@@ -76,6 +76,7 @@ const CadastroBarcoTemplate = {
 				<td>${data.id}</td>
 				<td>${data.nome}</td>
 				<td>${data.descricao}</td>
+				<td>${data.hrsBarcoPrevista/60}</td>
 				<td>
 					<span onclick="CadastroBarcoController.editar(${data.id});" class="glyphicon glyphicon-pencil"></span>
 					<span onclick="CadastroBarcoController.deletar(${data.id});" class="glyphicon glyphicon-trash"></span>

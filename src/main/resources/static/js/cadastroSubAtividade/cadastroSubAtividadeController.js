@@ -5,7 +5,7 @@ const CadastroSubAtividadeController = {
 		setTimeout(function () {
 			$('#'+divId).hide(); 
 		}, 1500); 
-	}
+	},
 		
 	erro(data, alertComponent){
 		$("#myModal").scrollTop(0);
@@ -18,6 +18,10 @@ const CadastroSubAtividadeController = {
     	if(data.responseJSON.statusCode === 401){
     		$("#"+alertComponent).removeClass("oculta").addClass("alert-danger").find('div').append(data.responseJSON.response.message+"<br>");
     		CadastroSubAtividadeController.tempoEspera(alertComponent);
+    		return;
+    	}
+    	if(data.responseJSON.statusCode === 500){
+    		$("#"+alertComponent).removeClass("oculta").addClass("alert-danger").find('div').append("Erro Interno"+"<br>");
     		return;
     	}
     	retorno = data.responseJSON.response;

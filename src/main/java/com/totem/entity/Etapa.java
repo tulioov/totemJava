@@ -22,7 +22,7 @@ public class Etapa {
 	@Column(name = "COD_ETAPA")
 	private Long id;
 	
-	@Column(name = "DESCRICAO")
+	@Column(name = "DESCRICAO", unique=true)
 	@NotEmpty(message = "Etapa deve conter uma descrição.")	
 	@Size(min = 3 , max = 250, message = "descrição deve conter minimo de 3 caracter")
 	private String descricao;

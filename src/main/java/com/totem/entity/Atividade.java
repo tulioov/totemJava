@@ -22,7 +22,7 @@ public class Atividade {
 	@Column(name = "COD_ATIVIDADE")
 	private Long id;
 	
-	@Column(name = "DESCRICAO")
+	@Column(name = "DESCRICAO", unique=true)
 	@NotEmpty(message = "Atividade deve conter uma descrição.")	
 	@Size(min = 3 , max = 250, message = "Descrição deve conter minimo de 3 caracter")
 	private String descricao;

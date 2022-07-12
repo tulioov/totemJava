@@ -22,11 +22,11 @@ const CadastroUsuarioTemplate = {
 			                	<div class="row">
 									<div class="col-md-6">
 										<div>Nome: </div>
-										<input type="text" name="nome" class="form-control" id="nomeId">
+										<input type="text" name="nome" class="form-control uppercase" id="nomeId">
 									</div>
 									<div class="col-md-4">
 										<div>Especialidade: </div>
-										<input type="text" name="especialidade" class="form-control" id="especialidadeId">
+										<input type="text" name="especialidade" class="form-control uppercase" id="especialidadeId">
 									</div>
 								</div>
 								<div class="row">
