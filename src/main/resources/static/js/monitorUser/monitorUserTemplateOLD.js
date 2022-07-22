@@ -36,7 +36,7 @@ const MonitorUserTemplate = {
 	},
 		
 		
-	abrirEscolhaEtapa(){
+	abrirEscolhaFase(){
 		return`
 				<div class="modal-dialog modal-lg">
 			        <div class="modal-content">
@@ -44,17 +44,17 @@ const MonitorUserTemplate = {
 			                <h4 class="modal-title">Escolha sua atividade</h4>
 			            </div>
 			            <div class="modal-body">
-			            <h2>Bem vindo NOME, Estamos ta etapa 0</h2>
+			            <h2>Bem vindo NOME, Estamos ta fase 0</h2>
 			            
 			            <div class="col-md-12">
 				            <div class="panel with-nav-tabs panel-primary">
 				                <div class="panel-heading">
 			                        <ul class="nav nav-tabs">
-			                            <li class="active"><a href="#tab0primary" data-toggle="tab">Etapa 0</a></li>
-			                            <li><a href="#tab1primary" data-toggle="tab">Etapa 1</a></li>
-			                            <li><a href="#tab2primary" data-toggle="tab">Etapa 2</a></li>
-			                            <li><a href="#tab3primary" data-toggle="tab">Etapa 3</a></li>
-			                            <li><a href="#tab4primary" data-toggle="tab">Etapa 4</a></li>
+			                            <li class="active"><a href="#tab0primary" data-toggle="tab">Fase 0</a></li>
+			                            <li><a href="#tab1primary" data-toggle="tab">Fase 1</a></li>
+			                            <li><a href="#tab2primary" data-toggle="tab">Fase 2</a></li>
+			                            <li><a href="#tab3primary" data-toggle="tab">Fase 3</a></li>
+			                            <li><a href="#tab4primary" data-toggle="tab">Fase 4</a></li>
 			                        </ul>
 				                </div>
 				                <div class="panel-body">
@@ -272,19 +272,19 @@ const MonitorUserTemplate = {
 						                            <div class="connecting-line"></div>
 						                            <ul class="nav nav-tabs" role="tablist">
 						                                <li role="presentation" class="active bg-white">
-						                                    <a href="#step0" data-toggle="tab" aria-controls="step0" role="tab" aria-expanded="true"><span class="round-tab">0 </span> <i>Etapa 0</i></a>
+						                                    <a href="#step0" data-toggle="tab" aria-controls="step0" role="tab" aria-expanded="true"><span class="round-tab">0 </span> <i>Fase 0</i></a>
 						                                </li>
 						                                <li role="presentation" class="disabled bg-white">
-						                                    <a href="#step1" data-toggle="tab" aria-controls="step1" role="tab" aria-expanded="false"><span class="round-tab">1</span> <i>Etapa 1</i></a>
+						                                    <a href="#step1" data-toggle="tab" aria-controls="step1" role="tab" aria-expanded="false"><span class="round-tab">1</span> <i>Fase 1</i></a>
 						                                </li>
 						                                <li role="presentation" class="disabled bg-white">
-						                                    <a href="#step2" data-toggle="tab" aria-controls="step2" role="tab"><span class="round-tab">2</span> <i>Etapa 2</i></a>
+						                                    <a href="#step2" data-toggle="tab" aria-controls="step2" role="tab"><span class="round-tab">2</span> <i>Fase 2</i></a>
 						                                </li>
 						                                <li role="presentation" class="disabled bg-white">
-						                                    <a href="#step3" data-toggle="tab" aria-controls="step3" role="tab"><span class="round-tab">3</span> <i>Etapa 3</i></a>
+						                                    <a href="#step3" data-toggle="tab" aria-controls="step3" role="tab"><span class="round-tab">3</span> <i>Fase 3</i></a>
 						                                </li>
 						                                <li role="presentation" class="disabled bg-white">
-						                                    <a href="#step4" data-toggle="tab" aria-controls="step4" role="tab"><span class="round-tab">4</span> <i>Etapa 4</i></a>
+						                                    <a href="#step4" data-toggle="tab" aria-controls="step4" role="tab"><span class="round-tab">4</span> <i>Fase 4</i></a>
 						                                </li>
 						                            </ul>
 						                        </div>

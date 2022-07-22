@@ -4,13 +4,15 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import com.totem.dto.UsuarioDTO;
-import com.totem.entity.Etapa;
+import com.totem.entity.Fase;
 import com.totem.entity.Usuario;
 import com.totem.exception.CustomErrorException;
 import com.totem.repository.UsuarioRepository;
@@ -24,7 +26,7 @@ public class UsuarioService {
 	private UsuarioRepository usuarioRepository;
 
 	@Autowired
-	private EtapaService etapaService;
+	private FaseService faseService;
 
 	public List<Usuario> listar(String emailUsuario) {
 		if(!isAdm(emailUsuario)) {
@@ -46,11 +48,16 @@ public class UsuarioService {
 		if(!isAdm(emailUsuario)) {
 			throw new CustomErrorException(HttpStatus.UNAUTHORIZED, ERRO_PERMISSAO);
 		}
-
+		@Valid
 		Usuario usuario = new Usuario();
 		BeanUtils.copyProperties(usuarioDTO, usuario);
-		addListEtapaInUsuario(usuarioDTO, usuario);
+		addListFaseInUsuario(usuarioDTO, usuario);
 
+		usuarioRepository.save(usuario);
+		return usuario;
+	}
+	
+	public Usuario salvar(Usuario usuario) {
 		usuarioRepository.save(usuario);
 		return usuario;
 	}
@@ -63,18 +70,18 @@ public class UsuarioService {
 		return usuario;
 	}
 
-	private void addListEtapaInUsuario(UsuarioDTO usuarioDTO, Usuario usuario) {
+	private void addListFaseInUsuario(UsuarioDTO usuarioDTO, Usuario usuario) {
 		
-		if (usuarioDTO.getEtapaList() == null || usuarioDTO.getEtapaList().isEmpty()) {
+		if (usuarioDTO.getFaseList() == null || usuarioDTO.getFaseList().isEmpty()) {
 			return;
 		}
 		
-		Set<Etapa> etapaList = new HashSet<>();
+		Set<Fase> faseList = new HashSet<>();
 
-		for (Long codEtapa : usuarioDTO.getEtapaList()) {
-			etapaList.add(etapaService.findById(codEtapa));
+		for (Long codFase : usuarioDTO.getFaseList()) {
+			faseList.add(faseService.findById(codFase));
 		}
-		usuario.setEtapa(etapaList);
+		usuario.setFase(faseList);
 	}
 
 	public Usuario delete(Long id, String emailUsuario) {

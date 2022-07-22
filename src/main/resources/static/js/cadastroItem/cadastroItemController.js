@@ -20,6 +20,10 @@ const CadastroItemController = {
     		CadastroItemController.tempoEspera(alertComponent);
     		return;
     	}
+    	if(data.responseJSON.statusCode === 500){
+    		$("#"+alertComponent).removeClass("oculta").addClass("alert-danger").find('div').append("Erro Interno"+"<br>");
+    		return;
+    	}
     	retorno = data.responseJSON.response;
     	for (const property in retorno) {
     		if(property == 'stackTrace'){
@@ -136,7 +140,7 @@ const CadastroItemController = {
 		if(item != undefined){
 			$('#campoId').val(item.id);
 			$('#nomeId').val(item.nome);
-			$('#descricaoId').val(item.descricao);
+			$('#constanteCampoId').val(item.constanteCampo);
 		}
 	}
 };

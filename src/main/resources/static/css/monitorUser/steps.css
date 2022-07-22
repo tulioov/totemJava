@@ -59,7 +59,7 @@ input:focus, button:focus, .form-control:focus {
 	height: 2px;
 	background: #e0e0e0;
 	position: absolute;
-	width: 75%;
+/* 	width: 75%; */
 	margin: 0 auto;
 	left: 0;
 	right: 0;
@@ -111,7 +111,7 @@ span.round-tab i {
 }
 
 .wizard .nav-tabs>li {
-	width: 20%;
+	width: 12%;
 }
 
 .wizard li:after {

@@ -20,6 +20,10 @@ const CadastroMaterialController = {
     		CadastroMaterialController.tempoEspera(alertComponent);
     		return;
     	}
+    	if(data.responseJSON.statusCode === 500){
+    		$("#"+alertComponent).removeClass("oculta").addClass("alert-danger").find('div').append("Erro Interno"+"<br>");
+    		return;
+    	}
     	retorno = data.responseJSON.response;
     	for (const property in retorno) {
     		if(property == 'stackTrace'){
@@ -136,7 +140,7 @@ const CadastroMaterialController = {
 		if(material != undefined){
 			$('#campoId').val(material.id);
 			$('#nomeId').val(material.nome);
-			$('#descricaoId').val(material.descricao);
+			$('#constanteCampoId').val(material.constanteCampo);
 		}
 	}
 };

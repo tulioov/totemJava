@@ -5,10 +5,10 @@ import java.util.List;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
-import com.totem.entity.Etapa;
+import com.totem.entity.Local;
 
 @Repository
-public interface EtapaRepository extends CrudRepository<Etapa, Long> {
+public interface LocalRepository extends CrudRepository<Local, Long> {
 
-	List<Etapa> findAll();
+	List<Local> findAll();
 }

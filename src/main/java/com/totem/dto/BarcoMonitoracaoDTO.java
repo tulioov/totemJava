@@ -4,7 +4,7 @@ public class BarcoMonitoracaoDTO {
 	
 	
 	private Long idBarco;
-	private Long idSubAtividade;
+	private Long idAtividade;
 	private String nfcId;
 	private String acao;
 	
@@ -20,11 +20,11 @@ public class BarcoMonitoracaoDTO {
 	public void setIdBarco(Long idBarco) {
 		this.idBarco = idBarco;
 	}
-	public Long getIdSubAtividade() {
-		return idSubAtividade;
+	public Long getIdAtividade() {
+		return idAtividade;
 	}
-	public void setIdSubAtividade(Long idSubAtividade) {
-		this.idSubAtividade = idSubAtividade;
+	public void setIdAtividade(Long idAtividade) {
+		this.idAtividade = idAtividade;
 	}
 	public String getNfcId() {
 		return nfcId;

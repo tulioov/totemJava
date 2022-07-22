@@ -1,4 +1,4 @@
-CREATE TABLE IF NOT EXISTS  usuario (
+/*CREATE TABLE IF NOT EXISTS  usuario (
 	cod_usuario INT AUTO_INCREMENT PRIMARY KEY,
 	NFC INT NOT NULL,
 	Nome VARCHAR(250) NOT NULL,
@@ -12,8 +12,8 @@ CREATE TABLE IF NOT EXISTS  barco (
 	descricao VARCHAR(250) NOT NULL
 );
 
-CREATE TABLE IF NOT EXISTS  etapa (
-	cod_etapa INT AUTO_INCREMENT PRIMARY KEY,
+CREATE TABLE IF NOT EXISTS  fase (
+	cod_fase INT AUTO_INCREMENT PRIMARY KEY,
 	Nome VARCHAR(250)  NOT NULL,
 	constante_campo VARCHAR(100)  NOT NULL,
 	Descricao VARCHAR(250)  NOT NULL
@@ -24,24 +24,34 @@ CREATE TABLE IF NOT EXISTS  atividade (
 	Descricao VARCHAR(250) NOT NULL,
 	constante_campo VARCHAR(100) NOT NULL
 );
-/**/
-insert into etapa  (CONSTANTE_CAMPO,DESCRICAO)
-select  'ETAPA_0', 'Etapa 0'  from dual 
-where not exists(select * from etapa where CONSTANTE_CAMPO='ETAPA_0');
-insert into etapa  (CONSTANTE_CAMPO,DESCRICAO)
-select  'ETAPA_1', 'Etapa 1'  from dual 
-where not exists(select * from etapa where CONSTANTE_CAMPO='ETAPA_1');
-insert into etapa  (CONSTANTE_CAMPO,DESCRICAO)
-select  'ETAPA_2', 'Etapa 2'  from dual 
-where not exists(select * from etapa where CONSTANTE_CAMPO='ETAPA_2');
-insert into etapa  (CONSTANTE_CAMPO,DESCRICAO)
-select  'ETAPA_3', 'Etapa 3'  from dual 
-where not exists(select * from etapa where CONSTANTE_CAMPO='ETAPA_3');
-insert into etapa  (CONSTANTE_CAMPO,DESCRICAO)
-select  'ETAPA_4', 'Etapa 4'  from dual 
-where not exists(select * from etapa where CONSTANTE_CAMPO='ETAPA_4');
+*/
+insert into fase  (CONSTANTE_CAMPO,NOME)
+select  'FASE_0', 'Fase 0'  from dual 
+where not exists(select * from fase where CONSTANTE_CAMPO='FASE_0');
+insert into fase  (CONSTANTE_CAMPO,NOME)
+select  'FASE_1', 'Fase 1'  from dual 
+where not exists(select * from fase where CONSTANTE_CAMPO='FASE_1');
+insert into fase  (CONSTANTE_CAMPO,NOME)
+select  'FASE_2', 'Fase 2'  from dual 
+where not exists(select * from fase where CONSTANTE_CAMPO='FASE_2');
+insert into fase  (CONSTANTE_CAMPO,NOME)
+select  'FASE_3', 'Fase 3'  from dual 
+where not exists(select * from fase where CONSTANTE_CAMPO='FASE_3');
+insert into fase  (CONSTANTE_CAMPO,NOME)
+select  'FASE_4', 'Fase 4'  from dual 
+where not exists(select * from fase where CONSTANTE_CAMPO='FASE_4');
+insert into fase  (CONSTANTE_CAMPO,NOME)
+select  'FASE_5', 'Fase 5'  from dual 
+where not exists(select * from fase where CONSTANTE_CAMPO='FASE_5');
+insert into fase  (CONSTANTE_CAMPO,NOME)
+select  'FASE_6', 'Fase 6'  from dual 
+where not exists(select * from fase where CONSTANTE_CAMPO='FASE_6');
+insert into fase  (CONSTANTE_CAMPO,NOME)
+select  'FASE_7', 'Fase 7'  from dual 
+where not exists(select * from fase where CONSTANTE_CAMPO='FASE_7');
 
 
+/*
 CREATE TABLE IF NOT EXISTS  sub_atividade (
 	cod_sub_atividade INT AUTO_INCREMENT PRIMARY KEY,
 	Descricao VARCHAR(250) NOT NULL,
@@ -62,11 +72,11 @@ CREATE TABLE IF NOT EXISTS  item (
 	Unidade_medida VARCHAR(10),
 	quantidade INT
 );
-
+*/
 /*
 DROP TABLE IF EXISTS BARCO ;
 DROP TABLE IF EXISTS BARCO _MONITORACAO;
-DROP TABLE IF EXISTS ETAPA ;
+DROP TABLE IF EXISTS FASE ;
 DROP TABLE IF EXISTS ITEM  ;
 DROP TABLE IF EXISTS MATERIAL ;
 DROP TABLE IF EXISTS USUARIO ;

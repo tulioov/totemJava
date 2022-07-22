@@ -22,6 +22,10 @@ const CadastroBarcoController = {
     		CadastroBarcoController.tempoEspera(alertComponent);
     		return;
     	}
+    	if(data.responseJSON.statusCode === 500){
+    		$("#"+alertComponent).removeClass("oculta").addClass("alert-danger").find('div').append("Erro Interno"+"<br>");
+    		return;
+    	}
     	retorno = data.responseJSON.response;
     	for (const property in retorno) {
     		if(property == 'stackTrace'){
@@ -40,7 +44,7 @@ const CadastroBarcoController = {
 		formControl.imagem = $('#base64image').val();
 		formControl.dtInicioPrevisto = $("#dtInicioPrevistoId").val().split('-').reverse().join('/');
 		formControl.dtFimPrevisto = $("#dtFimPrevistoId").val().split('-').reverse().join('/');
-		formControl.hrsBarcoPrevistaId = $('#hrsBarcoPrevistaId').val()*60;
+		formControl.hrsBarcoPrevista = $('#hrsBarcoPrevistaId').val()*60;
 		let myJsonData = JSON.stringify(formControl);
 		
 		$.ajax({
@@ -152,7 +156,7 @@ const CadastroBarcoController = {
 			$('#hrsBarcoPrevistaId').val(barco.hrsBarcoPrevista/60);
 			$('#dtInicioPrevistoId').val(barco.dtInicioPrevisto.split('/').reverse().join('-'));
 			$('#dtFimPrevistoId').val(barco.dtFimPrevisto.split('/').reverse().join('-'));
-			$('#descricaoId').val(barco.descricao);
+			$('#constanteCampoId').val(barco.constanteCampo);
 			$('#base64image').attr('src', barco.imagem); 
 			$('#base64image').val(barco.imagem);
 		}

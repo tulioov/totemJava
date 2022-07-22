@@ -36,17 +36,30 @@ const CadastroBarcoTemplate = {
 			                	<div class="row">
 									<div class="col-md-4">
 										<div>Nome: </div>
-										<input type="text" name="nome" class="form-control" id="nomeId">
+										<input type="text" name="nome" class="form-control uppercase"  id="nomeId">
 									</div>
 									<div class="col-md-4">
-										<div>Descri\u00e7\u00e3o: </div>
-										<input type="text" name="descricao" oninput="this.value = this.value.replace(' ', '');" class="form-control uppercase" id="descricaoId">
+										<div>Constante Campo: </div>
+										<input type="text" name="constanteCampo" oninput="this.value = this.value.replace(' ', '');" class="form-control uppercase" id="constanteCampoId">
 									</div>
-									<div class="col-md-4">
+								</div>
+								
+								<div class="row mt15">
+									<div class="col-md-6">
 										<div>Horas Total de Prevista: </div>
 										<input type="numer" name="hrsBarcoPrevista" class="form-control" id="hrsBarcoPrevistaId">
 									</div>
+									<div class="col-md-6">
+										<div>Status: </div>
+										<select class="form-control" id="sel1">
+											<option>Ativo</option>
+										    <option>Em Andamento</option>
+										    <option>Inativo</option>
+										</select>
+									</div>
 								</div>
+								
+								
 								<div class="row mt15">
 									<div class="col-md-6">
 										<div>Data Prevista In&iacute;cio: </div>
@@ -75,7 +88,9 @@ const CadastroBarcoTemplate = {
 			<tr>
 				<td>${data.id}</td>
 				<td>${data.nome}</td>
-				<td>${data.descricao}</td>
+				<td>${data.constanteCampo}</td>
+				<td>${data.hrsBarcoPrevista/60}</td>
+				<td><span class="${data.status != null?'inativo':'ativo'}">${data.status != null?'Inativo':'Ativo'}</span></td>
 				<td>
 					<span onclick="CadastroBarcoController.editar(${data.id});" class="glyphicon glyphicon-pencil"></span>
 					<span onclick="CadastroBarcoController.deletar(${data.id});" class="glyphicon glyphicon-trash"></span>

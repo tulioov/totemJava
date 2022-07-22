@@ -20,6 +20,10 @@ const CadastroFeriadoController = {
     		CadastroFeriadoController.tempoEspera(alertComponent);
     		return;
     	}
+    	if(data.responseJSON.statusCode === 500){
+    		$("#"+alertComponent).removeClass("oculta").addClass("alert-danger").find('div').append("Erro Interno"+"<br>");
+    		return;
+    	}
     	let retorno = data.responseJSON.response;
     	for (const property in retorno) {
     		if(property == 'stackTrace'){
@@ -142,7 +146,7 @@ const CadastroFeriadoController = {
 			$('#campoId').val(Feriado.id);
 			$('#nomeId').val(Feriado.nome);
 			$('#dtFeriadoId').val(Feriado.dtFeriado.split('/').reverse().join('-'));
-			$('#descricaoId').val(Feriado.descricao);
+			$('#nomeId').val(Feriado.nome);
 			$('#constanteCampoId').val(Feriado.constanteCampo);
 		}
 	}

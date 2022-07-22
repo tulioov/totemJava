@@ -56,25 +56,25 @@ public class PaginasController {
 		return "cadastroBarco";
 	}
 	
-	@GetMapping("/cadasdroEtapas")
-	public String cadasdroEtapas(Model model, @AuthenticationPrincipal OidcUser principal){
+	@GetMapping("/cadasdroFases")
+	public String cadasdroFases(Model model, @AuthenticationPrincipal OidcUser principal){
 		paginaService.control(principal, model);
 		model.addAttribute("titulo" , "Controle de Tontens");
-		return "cadasdroEtapas";
-	}
-	
-	@GetMapping("/cadastroSubAtividade")
-	public String cadastroGruposAtividades(Model model, @AuthenticationPrincipal OidcUser principal){
-		paginaService.control(principal, model);
-		model.addAttribute("titulo" , "Controle de Tontens");
-		return "cadastroSubAtividade";
+		return "cadasdroFases";
 	}
 	
 	@GetMapping("/cadastroAtividade")
-	public String cadastroAtividade(Model model, @AuthenticationPrincipal OidcUser principal){
+	public String cadastroGruposAtividades(Model model, @AuthenticationPrincipal OidcUser principal){
 		paginaService.control(principal, model);
 		model.addAttribute("titulo" , "Controle de Tontens");
 		return "cadastroAtividade";
+	}
+	
+	@GetMapping("/cadastroLocal")
+	public String cadastroAtividade(Model model, @AuthenticationPrincipal OidcUser principal){
+		paginaService.control(principal, model);
+		model.addAttribute("titulo" , "Controle de Tontens");
+		return "cadastroLocal";
 	}
 	
 	@GetMapping("/cadastroItens")

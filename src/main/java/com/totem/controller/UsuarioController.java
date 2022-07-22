@@ -1,7 +1,5 @@
 package com.totem.controller;
 
-import javax.validation.Valid;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -29,7 +27,7 @@ public class UsuarioController {
 	@PostMapping("/salvar")
 	public @ResponseBody ResponseEntity<RetornoDTO> salvar(
 			@RequestHeader(name = "Authorization", required = true) String emailUsuario,
-			@Valid @RequestBody UsuarioDTO usuarioDTO) {
+			@RequestBody UsuarioDTO usuarioDTO) {
 
 		return ResponseEntityUtil.defaultResponse(usuarioService.salvar(usuarioDTO, emailUsuario));
 	}

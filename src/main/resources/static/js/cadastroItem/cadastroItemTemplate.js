@@ -22,11 +22,11 @@ const CadastroItemTemplate = {
 			                	<div class="row">
 									<div class="col-md-6">
 										<div>Nome: </div>
-										<input type="text" name="nome" class="form-control" id="nomeId">
+										<input type="text" name="nome" class="form-control uppercase" id="nomeId">
 									</div>
 									<div class="col-md-4">
-										<div>Descri\u00e7\u00e3o: </div>
-										<input type="text" name="descricao" class="form-control" id="descricaoId">
+										<div>Constante campo: </div>
+										<input type="text" name="constanteCampo" class="form-control uppercase" id="constanteCampoId">
 									</div>
 								</div>
 								<div class="row">
@@ -58,7 +58,8 @@ const CadastroItemTemplate = {
 			<tr>
 				<td>${data.id}</td>
 				<td>${data.nome}</td>
-				<td>${data.descricao}</td>
+				<td>${data.constanteCampo}</td>
+				<td><span class="${data.usuarioDelete != null?'inativo':'ativo'}">${data.usuarioDelete != null?'Inativo':'Ativo'}</span></td>
 				<td>
 					<span onclick="CadastroItemController.editar(${data.id});" class="glyphicon glyphicon-pencil"></span>
 					<span onclick="CadastroItemController.deletar(${data.id});" class="glyphicon glyphicon-trash"></span>

@@ -1,5 +1,5 @@
 
-const CadastroEtapaController = {
+const CadastroLocalController = {
 		
 	tempoEspera(divId){
 		setTimeout(function () {
@@ -12,12 +12,16 @@ const CadastroEtapaController = {
     	$("#"+alertComponent).find('div').html("");
     	if(data.responseJSON.statusCode === 404){
     		$("#"+alertComponent).removeClass("oculta").addClass("alert-danger").find('div').append(data.responseJSON.response+"<br>");
-    		CadastroEtapaController.tempoEspera(alertComponent);
+    		CadastroLocalController.tempoEspera(alertComponent);
     		return;
     	}
     	if(data.responseJSON.statusCode === 401){
     		$("#"+alertComponent).removeClass("oculta").addClass("alert-danger").find('div').append(data.responseJSON.response.message+"<br>");
-    		CadastroEtapaController.tempoEspera(alertComponent);
+    		CadastroLocalController.tempoEspera(alertComponent);
+    		return;
+    	}
+    	if(data.responseJSON.statusCode === 500){
+    		$("#"+alertComponent).removeClass("oculta").addClass("alert-danger").find('div').append("Erro Interno"+"<br>");
     		return;
     	}
     	retorno = data.responseJSON.response;
@@ -26,10 +30,11 @@ const CadastroEtapaController = {
     			return;
     		}
     		$("#"+property+"Id").addClass("errorInput");
-    		$("#"+alertComponent).removeClass("oculta").addClass("alert-danger").find('div').append(retorno[property]+"<br>");
-    		CadastroEtapaController.tempoEspera(alertComponent);
+    		$("#alertMsgId").removeClass("oculta").addClass("alert-danger").find('div').append(retorno[property]+"<br>");
+    		CadastroLocalController.tempoEspera(alertComponent);
 		}
 	},
+		
 	
 	carregarDualList(atividadeList){
 		$.ajax({
@@ -43,13 +48,13 @@ const CadastroEtapaController = {
 	        success: function(retorno) {
 	        	$(retorno.response).each(function(index, data) {
 	        		if (atividadeList != undefined){
-        				if(atividadeList.some(atividade => atividade.id === data.id)){
-	        				$("#duallistboxId").append(`<option value="${data.id}" selected="selected" >${data.descricao}</option>`);
+        				if(atividadeList.some(local => local.id === data.id)){
+	        				$("#duallistboxId").append(`<option value="${data.id}" selected="selected" >${data.nome}</option>`);
         				}else{
-        					$("#duallistboxId").append(`<option value="${data.id}">${data.descricao}</option>`);
+        					$("#duallistboxId").append(`<option value="${data.id}">${data.nome}</option>`);
         				}
 	        		}else{
-	        			$("#duallistboxId").append(`<option value="${data.id}">${data.descricao}</option>`);
+	        			$("#duallistboxId").append(`<option value="${data.id}">${data.nome}</option>`);
 	        		}
         		});
 	        },complete: function(data) { 
@@ -57,7 +62,6 @@ const CadastroEtapaController = {
 	        }
 	    });
 	},
-		
 	salvar(){
 		
 		let formControl = new Object();
@@ -71,7 +75,7 @@ const CadastroEtapaController = {
 	            'Content-Type':'application/json'
 	        },
 	        type: "POST",
-	        url: "/etapa/salvar",
+	        url: "/local/salvar",
 	        dataType: "json",
 	        cache: false,
 	        data : myJsonData,
@@ -81,11 +85,11 @@ const CadastroEtapaController = {
 	        	setTimeout(function(){
 	        		$("#alertMsgId").addClass("oculta").find('div').removeClass("alert-success").html("");
 	        		$('#myModal').modal('hide');
-	        		CadastroEtapaController.listar();
+	        		CadastroLocalController.listar();
         		},2000); 
 	        },
 	        error: function (data) {   
-	        	CadastroEtapaController.erro(data,"alertMsgId");
+	        	CadastroLocalController.erro(data,"alertMsgId");
 	        },
 	    });
 	},
@@ -98,11 +102,12 @@ const CadastroEtapaController = {
 	        },
 	        type: "GET",
 	        contentType: "application/json",
-	        url: "/etapa/findById/"+id,
+	        url: "/local/findById/"+id,
 	        success: function(retorno) {
-	        	CadastroEtapaController.addUser(retorno.response)
-	        }, error: function (data) {   
-	        	CadastroEtapaController.erro(data,"alertMsgId");
+	        	CadastroLocalController.addUser(retorno.response)
+	        }, 
+	        error: function (data) {   
+	        	CadastroLocalController.erro(data,"alertMsgId");
 	        }
 	    });
 	},
@@ -115,23 +120,23 @@ const CadastroEtapaController = {
 	        },
 	        type: "DELETE",
 	        contentType: "application/json",
-	        url: "/etapa/deletar/"+id,
+	        url: "/local/deletar/"+id,
 	        success: function(retorno) {
 	        	$("#myModal").scrollTop(0);
 	        	$("#alertMsgIdTable").removeClass("oculta").addClass("alert-success").find('div').append("Deletado com sucesso!");
 	        	setTimeout(function(){
 	        		$("#alertMsgIdTable").addClass("oculta").removeClass("alert-success").find('div').html("");
-	        		CadastroEtapaController.listar();
+	        		CadastroLocalController.listar();
         		},2000); 
 	        }, error: function (data) {  
-	        	CadastroEtapaController.erro(data,"alertMsgIdTable");
+	        	CadastroLocalController.erro(data,'alertMsgIdTable');
 	        }
 	    });
 	},
 		
 	listar(){
-		$('#tableEtapa').dataTable().fnClearTable();
-	    $('#tableEtapa').dataTable().fnDestroy();
+		$('#tableLocal').dataTable().fnClearTable();
+	    $('#tableLocal').dataTable().fnDestroy();
 		$.ajax({
 			headers: {
 	            'Authorization': email,
@@ -139,16 +144,17 @@ const CadastroEtapaController = {
 	        },
 	        type: "GET",
 	        contentType: "application/json",
-	        url: "/etapa/listar",
+	        url: "/local/listar",
 	        success: function(retorno) {
 	        	$(retorno.response).each(function(index, data) {
-	        		$("#tableEtapa").find('tbody').append(CadastroEtapaTemplate.itemLinha(data));
+	        		$("#tableLocal").find('tbody').append(CadastroLocalTemplate.itemLinha(data));
         		});
-	        },error: function (data) {   
-	        	CadastroEtapaController.erro(data,"alertMsgIdTable");
+	        },
+	        error: function (data) {  
+	        	CadastroLocalController.erro(data,'alertMsgIdTable');
 	        },
 	        complete: function(data) { 
-	        	$('#tableEtapa').DataTable( {
+	        	$('#tableLocal').DataTable( {
 	        	    language: {
 	        	        url: '//cdn.datatables.net/plug-ins/1.11.3/i18n/pt_br.json'
 	        	    }
@@ -157,29 +163,28 @@ const CadastroEtapaController = {
 	    });
 	},
 	
-	addUser(etapa){
+	addUser(local){
 		
-		$('#myModal').html(CadastroEtapaTemplate.add()).show();
-		
+		$('#myModal').html(CadastroLocalTemplate.add()).show();
 		$("#duallistboxId").bootstrapDualListbox({
 			nonSelectedListLabel: 'N\u00e3o Selecionadas',
 			selectedListLabel: 'Selecionadas'
 		});
 		
-		if(etapa != undefined){
-			$('#campoId').val(etapa.id);
-			$('#nomeId').val(etapa.nome);
-			$('#descricaoId').val(etapa.descricao);
-			$('#constanteCampoId').val(etapa.constanteCampo);
-			CadastroEtapaController.carregarDualList(etapa.atividadeList);
+		if(local != undefined){
+			$('#campoId').val(local.id);
+			$('#codigoId').val(local.codigo);
+			$('#nomeId').val(local.nome);
+			$('#constanteCampoId').val(local.constanteCampo);
+			CadastroLocalController.carregarDualList(local.atividadeList);
 			return;
 		}
-		CadastroEtapaController.carregarDualList();
+		CadastroLocalController.carregarDualList();
 	}
 };
 
 $( document ).ready(function() {
-	CadastroEtapaController.listar();
+	CadastroLocalController.listar();
 });
 
 

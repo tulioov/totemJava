@@ -10,8 +10,7 @@
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
 	<link href="../externo/dual-list/bootstrap-duallistbox.css" rel="stylesheet" />
 	
-	
-	<title>Cadastro de Etapa</title>
+	<title>Cadastro de Fase</title>
 </head>
 <body>
 
@@ -23,8 +22,8 @@
 	<input type="hidden" name="localizacao" id="localizacao">
 	<div class="container">
 		<div class="row">
-			<button type="submit" onclick="CadastroEtapaController.addUser();" class="btn btn-primary" data-toggle="modal" data-target="#myModal">
-				Add Etapa
+			<button type="submit" onclick="CadastroFaseController.addUser();" class="btn btn-primary" data-toggle="modal" data-target="#myModal">
+				Add Fase
 			</button>
 			<div id="alertMsgIdTable" class=" mt15 alert fade in oculta ">
               	<a onclick="$('#alertMsgIdTable').addClass('oculta');" class="close">&times;</a>
@@ -35,12 +34,13 @@
 		<div class="modal scroll" id="myModal">
 		</div>
 		<div class="row">
-			<table id="tableEtapa" class="display">
+			<table id="tableFase" class="display">
 				<thead>
 			    <tr>
 			        <th>ID</th>
-			        <th>Descri&ccedil;&atilde;o</th>
+			        <th>Nome</th>
 			        <th>Constante Campo</th>
+			        <th>Status</th>
 			        <th>A&ccedil;&atilde;o</th>
 			    </tr>
 				</thead>
@@ -51,7 +51,7 @@
 	<script src="../externo/serializejson/serializejson.js"></script>
 	<script src="../externo/dual-list/jquery.bootstrap-duallistbox.js"></script>
 	<script src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.js"></script>
-	<script src="../js/cadastroEtapa/cadastroEtapaTemplate.js"></script>
-	<script src="../js/cadastroEtapa/cadastroEtapaController.js"></script>
+	<script src="../js/cadastroFase/cadastroFaseTemplate.js"></script>
+	<script src="../js/cadastroFase/cadastroFaseController.js"></script>
 </body>
 </html>

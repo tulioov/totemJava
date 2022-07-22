@@ -65,15 +65,15 @@
                     <a href="/cadastroFeriado" class="dashboard-nav-dropdown-item">Feriado</a>
 					<a href="/cadastroBarco" class="dashboard-nav-dropdown-item">Barco</a>
 					<a href="/cadastroUsuario" onclick="CadastroUsuarioController.listar();" class="dashboard-nav-dropdown-item">Usuario</a>
-					<a href="/cadasdroEtapas" class="dashboard-nav-dropdown-item">Etapa</a>
+					<a href="/cadasdroFases" class="dashboard-nav-dropdown-item">Fase</a>
 					<div class='dashboard-nav-dropdown'>
 		            	<a href="#!" class="dashboard-nav-item dashboard-nav-dropdown-toggle">
 			            	<i class="fas fa-coins"></i> 
-							Grupo Atividade
+							Grupo Local/Atividade
 						</a>
 		                <div class='dashboard-nav-dropdown-menu'>
+							<a href="/cadastroLocal" class="dashboard-nav-dropdown-item">Local</a>
 							<a href="/cadastroAtividade" class="dashboard-nav-dropdown-item">Atividade</a>
-							<a href="/cadastroSubAtividade" class="dashboard-nav-dropdown-item">SubAtividade</a>
 						</div>
 		            </div>
 		            

@@ -12,7 +12,7 @@ public class UsuarioDTO {
 	private String email;
 	private String codRfid;
 	private Boolean isAdmin;
-	private List<Long> etapaList;
+	private List<Long> faseList;
 	
 	public String getEmail() {
 		return email;
@@ -62,11 +62,10 @@ public class UsuarioDTO {
 	public void setIsAdmin(Boolean isAdmin) {
 		this.isAdmin = isAdmin;
 	}
-	public List<Long> getEtapaList() {
-		return etapaList;
+	public List<Long> getFaseList() {
+		return faseList;
 	}
-	public void setEtapaList(List<Long> etapaList) {
-		this.etapaList = etapaList;
+	public void setFaseList(List<Long> faseList) {
+		this.faseList = faseList;
 	}
-	
 }

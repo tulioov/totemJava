@@ -1,12 +1,15 @@
 package com.totem.entity;
 
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
@@ -14,37 +17,32 @@ import javax.validation.constraints.Size;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 @Entity
-@Table(name = "ATIVIDADE")
-public class Atividade {
+@Table(name = "FASE")
+public class Fase {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY, generator = "native")
-	@Column(name = "COD_ATIVIDADE")
+	@Column(name = "COD_FASE")
 	private Long id;
-	
-	@Column(name = "CODIGO", unique=true)
-	private String codigo;
 
-	@Column(name = "NOME", unique=true)
-	@NotEmpty(message = "Nome deve conter um nome")	
-	@Size(min = 3 , max = 250, message = "Nome deve conter minimo de 3 caracter")
+	@Column(name = "NOME", unique = true)
+	@NotEmpty(message = "Nome deve conter um nome")
+	@Size(min = 3, max = 250, message = "Nome deve conter minimo de 3 caracter")
 	private String nome;
 
-	@Column(name = "CONSTANTE_CAMPO", unique=true)
-	@NotEmpty(message = "Barco deve conter um nome.")
-	@Size(min = 3, max = 250, message = "Nome deve conter minimo de 3 caracter")
+	@Column(name = "CONSTANTE_CAMPO", unique = true)
+	@NotEmpty(message = "Constante campo deve conter um nome.")
+	@Size(min = 3, max = 250, message = "Constante campo deve conter minimo de 3 caracter")
 	private String constanteCampo;
 
-	@Column(name = "TEMPO_ESTIMADO")
-	private String tempoEstimado;
-	
-	@Column(name = "TEMPO_REAL")
-	private String tempoReal;
-	
+	@JoinColumn(name = "ID_FASE")
+	@OneToMany
+	private List<Local> localList;
+
 	@Column(name = "USUARIO_DELETE")
 	private String usuarioDelete;
-	
-	@JsonFormat(pattern="dd/MM/yyyy")
+
+	@JsonFormat(pattern = "dd/MM/yyyy")
 	@Column(name = "DT_DELETE")
 	private Date dtDelete;
 
@@ -55,7 +53,7 @@ public class Atividade {
 	public void setId(Long id) {
 		this.id = id;
 	}
-	
+
 	public String getNome() {
 		return nome;
 	}
@@ -71,15 +69,15 @@ public class Atividade {
 	public void setConstanteCampo(String constanteCampo) {
 		this.constanteCampo = constanteCampo;
 	}
-
-	public String getTempoEstimado() {
-		return tempoEstimado;
-	}
-
-	public void setTempoEstimado(String tempoEstimado) {
-		this.tempoEstimado = tempoEstimado;
-	}
 	
+	public List<Local> getLocalList() {
+		return localList;
+	}
+
+	public void setLocalList(List<Local> localList) {
+		this.localList = localList;
+	}
+
 	public String getUsuarioDelete() {
 		return usuarioDelete;
 	}
@@ -96,20 +94,4 @@ public class Atividade {
 		this.dtDelete = dtDelete;
 	}
 
-	public String getTempoReal() {
-		return tempoReal;
-	}
-
-	public void setTempoReal(String tempoReal) {
-		this.tempoReal = tempoReal;
-	}
-
-	public String getCodigo() {
-		return codigo;
-	}
-
-	public void setCodigo(String codigo) {
-		this.codigo = codigo;
-	}
-	
 }

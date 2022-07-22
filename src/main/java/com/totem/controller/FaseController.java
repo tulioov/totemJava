@@ -14,41 +14,41 @@ import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.totem.entity.SubAtividade;
-import com.totem.service.SubAtividadeService;
+import com.totem.dto.FaseDTO;
+import com.totem.service.FaseService;
 import com.totem.util.ResponseEntityUtil;
 import com.totem.util.RetornoDTO;
 
 @Controller
-@RequestMapping("/subAtividade")
-public class SubAtividadeController {
+@RequestMapping("/fase")
+public class FaseController {
 
 	@Autowired
-	SubAtividadeService subAtividadeService;
+	FaseService faseService;
 
 	@PostMapping("/salvar")
 	public @ResponseBody ResponseEntity<RetornoDTO> salvar(
-			@RequestHeader(name = "Authorization", required = true) String emailUsuario, @Valid @RequestBody SubAtividade subAtividade) {
+			@RequestHeader(name = "Authorization", required = true) String emailUsuario, @Valid @RequestBody FaseDTO faseDTO) {
 
-		return ResponseEntityUtil.defaultResponse(subAtividadeService.salvar(subAtividade, emailUsuario));
+		return ResponseEntityUtil.defaultResponse(faseService.salvar(faseDTO, emailUsuario));
 	}
 
 	@GetMapping("/findById/{id}")
 	public @ResponseBody ResponseEntity<RetornoDTO> buscarDadosPorId(
 			@RequestHeader(name = "Authorization", required = true) String emailUsuario, @PathVariable("id") Long id) {
-		return ResponseEntityUtil.defaultResponse(subAtividadeService.findById(id, emailUsuario));
+		return ResponseEntityUtil.defaultResponse(faseService.findById(id));
 	}
 
 	@GetMapping("/listar")
 	public @ResponseBody ResponseEntity<RetornoDTO> listar(
 			@RequestHeader(name = "Authorization", required = true) String emailUsuario) {
-		return ResponseEntityUtil.defaultResponse(subAtividadeService.listar(emailUsuario));
+		return ResponseEntityUtil.defaultResponse(faseService.listar(emailUsuario));
 	}
 
 	@DeleteMapping("/deletar/{id}")
 	public @ResponseBody ResponseEntity<RetornoDTO> deletar(
 			@RequestHeader(name = "Authorization", required = true) String emailUsuario, @PathVariable("id") Long id) {
-		return ResponseEntityUtil.defaultResponse(subAtividadeService.delete(id, emailUsuario));
+		return ResponseEntityUtil.defaultResponse(faseService.delete(id, emailUsuario));
 	}
 
 }
