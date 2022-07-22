@@ -16,6 +16,7 @@ import com.totem.dto.MonitorPausa;
 import com.totem.entity.Barco;
 import com.totem.entity.Feriado;
 import com.totem.entity.Monitoracao;
+import com.totem.enums.EnumStatusMonitoracao;
 import com.totem.exception.CustomErrorException;
 import com.totem.repository.BarcoRepository;
 import com.totem.util.UtilDate;
@@ -46,27 +47,26 @@ public class BarcoService {
 	}
 	
 	public Object listar(String emailUsuario, String nfc) {
-//		if(!usuarioService.isAdm(emailUsuario)) {
-//			throw new CustomErrorException(HttpStatus.UNAUTHORIZED, ERRO_PERMISSAO);
-//		}
 		
-		if(monitoracaoService.isUsuarioTrabalhando(nfc) != null){
-			Monitoracao monitoracao = monitoracaoService.isUsuarioTrabalhando(nfc);
+		Monitoracao monitoracao = null;
+		
+		monitoracao = monitoracaoService.isUsuarioTrabalhando(nfc);
+		if(monitoracao != null){
 			Barco barco =  barcoRepository.findByMonitoracao(monitoracao);
 			MonitorPausa monitorPausa = new MonitorPausa();
 			monitorPausa.setBarco(barco);
 			monitorPausa.setMonitoracao(monitoracao);
-			monitorPausa.setStatus("Trabalhando");
+			monitorPausa.setStatus(EnumStatusMonitoracao.TRABALHANDO.toString());
 			return monitorPausa;
 		}
 		
-		if(monitoracaoService.isUsuarioPausado(nfc) != null){
-			Monitoracao monitoracao = monitoracaoService.isUsuarioPausado(nfc);
+		monitoracao = monitoracaoService.isUsuarioPausado(nfc);
+		if(monitoracao != null){
 			Barco barco =  barcoRepository.findByMonitoracao(monitoracao);
 			MonitorPausa monitorPausa = new MonitorPausa();
 			monitorPausa.setBarco(barco);
 			monitorPausa.setMonitoracao(monitoracao);
-			monitorPausa.setStatus("Pausa");
+			monitorPausa.setStatus(EnumStatusMonitoracao.PAUSA.toString());
 			return monitorPausa;
 		}
 		
@@ -78,6 +78,13 @@ public class BarcoService {
 //			throw new CustomErrorException(HttpStatus.UNAUTHORIZED, ERRO_PERMISSAO);
 //		}
 		return barcoRepository.findById(id).get();
+	}
+	
+	@Transactional
+	public Barco salvar(Barco barco, String emailUsuario) {
+		
+		barcoRepository.save(barco);
+		return barco;
 	}
 	
 	@Transactional
@@ -142,13 +149,11 @@ public class BarcoService {
 		}
 		
 		Barco barco = barcoRepository.findById(id).get();
-//		Monitoracao monitoracao = monitoracaoService.findByBarco(barco.getId(), emailUsuario);
 		
-//		if(monitoracao != null) {
-//			monitoracaoService.delete(id, emailUsuario);
-//		}
-		
-		barcoRepository.delete(barco);
+		barco.setUsuarioDelete(emailUsuario);
+		barco.setDtDelete(new Date());
+		barco.setStatus("INATIVO");
+		barcoRepository.save(barco);
 		return barco;
 	}
 

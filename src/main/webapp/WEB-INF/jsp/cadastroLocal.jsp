@@ -11,7 +11,7 @@
 	<link href="../externo/dual-list/bootstrap-duallistbox.css" rel="stylesheet" />
 	
 	
-	<title>Cadastro de Subatividade</title>
+	<title>Cadastro de Local</title>
 </head>
 <body>
 
@@ -23,8 +23,8 @@
 	<input type="hidden" name="localizacao" id="localizacao">
 	<div class="container">
 		<div class="row">
-			<button type="submit" onclick="CadastroSubAtividadeController.addUser();" class="btn btn-primary" data-toggle="modal" data-target="#myModal">
-				Add SubAtividade
+			<button type="submit" onclick="CadastroLocalController.addUser();" class="btn btn-primary" data-toggle="modal" data-target="#myModal">
+				Add Local
 			</button>
 			<div id="alertMsgIdTable" class=" mt15 alert fade in oculta ">
               	<a onclick="$('#alertMsgIdTable').addClass('oculta');" class="close">&times;</a>
@@ -35,12 +35,13 @@
 		<div class="modal scroll" id="myModal">
 		</div>
 		<div class="row">
-			<table id="tableSubAtividade" class="display">
+			<table id="tableLocal" class="display">
 				<thead>
 			    <tr>
 			        <th>ID</th>
-			        <th>Descri&ccedil;&atilde;o</th>
+			        <th>Nome</th>
 			        <th>Constante Campo</th>
+			        <th>Status</th>
 			        <th>A&ccedil;&atilde;o</th>
 			    </tr>
 				</thead>
@@ -51,7 +52,7 @@
 	<script src="../externo/serializejson/serializejson.js"></script>
 	<script src="../externo/dual-list/jquery.bootstrap-duallistbox.js"></script>
 	<script src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.js"></script>
-	<script src="../js/cadastroSubAtividade/cadastroSubAtividadeTemplate.js"></script>
-	<script src="../js/cadastroSubAtividade/cadastroSubAtividadeController.js"></script>
+	<script src="../js/cadastroLocal/cadastroLocalTemplate.js"></script>
+	<script src="../js/cadastroLocal/cadastroLocalController.js"></script>
 </body>
 </html>

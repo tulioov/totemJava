@@ -18,15 +18,15 @@
 	<input type="hidden" name="descricao" id="descricao">
 	<input type="hidden" name="localizacao" id="localizacao">
 	<div class="container">
-		<h2>Bem vindo NOME, Estamos ta etapa 5</h2>
+		<h2>Bem vindo NOME, Estamos ta fase 5</h2>
 			<div class="col-12">
 				<button type="button" class="btn btn-primary btn-lg btn-block">Fibra</button>
 				<button type="button" class="btn btn-primary btn-lg btn-block">Eletrica</button>
-				<button type="button" class="btn btn-primary btn-lg btn-block">Etapa0</button>
-				<button type="button" class="btn btn-primary btn-lg btn-block">Etapa1</button>
-				<button type="button" class="btn btn-primary btn-lg btn-block">Etapa2</button>
-				<button type="button" class="btn btn-primary btn-lg btn-block">Etapa3</button>
-				<button type="button" class="btn btn-primary btn-lg btn-block">Etapa4</button>
+				<button type="button" class="btn btn-primary btn-lg btn-block">Fase0</button>
+				<button type="button" class="btn btn-primary btn-lg btn-block">Fase1</button>
+				<button type="button" class="btn btn-primary btn-lg btn-block">Fase2</button>
+				<button type="button" class="btn btn-primary btn-lg btn-block">Fase3</button>
+				<button type="button" class="btn btn-primary btn-lg btn-block">Fase4</button>
 			</div>
 	</div>
 <!-- 	<script src="../js/cadastroUsuario/cadastroUsuarioController.js"></script> -->

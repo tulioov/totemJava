@@ -35,10 +35,13 @@ const MonitorUserController = {
 				$('#tableMonitorUser').DataTable().destroy();
 				
 				$(data.monitoracao).each(function(inde, dat) {
-					$("#tableMonitorUser").find('tbody').append(MonitorUserTemplate.itemLinha(dat));
+					if(dat.status !== 'FINALIZADO'){
+						$("#tableMonitorUser").find('tbody').append(MonitorUserTemplate.itemLinha(dat));
+					}
 				});
 				
 				$('#tableMonitorUser').DataTable( {
+					"searching": false,
 	    		    language: {
 	    		        url: '//cdn.datatables.net/plug-ins/1.11.3/i18n/pt_br.json'
 	    		    }
@@ -91,21 +94,21 @@ const MonitorUserController = {
 	        url: "/barco/escolhaBarco/"+$('#nfcIdCache').val(),
 	        success: function(retorno) {
 	        	
-	        	if(retorno.response.status == "Trabalhando"){
+	        	if(retorno.response.status == "TRABALHANDO"){
 	        		$('#imgEscolhaBarco').append(
 	    					`<div class="col-md-12 mt15">
-	    						<button type="button" class="btn-lg btn-warning col-md-12 mt15" onclick="MonitorUserController.continuarPausarFinalizar('pausar');">Pausar Atividade</button>
-	    						<button type="button" class="btn-lg btn-danger col-md-12 mt15" onclick="MonitorUserController.continuarPausarFinalizar('finalizar');">Finalizar Atividade</button>
+	    						<button type="button" class="btn-lg btn-warning col-md-12 mt15" onclick="MonitorUserController.continuarPausarFinalizar('PAUSA');">Pausar Atividade</button>
+	    						<button type="button" class="btn-lg btn-danger col-md-12 mt15" onclick="MonitorUserController.continuarPausarFinalizar('FINALIZADO');">Finalizar Atividade</button>
 	    					</div>`);
 	        		return;
 	        	}
 	        	
-        		if(retorno.response.status == "Pausa"){
+        		if(retorno.response.status == "PAUSA"){
         			$('#imgEscolhaBarco').append(
 	    					`
 	    					<div class="col-md-12 mt15">
-	    						<button type="button" class="btn-lg btn-success col-md-12 mt15" onclick="MonitorUserController.continuarPausarFinalizar();">Continuar Trabalhando na ${retorno.response.barco.nome} na SubAtividade: ${retorno.response.monitoracao.subAtividade.descricao}</button>
-	    						<button type="button" class="btn-lg btn-danger col-md-12 mt15" onclick="MonitorUserController.continuarPausarFinalizar('finalizar');">Finalizar Atividade</button>
+	    						<button type="button" class="btn-lg btn-success col-md-12 mt15" onclick="MonitorUserController.continuarPausarFinalizar();">Continuar Trabalhando na ${retorno.response.barco.nome} na Atividade: ${retorno.response.monitoracao.atividade.nome}</button>
+	    						<button type="button" class="btn-lg btn-danger col-md-12 mt15" onclick="MonitorUserController.continuarPausarFinalizar('FINALIZADO');">Finalizar Atividade</button>
 	    					</div>`);
 	        		return;
 	        	}
@@ -117,9 +120,10 @@ const MonitorUserController = {
         						style='display:block; width:16em;height:9em;cursor:pointer;' 
         						id='base64image-${barco.id}' 
         						src='${barco.imagem}'
-        						onClick=MonitorUserController.abrirEscolhaEtapa(${barco.id})
+        						onClick=MonitorUserController.abrirEscolhaFase(${barco.id})
         						class="btn btn-primary" data-toggle="modal" data-target="#myModal"
     						/>
+    						<h3>${barco.nome}</h3>
         				</div>`);
         		}
 	        }
@@ -148,24 +152,17 @@ const MonitorUserController = {
 	        data : myJsonData,
 	        success: function(retorno) {
 	        	window.location.reload(true)
-	        	$("#myModal").scrollTop(0);
-	        	$("#alertMsgId").removeClass("oculta").addClass("alert-success").find('div').append("Salvo com sucesso!");
-	        	setTimeout(function(){
-	        		$("#alertMsgId").addClass("oculta").find('div').removeClass("alert-success").html("");
-	        		$('#myModal').modal('hide');
-	        		CadastroUsuarioController.listar();
-        		},2000); 
 	        }
 	    });
 		
 	},
 	
-	salvarSubAtividadeEscolhida(idSubAtividade){
+	salvarAtividadeEscolhida(idAtividade){
 		
 		let formControl = new Object();
 		formControl  = $('#formId').serializeJSON();
 		formControl.idBarco = $('#barcoId').val();
-		formControl.idSubAtividade = idSubAtividade;
+		formControl.idAtividade = idAtividade;
 		formControl.nfcId = $('#nfcIdCache').val();
 		
 		let myJsonData = JSON.stringify(formControl);
@@ -199,7 +196,7 @@ const MonitorUserController = {
 		var valorBar = $('#'+idProgress).attr("value");
 		
 		if(valorBar <= 0){
-			if(acao == "escolhaEtapa"){
+			if(acao == "escolhaFase"){
 				$("#modalCloseId").click();
 			}
 			if(acao == "escolhaBarco"){
@@ -230,10 +227,10 @@ const MonitorUserController = {
 	        url: "/usuario/findByNFC/"+$('#nfcIdCache').val(),
 	        success: function(retorno) {
 	        	$(retorno.response).each(function(index, usuario) {
-	        		$(usuario.etapa).each(function(index, etapa) {
-	        			$(etapa.atividadeList).each(function(index, atividade) {
-	        				let atividadeHTML = MonitorUserTemplate.contentAtividade(index,atividade);
-	        				$('#contentAtividadeId'+etapa.id).html(atividadeHTML);
+	        		$(usuario.fase).each(function(index, fase) {
+	        			$(fase.localList).each(function(index, local) {
+	        				let atividadeHTML = MonitorUserTemplate.contentLocal(index,local);
+	        				$('#contentLocalId'+fase.id).html(atividadeHTML);
 	        			});
 	        		});
         		});
@@ -251,9 +248,9 @@ const MonitorUserController = {
 	    });
 	},
 	
-	abrirEscolhaEtapa(idBarco){
+	abrirEscolhaFase(idBarco){
 		
-		$('#myModal').html(MonitorUserTemplate.abrirEscolhaEtapa(idBarco));
+		$('#myModal').html(MonitorUserTemplate.abrirEscolhaFase(idBarco));
 		
 		$.ajax({
 			headers: {
@@ -262,11 +259,11 @@ const MonitorUserController = {
 	        },
 	        type: "GET",
 	        contentType: "application/json",
-	        url: "/etapa/listar",
+	        url: "/fase/listar",
 	        success: function(retorno) {
-	        	$(retorno.response).each(function(index, etapa) {
-	        		$('#rowEtapasId').append(MonitorUserTemplate.rowEtapas(index,etapa));
-	        		$('#contentEtapasId').append(MonitorUserTemplate.contentEtapas(index,etapa));
+	        	$(retorno.response).each(function(index, fase) {
+	        		$('#rowFasesId').append(MonitorUserTemplate.rowFases(index,fase));
+	        		$('#contentFasesId').append(MonitorUserTemplate.contentFases(index,fase));
         		});
 	        	MonitorUserController.carregarAtividadesUsuario();
 	        },
@@ -281,7 +278,7 @@ const MonitorUserController = {
 	        	});
 	        }
 	    });
-		MonitorUserController.tempoProgressbar("progressBarEtapaId","escolhaEtapa")
+		MonitorUserController.tempoProgressbar("progressBarFaseId","escolhaFase")
 	}
 };
 

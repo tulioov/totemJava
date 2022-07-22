@@ -31,7 +31,6 @@
 		</div>
 		<div id="contentId">
 		</div>
-		
 	</div>
 	
 	<script src="../externo/serializejson/serializejson.js"></script>

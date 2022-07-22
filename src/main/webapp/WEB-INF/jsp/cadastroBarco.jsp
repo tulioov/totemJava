@@ -40,8 +40,9 @@
 			    <tr>
 			        <th>ID</th>
 			        <th>Nome</th>
-			        <th>Descri&ccedil;&atilde;o</th>
+			        <th>Nome</th>
 			        <th>Horas previstas</th>
+			        <th>Status</th>
 			        <th>A&ccedil;&atilde;o</th>
 			    </tr>
 				</thead>

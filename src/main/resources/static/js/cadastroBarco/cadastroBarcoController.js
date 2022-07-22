@@ -156,7 +156,7 @@ const CadastroBarcoController = {
 			$('#hrsBarcoPrevistaId').val(barco.hrsBarcoPrevista/60);
 			$('#dtInicioPrevistoId').val(barco.dtInicioPrevisto.split('/').reverse().join('-'));
 			$('#dtFimPrevistoId').val(barco.dtFimPrevisto.split('/').reverse().join('-'));
-			$('#descricaoId').val(barco.descricao);
+			$('#constanteCampoId').val(barco.constanteCampo);
 			$('#base64image').attr('src', barco.imagem); 
 			$('#base64image').val(barco.imagem);
 		}

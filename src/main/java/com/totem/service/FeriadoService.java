@@ -58,7 +58,9 @@ public class FeriadoService {
 		}
 		
 		Feriado feriado = feriadoRepository.findById(id).get();
-		feriadoRepository.delete(feriado);
+		feriado.setUsuarioDelete(emailUsuario);
+		feriado.setDtDelete(new Date());
+		feriadoRepository.save(feriado);
 		return feriado;
 	}
 

@@ -26,7 +26,7 @@ const CadastroUsuarioController = {
 		}
 	},
 		
-	carregarDualList(etapaList){
+	carregarDualList(faseList){
 		$.ajax({
 			headers: {
 	            'Authorization': email,
@@ -34,17 +34,17 @@ const CadastroUsuarioController = {
 	        },
 	        type: "GET",
 	        contentType: "application/json",
-	        url: "/etapa/listar",
+	        url: "/fase/listar",
 	        success: function(retorno) {
 	        	$(retorno.response).each(function(index, data) {
-	        		if (etapaList != undefined){
-        				if(etapaList.some(etapa => etapa.id === data.id)){
-	        				$("#duallistboxId").append(`<option value="${data.id}" selected="selected" >${data.descricao}</option>`);
+	        		if (faseList != undefined){
+        				if(faseList.some(fase => fase.id === data.id)){
+	        				$("#duallistboxId").append(`<option value="${data.id}" selected="selected" >${data.nome}</option>`);
         				}else{
-        					$("#duallistboxId").append(`<option value="${data.id}">${data.descricao}</option>`);
+        					$("#duallistboxId").append(`<option value="${data.id}">${data.nome}</option>`);
         				}
 	        		}else{
-	        			$("#duallistboxId").append(`<option value="${data.id}">${data.descricao}</option>`);
+	        			$("#duallistboxId").append(`<option value="${data.id}">${data.nome}</option>`);
 	        		}
         		});
 	        },complete: function(data) { 
@@ -57,7 +57,7 @@ const CadastroUsuarioController = {
 		
 		let formControl = new Object();
 		formControl  = $('#formId').serializeJSON();
-		formControl.etapaList = $('#duallistboxId').val();
+		formControl.faseList = $('#duallistboxId').val();
 		formControl.isAdmin = $('#isAdminId').prop('checked');
 		formControl.email = $('#emailId').val();
 		
@@ -173,7 +173,7 @@ const CadastroUsuarioController = {
 			$('#emailId').val(usuario.email);
 			$('#codRfidId').val(usuario.codRfid);
 			$('#isAdminId').prop('checked', usuario.isAdmin);
-			CadastroUsuarioController.carregarDualList(usuario.etapaList);
+			CadastroUsuarioController.carregarDualList(usuario.fase);
 			return;
 		}
 		CadastroUsuarioController.carregarDualList();

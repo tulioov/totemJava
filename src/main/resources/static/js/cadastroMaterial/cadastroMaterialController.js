@@ -140,7 +140,7 @@ const CadastroMaterialController = {
 		if(material != undefined){
 			$('#campoId').val(material.id);
 			$('#nomeId').val(material.nome);
-			$('#descricaoId').val(material.descricao);
+			$('#constanteCampoId').val(material.constanteCampo);
 		}
 	}
 };

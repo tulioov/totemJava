@@ -1,47 +1,36 @@
 package com.totem.dto;
 
-import java.util.Date;
+import java.util.List;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
-
-public class FeriadoDTO {
-
+public class FaseDTO {
+	
 	private Long id;
 	private String nome;
 	private String constanteCampo;
-	@JsonFormat(pattern = "dd/MM/yyyy")
-	private Date dtFeriado;
-
+	private List<Long> localList;
 	public Long getId() {
 		return id;
 	}
-
 	public void setId(Long id) {
 		this.id = id;
 	}
-	
 	public String getNome() {
 		return nome;
 	}
-
 	public void setNome(String nome) {
 		this.nome = nome;
 	}
-
 	public String getConstanteCampo() {
 		return constanteCampo;
 	}
-
 	public void setConstanteCampo(String constanteCampo) {
 		this.constanteCampo = constanteCampo;
 	}
-
-	public Date getDtFeriado() {
-		return dtFeriado;
+	public List<Long> getLocalList() {
+		return localList;
 	}
-
-	public void setDtFeriado(Date dtFeriado) {
-		this.dtFeriado = dtFeriado;
+	public void setLocalList(List<Long> localList) {
+		this.localList = localList;
 	}
 
 }

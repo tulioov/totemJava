@@ -53,10 +53,10 @@ public class Barco {
 	@Size(min = 3 , max = 250, message = "Nome deve conter minimo de 3 caracter")
 	private String nome;
 	
-	@Column(name = "DESCRICAO")
-	@NotEmpty(message = "Barco deve conter uma descrição.")	
-	@Size(min = 3 , max = 250, message = "descrição deve conter minimo de 3 caracter")
-	private String descricao;
+	@Column(name = "CONSTANTE_CAMPO", unique=true)
+	@NotEmpty(message = "Barco deve conter uma constanteCampo.")	
+	@Size(min = 3 , max = 250, message = "Contante Campo deve conter minimo de 3 caracter")
+	private String constanteCampo;
 	
 	@Column(name = "HRS_BARCO_PREVISTA")
 	private Long hrsBarcoPrevista;
@@ -66,6 +66,16 @@ public class Barco {
 	
 	@Column(name = "HRS_BARCO_TRABALHADAS")
 	private Long hrsBarcoTrabalhadas;
+	
+	@Column(name = "USUARIO_DELETE")
+	private String usuarioDelete;
+	
+	@JsonFormat(pattern="dd/MM/yyyy")
+	@Column(name = "DT_DELETE")
+	private Date dtDelete;
+	
+	@Column(name = "STATUS")
+	private String status;
 	
 	@ManyToMany(targetEntity=Monitoracao.class)
 	private Set<Monitoracao> monitoracao;
@@ -154,13 +164,15 @@ public class Barco {
 		this.nome = nome;
 	}
 
-	public String getDescricao() {
-		return descricao;
+	public String getConstanteCampo() {
+		return constanteCampo;
 	}
 
-	public void setDescricao(String descricao) {
-		this.descricao = descricao;
+
+	public void setConstanteCampo(String constanteCampo) {
+		this.constanteCampo = constanteCampo;
 	}
+
 
 	public String getImagem() {
 		return imagem;
@@ -197,6 +209,30 @@ public class Barco {
 
 	public void setHrsBarcoPrevista(Long hrsBarcoPrevista) {
 		this.hrsBarcoPrevista = hrsBarcoPrevista;
+	}
+	
+	public String getUsuarioDelete() {
+		return usuarioDelete;
+	}
+
+	public void setUsuarioDelete(String usuarioDelete) {
+		this.usuarioDelete = usuarioDelete;
+	}
+
+	public Date getDtDelete() {
+		return dtDelete;
+	}
+
+	public void setDtDelete(Date dtDelete) {
+		this.dtDelete = dtDelete;
+	}
+
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
 	}
 	
 }

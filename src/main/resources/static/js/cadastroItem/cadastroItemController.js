@@ -140,7 +140,7 @@ const CadastroItemController = {
 		if(item != undefined){
 			$('#campoId').val(item.id);
 			$('#nomeId').val(item.nome);
-			$('#descricaoId').val(item.descricao);
+			$('#constanteCampoId').val(item.constanteCampo);
 		}
 	}
 };

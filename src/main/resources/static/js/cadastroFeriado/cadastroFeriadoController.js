@@ -146,7 +146,7 @@ const CadastroFeriadoController = {
 			$('#campoId').val(Feriado.id);
 			$('#nomeId').val(Feriado.nome);
 			$('#dtFeriadoId').val(Feriado.dtFeriado.split('/').reverse().join('-'));
-			$('#descricaoId').val(Feriado.descricao);
+			$('#nomeId').val(Feriado.nome);
 			$('#constanteCampoId').val(Feriado.constanteCampo);
 		}
 	}

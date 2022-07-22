@@ -32,7 +32,6 @@ public class MonitoracaoController {
 		return ResponseEntityUtil.defaultResponse(monitoracaoService.salvarBarcoMonitoracao(monitoracaoDTO, emailUsuario));
 	}
 	
-	
 	@PostMapping("/continuarPausarFinalizar")
 	public @ResponseBody ResponseEntity<RetornoDTO> continuarPausarFinalizar(
 			@RequestHeader(name = "Authorization", required = true) String emailUsuario,
@@ -40,12 +39,6 @@ public class MonitoracaoController {
 
 		return ResponseEntityUtil.defaultResponse(monitoracaoService.continuarPausarFinalizar(monitoracaoDTO, emailUsuario));
 	}
-
-//	@GetMapping("/findByBarcoId/{id}")
-//	public @ResponseBody ResponseEntity<RetornoDTO> buscarDadosPorBarcoId(
-//			@RequestHeader(name = "Authorization", required = true) String emailUsuario, @PathVariable("id") Long id) {
-//		return ResponseEntityUtil.defaultResponse(monitoracaoService.findByBarco(id, emailUsuario));
-//	}
 
 	@GetMapping("/listar")
 	public @ResponseBody ResponseEntity<RetornoDTO> listar(

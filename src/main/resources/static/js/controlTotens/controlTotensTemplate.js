@@ -26,7 +26,7 @@ const ControlTotensTemplate = {
 			<tr>
 				<td>${data.id}</td>
 				<td>${data.usuario.nome}</td>
-				<td>${data.subAtividade.descricao}</td>
+				<td>${data.atividade.descricao}</td>
 				<td>${data.dtInicioAtividade}</td>
 				<td>${data.tempoTrabalho}</td>
 				<td>${data.status}</td>

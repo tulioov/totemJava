@@ -5,10 +5,10 @@ import java.util.List;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
-import com.totem.entity.SubAtividade;
+import com.totem.entity.Fase;
 
 @Repository
-public interface SubAtividadeRepository extends CrudRepository<SubAtividade, Long> {
+public interface FaseRepository extends CrudRepository<Fase, Long> {
 
-	List<SubAtividade> findAll();
+	List<Fase> findAll();
 }

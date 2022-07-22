@@ -1,7 +1,6 @@
 package com.totem.service;
 
 import java.util.Date;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -10,10 +9,12 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import com.totem.dto.BarcoMonitoracaoDTO;
+import com.totem.entity.Atividade;
 import com.totem.entity.Barco;
 import com.totem.entity.Monitoracao;
-import com.totem.entity.SubAtividade;
 import com.totem.entity.Usuario;
+import com.totem.enums.EnumStatusMonitoracao;
+import com.totem.enums.EnumStatusUsuario;
 import com.totem.exception.CustomErrorException;
 import com.totem.repository.MonitoracaoRepository;
 
@@ -27,7 +28,7 @@ public class MonitoracaoService {
 	BarcoService barcoService;
 
 	@Autowired
-	SubAtividadeService subAtividadeService;
+	AtividadeService atividadeService;
 	
 	@Autowired
 	private MonitoracaoRepository monitoracaoRepository;
@@ -35,11 +36,6 @@ public class MonitoracaoService {
 	private static final String ERRO_PERMISSAO = "Usuário sem permissão";
 
 	public List<Monitoracao> listar(String emailUsuario) {
-
-		// if(!usuarioService.isAdm(emailUsuario)) {
-		// throw new CustomErrorException(HttpStatus.UNAUTHORIZED, ERRO_PERMISSAO);
-		// }
-
 		return monitoracaoRepository.findAll();
 	}
 
@@ -49,7 +45,7 @@ public class MonitoracaoService {
 		List<Monitoracao> lstMonitoracao = monitoracaoRepository.findByUsuario(usuario);
 
 		for (Monitoracao monitoracao : lstMonitoracao) {
-			if (monitoracao.getDtFimAtividade() == null) {
+			if (EnumStatusMonitoracao.TRABALHANDO.toString().equals(monitoracao.getStatus())) {
 				return monitoracao;
 			}
 		}
@@ -63,7 +59,7 @@ public class MonitoracaoService {
 		List<Monitoracao> lstMonitoracao = monitoracaoRepository.findByUsuario(usuario);
 
 		for (Monitoracao monitoracao : lstMonitoracao) {
-			if (monitoracao.getDtFimAtividadeTotal() == null) {
+			if (EnumStatusMonitoracao.PAUSA.toString().equals(monitoracao.getStatus())) {
 				return monitoracao;
 			}
 		}
@@ -79,11 +75,6 @@ public class MonitoracaoService {
 	}
 
 	public Monitoracao salvar(Monitoracao monitoracao, String emailUsuario) {
-
-		// if (!usuarioService.isAdm(emailUsuario)) {
-		// throw new CustomErrorException(HttpStatus.UNAUTHORIZED, ERRO_PERMISSAO);
-		// }
-
 		monitoracaoRepository.save(monitoracao);
 		return monitoracao;
 	}
@@ -102,22 +93,26 @@ public class MonitoracaoService {
 	public Barco salvarBarcoMonitoracao(BarcoMonitoracaoDTO monitoracaoDTO, String emailUsuario) {
 
 		Barco barco = barcoService.findById(monitoracaoDTO.getIdBarco(), emailUsuario);
+		
 		Usuario usuario = usuarioService.buscarUsuarioPorNFC(monitoracaoDTO.getNfcId());
-		SubAtividade subAtividade = subAtividadeService.findById(monitoracaoDTO.getIdSubAtividade(), emailUsuario);
+		usuario.setStatus(EnumStatusUsuario.TRABALHANDO.toString());
+		
+		Atividade atividade = atividadeService.findById(monitoracaoDTO.getIdAtividade(), emailUsuario);
 
 		Monitoracao monitoracao = new Monitoracao();
 		monitoracao.setIdBarco(barco.getId());
 		monitoracao.setDtInicioAtividade(new Date());
 		monitoracao.setUsuario(usuario);
-		monitoracao.setSubAtividade(subAtividade);
-		monitoracao.setStatus("Trabalhando");
+		monitoracao.setAtividade(atividade);
+		monitoracao.setStatus(EnumStatusMonitoracao.TRABALHANDO.toString());
 
-		Set<Monitoracao> lstMonitoracao = new HashSet<>();
+		Set<Monitoracao> lstMonitoracao = barco.getMonitoracao();
 		lstMonitoracao.add(monitoracao);
 		barco.setMonitoracao(lstMonitoracao);
 
 		this.salvar(monitoracao, emailUsuario);
 		barcoService.salvarBarcoMonitor(barco, emailUsuario);
+		usuarioService.salvar(usuario);
 
 		return barco;
 	}
@@ -129,7 +124,7 @@ public class MonitoracaoService {
 		Monitoracao monitoracao = null;
 		
 		for (Monitoracao monitoracaoVarr : lstMonitoracao) {
-			if (monitoracaoVarr.getDtFimAtividade() == null || monitoracaoVarr.getDtFimAtividadeTotal() == null) {
+			if (monitoracaoVarr.getDtFimAtividade() == null || monitoracaoVarr.getDtFimAtividadeTotal() == null && monitoracaoVarr.getUsuario().equals(usuario)) {
 				monitoracao = monitoracaoVarr;
 				break;
 			}
@@ -138,39 +133,44 @@ public class MonitoracaoService {
 			return null;
 		}
 		
-		if("pausar".equals(monitoracaoDTO.getAcao())){
+		if(EnumStatusMonitoracao.PAUSA.toString().equals(monitoracaoDTO.getAcao())){
 			monitoracao.setDtFimAtividade(new Date());
-			monitoracao.setStatus("Pausa");
+			monitoracao.setStatus(EnumStatusMonitoracao.PAUSA.toString());
 			monitoracaoRepository.save(monitoracao);
+			
+			usuario.setStatus(EnumStatusMonitoracao.PAUSA.toString());
+			usuarioService.salvar(usuario);
+			
+			Barco barco = barcoService.findById(monitoracao.getIdBarco(), emailUsuario);
+			Set<Monitoracao> monitor = barco.getMonitoracao();
+			monitor.add(monitoracao);
+			barco.setMonitoracao(monitor);
+			barcoService.salvar(barco, emailUsuario);
+			
 			return monitoracao;
 		}
-		if("finalizar".equals(monitoracaoDTO.getAcao())){
+		if(EnumStatusMonitoracao.FINALIZADO.toString().equals(monitoracaoDTO.getAcao())){
 			monitoracao.setDtFimAtividade(new Date());
 			monitoracao.setDtFimAtividadeTotal(new Date());
-			monitoracao.setStatus("Finalizado");
+			monitoracao.setStatus(EnumStatusMonitoracao.FINALIZADO.toString());
 			monitoracaoRepository.save(monitoracao);
+			
+			usuario.setStatus(EnumStatusMonitoracao.FINALIZADO.toString());
+			usuarioService.salvar(usuario);
+			
 			Barco barco = barcoService.findById(monitoracao.getIdBarco(), emailUsuario);
-			barco.setHrsBarcoTrabalhadas(monitoracao.getTempoTrabalho());
+			Long horasTrabalhadas = barco.getHrsBarcoTrabalhadas()==null?0L:barco.getHrsBarcoTrabalhadas();
+			barco.setHrsBarcoTrabalhadas(monitoracao.getTempoTrabalho()+horasTrabalhadas);
 			barcoService.salvarBarcoMonitor(barco, emailUsuario);
+			
 			return monitoracao;
 		}
 		
-		Barco barco = barcoService.findById(monitoracao.getIdBarco(), emailUsuario);
-		
-		Monitoracao monitoracaoNova = new Monitoracao();
-		monitoracaoNova.setDtInicioAtividade(monitoracao.getDtInicioAtividade());
-		monitoracaoNova.setUsuario(monitoracao.getUsuario());
-		monitoracaoNova.setSubAtividade(monitoracao.getSubAtividade());
-		monitoracaoNova.setStatus("Trabalhando");
-		monitoracaoRepository.save(monitoracaoNova);
-		
-		Set<Monitoracao> monitor = barco.getMonitoracao();
-		monitor.add(monitoracaoNova);
-		barcoService.salvarBarcoMonitor(barco, emailUsuario);
-		
-		monitoracao.setDtFimAtividade(new Date());
-		monitoracao.setDtFimAtividadeTotal(new Date());
+		monitoracao.setStatus(EnumStatusMonitoracao.TRABALHANDO.toString());
 		monitoracaoRepository.save(monitoracao);
+		usuario.setStatus(EnumStatusMonitoracao.TRABALHANDO.toString());
+		usuarioService.salvar(usuario);
+		
 		
 		return monitoracao;
 		

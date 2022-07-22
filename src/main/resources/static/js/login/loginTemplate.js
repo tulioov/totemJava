@@ -47,7 +47,7 @@ const CadastroUsuarioTemplate = {
 							</div>
 						</div>
 						<div class="panel panel-default">
-							<div class="panel-heading">Rela\u00e7\u00e3o Usu\u00e1rio Etapa</div>
+							<div class="panel-heading">Rela\u00e7\u00e3o Usu\u00e1rio Fase</div>
 	                			<div class="panel-body">
 								<select multiple="multiple" size="10" id="duallistboxId" name="duallistbox">
 								</select>

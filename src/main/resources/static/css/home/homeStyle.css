@@ -130,3 +130,33 @@ body {
     background: inherit;
     left: 20px;
 }
+.ativo{
+	color: white;
+	background-color: green;
+	border-radius: 50px;
+	padding: 2px 8px 2px 8px;
+}
+.inativo{
+	color: white;
+	background-color: red;
+	border-radius: 50px;
+	padding: 2px 8px 2px 8px;
+}
+.TRABALHANDO{
+	color: white;
+	background-color: gold;
+	border-radius: 50px;
+	padding: 2px 8px 2px 8px;
+}
+.PAUSA{
+	color: white;
+	background-color: blue;
+	border-radius: 50px;
+	padding: 2px 8px 2px 8px;
+}
+.FINALIZADO{
+	color: white;
+	background-color: green;
+	border-radius: 50px;
+	padding: 2px 8px 2px 8px;
+}

@@ -1,12 +1,12 @@
 
-const CadastroEtapaTemplate = {
+const CadastroFaseTemplate = {
 		
 	add (){
 		return `
 		<div class="modal-dialog modal-lg ">
 	        <div class="modal-content">
 	            <div class="modal-header">
-	                <h4 class="modal-title">Adicionar Etapa</h4>
+	                <h4 class="modal-title">Adicionar Fase</h4>
 	            </div>
 	            <div class="modal-body">
 		            
@@ -17,12 +17,12 @@ const CadastroEtapaTemplate = {
 						</div>
 	                	<input type="text" id="campoId" name="id" class="oculta">
 		                <div class="panel panel-default">
-		                	<div class="panel-heading">Cadastro de Etapa</div>
+		                	<div class="panel-heading">Cadastro de Fase</div>
 		                	<div class="panel-body">
 			                	<div class="row">
 									<div class="col-md-4">
-										<div>Descri\u00e7\u00e3o: </div>
-										<input type="text" name="descricao" class="form-control uppercase" id="descricaoId">
+										<div>Nome: </div>
+										<input type="text" name="nome" class="form-control uppercase" id="nomeId">
 									</div>
 									<div class="col-md-4">
 										<div>Constante Campo: </div>
@@ -32,7 +32,7 @@ const CadastroEtapaTemplate = {
 							</div>
 						</div>
 						<div class="panel panel-default">
-							<div class="panel-heading">Rela\u00e7\u00e3o Etapa e Atividade</div>
+							<div class="panel-heading">Rela\u00e7\u00e3o Fase e Local</div>
                 			<div class="panel-body">
 								<select multiple="multiple" size="10"  id="duallistboxId">
 								</select>
@@ -41,7 +41,7 @@ const CadastroEtapaTemplate = {
 			        </form>
 	            </div>
 	            <div class="modal-footer">
-	            	<button type="button" class="btn btn-success" onClick="CadastroEtapaController.salvar()" >Salvar</button>
+	            	<button type="button" class="btn btn-success" onClick="CadastroFaseController.salvar()" >Salvar</button>
 	                <button type="button" class="btn btn-danger" onClick="$('#myModal').hide();" data-dismiss="modal">Fechar</button>
 	            </div>
 	        </div>
@@ -53,11 +53,12 @@ const CadastroEtapaTemplate = {
 		return `
 			<tr>
 				<td>${data.id}</td>
-				<td>${data.descricao}</td>
+				<td>${data.nome}</td>
 				<td>${data.constanteCampo}</td>
+				<td><span class="${data.usuarioDelete != null?'inativo':'ativo'}">${data.usuarioDelete != null?'Inativo':'Ativo'}</span></td>
 				<td>
-					<span onclick="CadastroEtapaController.editar(${data.id});" class="glyphicon glyphicon-pencil"></span>
-					<span onclick="CadastroEtapaController.deletar(${data.id});" class="glyphicon glyphicon-trash"></span>
+					<span onclick="CadastroFaseController.editar(${data.id});" class="glyphicon glyphicon-pencil"></span>
+					<span onclick="CadastroFaseController.deletar(${data.id});" class="glyphicon glyphicon-trash"></span>
 				</td>
 			</tr>
 		`;

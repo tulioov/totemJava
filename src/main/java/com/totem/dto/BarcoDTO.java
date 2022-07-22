@@ -33,11 +33,9 @@ public class BarcoDTO {
 	
 	@NotEmpty(message = "Barco deve conter uma descrição.")	
 	@Size(min = 3 , max = 250, message = "descrição deve conter minimo de 3 caracter")
-	private String descricao;
+	private String constanteCampo;
 	
 	private Set<?> monitoracao;
-	
-	
 
 	public Long getHrsBarcoPrevista() {
 		return hrsBarcoPrevista;
@@ -102,13 +100,13 @@ public class BarcoDTO {
 	public void setNome(String nome) {
 		this.nome = nome;
 	}
-
-	public String getDescricao() {
-		return descricao;
+	
+	public String getConstanteCampo() {
+		return constanteCampo;
 	}
 
-	public void setDescricao(String descricao) {
-		this.descricao = descricao;
+	public void setConstanteCampo(String constanteCampo) {
+		this.constanteCampo = constanteCampo;
 	}
 
 	public Set<?> getMonitoracao() {

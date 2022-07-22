@@ -47,16 +47,16 @@ public class Monitoracao {
 	private Usuario usuario;
 	
 	@OneToOne(cascade = CascadeType.ALL)
-	@JoinColumn(name = "ID_ETAPA", referencedColumnName = "COD_ETAPA")
-	private Etapa etapa;
+	@JoinColumn(name = "ID_FASE", referencedColumnName = "COD_FASE")
+	private Fase fase;
+	
+	@OneToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name = "ID_LOCAL", referencedColumnName = "COD_LOCAL")
+	private Local local;
 	
 	@OneToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "ID_ATIVIDADE", referencedColumnName = "COD_ATIVIDADE")
 	private Atividade atividade;
-	
-	@OneToOne(cascade = CascadeType.ALL)
-	@JoinColumn(name = "ID_SUBATIVIDADE", referencedColumnName = "COD_SUB_ATIVIDADE")
-	private SubAtividade subAtividade;
 	
 	@Transient
 	private Long tempoTrabalho;
@@ -69,12 +69,12 @@ public class Monitoracao {
 		this.idBarco = idBarco;
 	}
 
-	public Etapa getEtapa() {
-		return etapa;
+	public Fase getFase() {
+		return fase;
 	}
 
-	public void setEtapa(Etapa etapa) {
-		this.etapa = etapa;
+	public void setFase(Fase fase) {
+		this.fase = fase;
 	}
 
 	public Long getId() {
@@ -101,20 +101,20 @@ public class Monitoracao {
 		this.usuario = usuario;
 	}
 
+	public Local getLocal() {
+		return local;
+	}
+
+	public void setLocal(Local local) {
+		this.local = local;
+	}
+
 	public Atividade getAtividade() {
 		return atividade;
 	}
 
 	public void setAtividade(Atividade atividade) {
 		this.atividade = atividade;
-	}
-
-	public SubAtividade getSubAtividade() {
-		return subAtividade;
-	}
-
-	public void setSubAtividade(SubAtividade subAtividade) {
-		this.subAtividade = subAtividade;
 	}
 	
 	public Long getTempoTrabalho() {

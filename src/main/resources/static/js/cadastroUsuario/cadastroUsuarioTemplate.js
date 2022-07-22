@@ -26,16 +26,25 @@ const CadastroUsuarioTemplate = {
 									</div>
 									<div class="col-md-4">
 										<div>Especialidade: </div>
-										<input type="text" name="especialidade" class="form-control" id="especialidadeId">
+										<input type="text" name="especialidade" class="form-control uppercase" id="especialidadeId">
 									</div>
 								</div>
-								<div class="row">
+								<div class="row mt15">
 									<div class="col-md-6">
 										<div>Email: </div>
-										<input type="text" disabled name="email" class="form-control" id="emailId">
+										<input type="text" disabled name="email" class="form-control uppercase" id="emailId">
+									</div>
+									<div class="col-md-6">
+										<div>Status: </div>
+										<select class="form-control" id="sel1">
+											<option>Ativo</option>
+										    <option>Pausa</option>
+										    <option>Trabalhando</option>
+										    <option>Inativo</option>
+										</select>
 									</div>
 								</div>
-								<div class="row">
+								<div class="row mt15">
 									<div class="col-md-6">
 										<div>RFID: </div>
 										<input type="text" name="codRfid" class="form-control" id="codRfidId">
@@ -53,7 +62,7 @@ const CadastroUsuarioTemplate = {
 							</div>
 						</div>
 						<div class="panel panel-default">
-							<div class="panel-heading">Rela\u00e7\u00e3o Usu\u00e1rio Etapa</div>
+							<div class="panel-heading">Rela\u00e7\u00e3o Usu\u00e1rio Fase</div>
 	                			<div class="panel-body">
 								<select multiple="multiple" size="10" id="duallistboxId" name="duallistbox">
 								</select>
@@ -71,11 +80,19 @@ const CadastroUsuarioTemplate = {
 	},
 	
 	itemLinha(data){
+		let status = data.status;
+		if(data.status == null){
+			data.status = "ativo";
+		}
+		if(data.status == 'FINALIZADO'){
+			data.status = "ativo";
+		}
 		return `
 			<tr>
 				<td>${data.id}</td>
 				<td>${data.nome}</td>
 				<td>${data.especialidade}</td>
+				<td><span class="${data.status}">${data.status}</span></td>
 				<td>
 					<span onclick="CadastroUsuarioController.editar(${data.id});" class="glyphicon glyphicon-pencil"></span>
 					<span onclick="CadastroUsuarioController.deletar(${data.id});" class="glyphicon glyphicon-trash"></span>

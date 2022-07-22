@@ -41,6 +41,7 @@
 			        <th>ID</th>
 			        <th>Nome</th>
 			        <th>Especialidade</th>
+			        <th>Status</th>
 			        <th>A&ccedil;&atilde;o</th>
 			    </tr>
 				</thead>

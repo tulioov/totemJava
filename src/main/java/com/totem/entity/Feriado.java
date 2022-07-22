@@ -22,12 +22,12 @@ public class Feriado {
 	@Column(name = "COD_FERIADO")
 	private Long id;
 	
-	@Column(name = "DESCRICAO")
-	@NotEmpty(message = "Etapa deve conter uma descrição.")	
-	@Size(min = 3 , max = 250, message = "descrição deve conter minimo de 3 caracter")
-	private String descricao;
+	@Column(name = "NOME", unique=true)
+	@NotEmpty(message = "Nome deve conter um nome")	
+	@Size(min = 3 , max = 250, message = "Nome deve conter minimo de 3 caracter")
+	private String nome;
 	
-	@Column(name = "CONSTANTE_CAMPO")
+	@Column(name = "CONSTANTE_CAMPO", unique=true)
 	@NotEmpty(message = "Constante campo deve conter um nome.")	
 	@Size(min = 3 , max = 250, message = "Constante campo deve conter minimo de 3 caracter")
 	private String constanteCampo;
@@ -35,6 +35,13 @@ public class Feriado {
 	@JsonFormat(pattern="dd/MM/yyyy")
 	@Column(name = "DT_FERIADO")
 	private Date dtFeriado;
+	
+	@Column(name = "USUARIO_DELETE")
+	private String usuarioDelete;
+	
+	@JsonFormat(pattern="dd/MM/yyyy")
+	@Column(name = "DT_DELETE")
+	private Date dtDelete;
 
 	public Long getId() {
 		return id;
@@ -43,13 +50,13 @@ public class Feriado {
 	public void setId(Long id) {
 		this.id = id;
 	}
-
-	public String getDescricao() {
-		return descricao;
+	
+	public String getNome() {
+		return nome;
 	}
 
-	public void setDescricao(String descricao) {
-		this.descricao = descricao;
+	public void setNome(String nome) {
+		this.nome = nome;
 	}
 
 	public String getConstanteCampo() {
@@ -66,6 +73,22 @@ public class Feriado {
 
 	public void setDtFeriado(Date dtFeriado) {
 		this.dtFeriado = dtFeriado;
+	}
+	
+	public String getUsuarioDelete() {
+		return usuarioDelete;
+	}
+
+	public void setUsuarioDelete(String usuarioDelete) {
+		this.usuarioDelete = usuarioDelete;
+	}
+
+	public Date getDtDelete() {
+		return dtDelete;
+	}
+
+	public void setDtDelete(Date dtDelete) {
+		this.dtDelete = dtDelete;
 	}
 	
 }

@@ -15,7 +15,7 @@ const MonitorUserTemplate = {
 			</div>
 			<div class="row mt15">
 				<h4 class="col-md-6">${barco.dtInicio==undefined?'Aguardando Inicio':barco.dtInicio}</h4> 
-				<h4 class="col-md-6 text-right">${barco.dtFim==undefined?'Aguardando Inicio':barco.dtFim}</h4> 
+				<h4 class="col-md-6 text-right">${barco.dtFim==undefined?'Aguardando Fim':barco.dtFim}</h4> 
 			</div>
 			<div class="progress mt15">
 			  	<div class="progress-bar bg-success" role="progressbar" style="width: ${(barco.hrsBarcoTrabalhadas*100/barco.hrsBarcoPrevista)}%"  aria-valuenow="25" aria-valuemin="0" aria-valuemax="${barco.hrsBarcoPrevista}">%</div>
@@ -45,10 +45,10 @@ const MonitorUserTemplate = {
 			<tr>
 				<td>${data.id}</td>
 				<td>${data.usuario.nome}</td>
-				<td>${data.subAtividade.descricao}</td>
+				<td>${data.atividade.nome}</td>
 				<td>${data.dtInicioAtividade}</td>
 				<td>${data.tempoTrabalho}</td>
-				<td>${data.status}</td>
+				<td><span class="${data.status}">${data.status}</span></td>
 			</tr>
 		`;
 	},
@@ -76,43 +76,43 @@ const MonitorUserTemplate = {
 		`
 	},
 	
-	rowEtapas(index, etapa){
+	rowFases(index, fase){
 		return `
 			<li role="presentation" class="${index==0?'active':'disabled'} bg-white">
-		        <a href="#step${index}" data-toggle="tab" aria-controls="step${index}" role="tab"><span class="round-tab">${index}</span> <i>${etapa.descricao}</i></a>
+		        <a href="#step${index}" data-toggle="tab" aria-controls="step${index}" role="tab"><span class="round-tab">${index}</span> <i>${fase.nome}</i></a>
 		    </li>
 			`
 	},
 	
-	contentEtapas(index, etapa){
+	contentFases(index, fase){
 		return`
 			<div class="tab-pane ${index==0?'active':''}" role="tabpanel" id="step${index}">
-	            <h4 class="text-center">${etapa.descricao}</h4>
-	            <div id="contentAtividadeId${etapa.id}" class="col-md-12">
+	            <h4 class="text-center">${fase.nome}</h4>
+	            <div id="contentLocalId${fase.id}" class="col-md-12">
 	            </div>
 	        </div>					
 			`
 	},
 	
-	htmlSubAtividade(atividade){
+	htmlAtividade(local){
 		let html = "";
-		$(atividade.subAtividadeList).each(function(index, subAtividade) {
-			html += `<button type="button" class="btn btn-success col-md-12 mt15" onclick="MonitorUserController.salvarSubAtividadeEscolhida(${subAtividade.id})">${subAtividade.descricao}</button>`
+		$(local.atividadeList).each(function(index, atividade) {
+			html += `<button type="button" class="btn btn-success col-md-12 mt15" onclick="MonitorUserController.salvarAtividadeEscolhida(${atividade.id})">${atividade.nome}</button>`
 		});
 		return html;
 	},
 	
-	contentAtividade(index,atividade){
+	contentLocal(index,local){
 		
 		return` 
 			<div class="list-content">
-		        <a class="btn btn-info" href="#cmb${index}${atividade.id}"  data-toggle="collapse" aria-expanded="false" aria-controls="cmb${index}${atividade.id}">${atividade.descricao}<i class="fa fa-chevron-down"></i></a>
-		        <div class="collapse" id="cmb${index}${atividade.id}">
+		        <a class="btn btn-info" href="#cmb${index}${local.id}"  data-toggle="collapse" aria-expanded="false" aria-controls="cmb${index}${local.id}">${local.nome}<i class="fa fa-chevron-down"></i></a>
+		        <div class="collapse" id="cmb${index}${local.id}">
 		            <div class="list-box">
 		                <div class="row">
 		                    <div class="col-md-12">
 		                        <div class="form-group">`+
-		                        MonitorUserTemplate.htmlSubAtividade(atividade);
+		                        MonitorUserTemplate.htmlAtividade(local);
 		                        +`</div>
 		                    </div>
 		                </div>
@@ -122,14 +122,14 @@ const MonitorUserTemplate = {
 		`;
 	},
 	
-	abrirEscolhaEtapa(idBarco){
+	abrirEscolhaFase(idBarco){
 		return`
 				<div class="modal-dialog modal-lg">
 			        <div class="modal-content">
 			            <div class="modal-header">
 			                <h4 class="modal-title">Escolha sua atividade</h4>
 			                <div class="progress">
-								<div id="progressBarEtapaId" class="progress-bar bg-success" role="progressbar" style="width: 100%" value=100 aria-valuemin="0" aria-valuemax="100">Tempo de espera</div>
+								<div id="progressBarFaseId" class="progress-bar bg-success" role="progressbar" style="width: 100%" value=100 aria-valuemin="0" aria-valuemax="100">Tempo de espera</div>
 							</div>
 			            </div>
 			            <input type="hidden" value="${idBarco}" id="barcoId">
@@ -141,12 +141,12 @@ const MonitorUserTemplate = {
 						                    <div class="wizard">
 						                        <div class="wizard-inner">
 						                            <div class="connecting-line"></div>
-						                            <ul class="nav nav-tabs" role="tablist" id="rowEtapasId">
+						                            <ul class="nav nav-tabs" role="tablist" id="rowFasesId">
 						                                
 						                            </ul>
 						                        </div>
 						                        <form role="form"  class="login-box">
-						                            <div class="tab-content" id="contentEtapasId">
+						                            <div class="tab-content" id="contentFasesId">
 						                            </div>
 						                        </form>
 						                    </div>

@@ -21,8 +21,8 @@ const CadastroFeriadoTemplate = {
 		                	<div class="panel-body">
 			                	<div class="row">
 									<div class="col-md-4">
-										<div>Descri\u00e7\u00e3o: </div>
-										<input type="text" name="descricao" class="form-control" id="descricaoId">
+										<div>Nome: </div>
+										<input type="text" name="nome" class="form-control" id="nomeId">
 									</div>
 									<div class="col-md-4">
 										<div>Constante Campo: </div>
@@ -53,8 +53,9 @@ const CadastroFeriadoTemplate = {
 			<tr>
 				<td>${data.id}</td>
 				<td>${data.dtFeriado}</td>
-				<td>${data.descricao}</td>
+				<td>${data.nome}</td>
 				<td>${data.constanteCampo}</td>
+				<td><span class="${data.usuarioDelete != null?'inativo':'ativo'}">${data.usuarioDelete != null?'Inativo':'Ativo'}</span></td>
 				<td>
 					<span onclick="CadastroFeriadoController.editar(${data.id});" class="glyphicon glyphicon-pencil"></span>
 					<span onclick="CadastroFeriadoController.deletar(${data.id});" class="glyphicon glyphicon-trash"></span>
