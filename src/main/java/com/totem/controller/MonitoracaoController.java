@@ -29,7 +29,7 @@ public class MonitoracaoController {
 			@RequestHeader(name = "Authorization", required = true) String emailUsuario,
 			@Valid @RequestBody BarcoMonitoracaoDTO monitoracaoDTO) {
 
-		return ResponseEntityUtil.defaultResponse(monitoracaoService.salvarBarcoMonitoracao(monitoracaoDTO, emailUsuario));
+		return ResponseEntityUtil.defaultResponse(monitoracaoService.salvarNovaBarcoMonitoracao(monitoracaoDTO, emailUsuario));
 	}
 	
 	@PostMapping("/continuarPausarFinalizar")

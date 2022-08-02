@@ -2,6 +2,11 @@
 const MonitorUserController = {
 		
 	erro(data, alertComponent){
+		
+		setTimeout(function () {
+			$("#"+alertComponent).removeClass("alert-danger").addClass("oculta").find('div').html("");
+		}, 5000);
+		
 		$("#myModal").scrollTop(0);
     	$("#"+alertComponent).find('div').html("");
     	if(data.responseJSON.statusCode === 404){
@@ -9,6 +14,10 @@ const MonitorUserController = {
     		return;
     	}
     	if(data.responseJSON.statusCode === 401){
+    		$("#"+alertComponent).removeClass("oculta").addClass("alert-danger").find('div').append(data.responseJSON.response.message+"<br>");
+    		return;
+    	}
+    	if(data.responseJSON.statusCode === 400){
     		$("#"+alertComponent).removeClass("oculta").addClass("alert-danger").find('div').append(data.responseJSON.response.message+"<br>");
     		return;
     	}
@@ -35,7 +44,7 @@ const MonitorUserController = {
 				$('#tableMonitorUser').DataTable().destroy();
 				
 				$(data.monitoracao).each(function(inde, dat) {
-					if(dat.status !== 'FINALIZADO'){
+					if(dat.status !== 'FINALIZADO' && dat.dtFimAtividadeTotal == null){
 						$("#tableMonitorUser").find('tbody').append(MonitorUserTemplate.itemLinha(dat));
 					}
 				});
@@ -76,13 +85,9 @@ const MonitorUserController = {
 		if($('#nfcId').val()===''){
 			return;
 		}
-		
-		$('#contentId').hide();
-		var tempoEscolhaBarco = 10000;
-		$('#contentIdBarco').html(MonitorUserTemplate.modalEscolhaBarco());
-		
 		$('#nfcIdCache').val($('#nfcId').val());
 		$('#nfcId').val('');
+		
 		
 		$.ajax({
 			headers: {
@@ -93,6 +98,9 @@ const MonitorUserController = {
 	        contentType: "application/json",
 	        url: "/barco/escolhaBarco/"+$('#nfcIdCache').val(),
 	        success: function(retorno) {
+	        	
+	        	$('#contentId').hide();
+	        	$('#contentIdBarco').html(MonitorUserTemplate.modalEscolhaBarco());
 	        	
 	        	if(retorno.response.status == "TRABALHANDO"){
 	        		$('#imgEscolhaBarco').append(
@@ -115,17 +123,15 @@ const MonitorUserController = {
 	        	
         		for (const barco of retorno.response){	
 	        		$('#imgEscolhaBarco').append(
-        				`<div class="col-md-4 mt15">
-        					<img 
-        						style='display:block; width:16em;height:9em;cursor:pointer;' 
-        						id='base64image-${barco.id}' 
-        						src='${barco.imagem}'
-        						onClick=MonitorUserController.abrirEscolhaFase(${barco.id})
-        						class="btn btn-primary" data-toggle="modal" data-target="#myModal"
-    						/>
-    						<h3>${barco.nome}</h3>
-        				</div>`);
+        				`
+        				<div class="col-md-4 mt15">
+        					<span class="btnBarco" data-toggle="modal" data-target="#myModal" onclick="javascript:MonitorUserController.abrirEscolhaFase(${barco.id});">${barco.nome}</span>
+        				</div>`
+    				);
         		}
+	        },
+	        error: function (data) {  
+	        	MonitorUserController.erro(data,'alertMsgIdTable');
 	        }
 	    });
 		MonitorUserController.tempoProgressbar("progressBarEscolhaBarcoId", "escolhaBarco");

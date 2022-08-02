@@ -160,3 +160,10 @@ body {
 	border-radius: 50px;
 	padding: 2px 8px 2px 8px;
 }
+.btnBarco{
+	color: white;
+	background-color: var(--azulOkean);
+	border-radius: 50px;
+	padding: 2px 8px 2px 8px;
+	font-size: xxx-large;
+}

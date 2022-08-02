@@ -9,7 +9,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.OneToMany;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
@@ -46,7 +46,7 @@ public class Local {
 	private Date dtDelete;
 	
 	@JoinColumn(name = "ID_LOCAL")
-	@OneToMany
+	@ManyToMany
 	private List<Atividade> atividadeList;
 	
 	public List<Atividade> getAtividadeList() {

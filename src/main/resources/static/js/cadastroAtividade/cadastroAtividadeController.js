@@ -132,6 +132,13 @@ const CadastroAtividadeController = {
 	addUser(atividade){
 		
 		$('#myModal').html(CadastroAtividadeTemplate.add()).show();
+		
+		$("#nomeId").keyup(function(){
+			const reg = /[^a-zA-Z0-9 ]+/g;
+			let texto = $("#nomeId").val().replace(reg,'');
+			$("#constanteCampoId").val(texto.replaceAll(' ','_'));
+		});
+		
 		$('[name=duallistbox]').bootstrapDualListbox({
 			nonSelectedListLabel: 'N\u00e3o Selecionadas',
 			selectedListLabel: 'Selecionadas'
@@ -143,6 +150,8 @@ const CadastroAtividadeController = {
 			$('#nomeId').val(atividade.nome);
 			$('#constanteCampoId').val(atividade.constanteCampo);
 			$('#tempoEstimadoId').val(atividade.tempoEstimado);
+			$('#tempoRealId').val(atividade.tempoReal);
+			
 		}
 	}
 };

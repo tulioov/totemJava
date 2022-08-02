@@ -29,6 +29,10 @@
 				<input type="text" id="nfcId" autofocus>
 			</form>
 		</div>
+		<div id="alertMsgIdTable" class=" mt15 alert fade in oculta ">
+           	<a onclick="$('#alertMsgIdTable').addClass('oculta');" class="close">&times;</a>
+           	<div></div>
+		</div>
 		<div id="contentId">
 		</div>
 	</div>

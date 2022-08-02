@@ -20,23 +20,27 @@ const CadastroAtividadeTemplate = {
 		                	<div class="panel-heading">Cadastro de Atividade</div>
 		                	<div class="panel-body">
 			                	<div class="row">
-			                		<div class="col-md-6">
+			                		<div class="col-md-4">
 										<div>Codigo:</div>
 										<input type="text" name="codigo" class="form-control uppercase" id="codigoId">
 									</div>
-									<div class="col-md-6">
+									<div class="col-md-4">
 										<div>Nome:</div>
 										<input type="text" name="nome" class="form-control uppercase" id="nomeId">
+									</div>
+									<div class="col-md-4">
+										<div>Constante Campo: </div>
+										<input type="text" name="constanteCampo" oninput="this.value = this.value.replace(' ', '');" class="form-control uppercase" id="constanteCampoId">
 									</div>
 								</div>
 								<div class="row mt15">
 									<div class="col-md-6">
-										<div>Constante Campo: </div>
-										<input type="text" name="constanteCampo" oninput="this.value = this.value.replace(' ', '');" class="form-control uppercase" id="constanteCampoId">
-									</div>
-									<div class="col-md-6">
 										<div>Tempo estimado (minutos): </div>
 										<input type="number" name="tempoEstimado" class="form-control" id="tempoEstimadoId">
+									</div>
+									<div class="col-md-6">
+										<div>Tempo real (minutos): </div>
+										<input type="number" disabled name="tempoReal" class="form-control" id="tempoRealId">
 									</div>
 								</div>
 							</div>

@@ -2,7 +2,6 @@ package com.totem.service;
 
 import java.util.Date;
 import java.util.List;
-import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -29,7 +28,7 @@ public class MonitoracaoService {
 
 	@Autowired
 	AtividadeService atividadeService;
-	
+
 	@Autowired
 	private MonitoracaoRepository monitoracaoRepository;
 
@@ -39,29 +38,17 @@ public class MonitoracaoService {
 		return monitoracaoRepository.findAll();
 	}
 
-	public Monitoracao isUsuarioTrabalhando(String nfc) {
-
-		Usuario usuario = usuarioService.buscarUsuarioPorNFC(nfc);
-		List<Monitoracao> lstMonitoracao = monitoracaoRepository.findByUsuario(usuario);
-
-		for (Monitoracao monitoracao : lstMonitoracao) {
-			if (EnumStatusMonitoracao.TRABALHANDO.toString().equals(monitoracao.getStatus())) {
-				return monitoracao;
-			}
-		}
-
-		return null;
+	public Monitoracao findByUsuarioAndStatusEquals(Usuario usuario, String status) {
+		return monitoracaoRepository.findByUsuarioAndStatusEqualsAndDtFimAtividadeTotalIsNull(usuario, status);
 	}
-	
-	public Monitoracao isUsuarioPausado(String nfc) {
+
+	public Monitoracao getMonitoracaoTrabalhandoOuPausa(String nfc, String status) {
 
 		Usuario usuario = usuarioService.buscarUsuarioPorNFC(nfc);
-		List<Monitoracao> lstMonitoracao = monitoracaoRepository.findByUsuario(usuario);
+		Monitoracao monitoracao = monitoracaoRepository.findByUsuarioAndStatusEqualsAndDtFimAtividadeTotalIsNull(usuario,status);
 
-		for (Monitoracao monitoracao : lstMonitoracao) {
-			if (EnumStatusMonitoracao.PAUSA.toString().equals(monitoracao.getStatus())) {
-				return monitoracao;
-			}
+		if (monitoracao != null) {
+			return monitoracao;
 		}
 
 		return null;
@@ -90,23 +77,23 @@ public class MonitoracaoService {
 		return monitoracao;
 	}
 
-	public Barco salvarBarcoMonitoracao(BarcoMonitoracaoDTO monitoracaoDTO, String emailUsuario) {
+	public Barco salvarNovaBarcoMonitoracao(BarcoMonitoracaoDTO monitoracaoDTO, String emailUsuario) {
 
 		Barco barco = barcoService.findById(monitoracaoDTO.getIdBarco(), emailUsuario);
-		
+
 		Usuario usuario = usuarioService.buscarUsuarioPorNFC(monitoracaoDTO.getNfcId());
 		usuario.setStatus(EnumStatusUsuario.TRABALHANDO.toString());
-		
+
 		Atividade atividade = atividadeService.findById(monitoracaoDTO.getIdAtividade(), emailUsuario);
 
 		Monitoracao monitoracao = new Monitoracao();
 		monitoracao.setIdBarco(barco.getId());
-		monitoracao.setDtInicioAtividade(new Date());
+		monitoracao.setDtInicioAtividade(monitoracaoDTO.getDtInicioAtividade()==null?new Date():monitoracaoDTO.getDtInicioAtividade());
 		monitoracao.setUsuario(usuario);
 		monitoracao.setAtividade(atividade);
 		monitoracao.setStatus(EnumStatusMonitoracao.TRABALHANDO.toString());
 
-		Set<Monitoracao> lstMonitoracao = barco.getMonitoracao();
+		List<Monitoracao> lstMonitoracao = barco.getMonitoracao();
 		lstMonitoracao.add(monitoracao);
 		barco.setMonitoracao(lstMonitoracao);
 
@@ -116,63 +103,67 @@ public class MonitoracaoService {
 
 		return barco;
 	}
+	
+	private Object salvarMonitoracaoPausarFinalizar(Monitoracao monitoracao, String status, Usuario usuario) {
+		monitoracao.setDtFimAtividade(new Date());
+		monitoracao.setStatus(status);
+		monitoracaoRepository.save(monitoracao);
+
+		monitoracao.getUsuario().setStatus(status);
+		usuarioService.salvar(usuario);
+
+		return monitoracao;
+		
+	}
 
 	public Object continuarPausarFinalizar(BarcoMonitoracaoDTO monitoracaoDTO, String emailUsuario) {
-		
+
 		Usuario usuario = usuarioService.buscarUsuarioPorNFC(monitoracaoDTO.getNfcId());
 		List<Monitoracao> lstMonitoracao = monitoracaoRepository.findByUsuario(usuario);
 		Monitoracao monitoracao = null;
-		
+
 		for (Monitoracao monitoracaoVarr : lstMonitoracao) {
-			if (monitoracaoVarr.getDtFimAtividade() == null || monitoracaoVarr.getDtFimAtividadeTotal() == null && monitoracaoVarr.getUsuario().equals(usuario)) {
+			if (monitoracaoVarr.getDtFimAtividade() == null || monitoracaoVarr.getDtFimAtividadeTotal() == null
+					&& monitoracaoVarr.getUsuario().equals(usuario)) {
 				monitoracao = monitoracaoVarr;
 				break;
 			}
 		}
-		if(monitoracao == null) {
+		if (monitoracao == null) {
 			return null;
 		}
-		
-		if(EnumStatusMonitoracao.PAUSA.toString().equals(monitoracaoDTO.getAcao())){
-			monitoracao.setDtFimAtividade(new Date());
-			monitoracao.setStatus(EnumStatusMonitoracao.PAUSA.toString());
-			monitoracaoRepository.save(monitoracao);
+
+		if (EnumStatusMonitoracao.PAUSA.toString().equals(monitoracaoDTO.getAcao())) {
+			return salvarMonitoracaoPausarFinalizar(monitoracao,EnumStatusMonitoracao.PAUSA.toString(), usuario);
 			
-			usuario.setStatus(EnumStatusMonitoracao.PAUSA.toString());
-			usuarioService.salvar(usuario);
-			
-			Barco barco = barcoService.findById(monitoracao.getIdBarco(), emailUsuario);
-			Set<Monitoracao> monitor = barco.getMonitoracao();
-			monitor.add(monitoracao);
-			barco.setMonitoracao(monitor);
-			barcoService.salvar(barco, emailUsuario);
-			
-			return monitoracao;
 		}
-		if(EnumStatusMonitoracao.FINALIZADO.toString().equals(monitoracaoDTO.getAcao())){
-			monitoracao.setDtFimAtividade(new Date());
+		if (EnumStatusMonitoracao.FINALIZADO.toString().equals(monitoracaoDTO.getAcao())) {
+			
 			monitoracao.setDtFimAtividadeTotal(new Date());
-			monitoracao.setStatus(EnumStatusMonitoracao.FINALIZADO.toString());
-			monitoracaoRepository.save(monitoracao);
-			
-			usuario.setStatus(EnumStatusMonitoracao.FINALIZADO.toString());
-			usuarioService.salvar(usuario);
-			
+			salvarMonitoracaoPausarFinalizar(monitoracao,EnumStatusMonitoracao.FINALIZADO.toString(),usuario);
+
 			Barco barco = barcoService.findById(monitoracao.getIdBarco(), emailUsuario);
-			Long horasTrabalhadas = barco.getHrsBarcoTrabalhadas()==null?0L:barco.getHrsBarcoTrabalhadas();
-			barco.setHrsBarcoTrabalhadas(monitoracao.getTempoTrabalho()+horasTrabalhadas);
+			Long horasTrabalhadas = barco.getHrsBarcoTrabalhadas() == null ? 0L : barco.getHrsBarcoTrabalhadas();
+			barco.setHrsBarcoTrabalhadas(monitoracao.getTempoTrabalho() + horasTrabalhadas);
 			barcoService.salvarBarcoMonitor(barco, emailUsuario);
-			
+
 			return monitoracao;
 		}
 		
-		monitoracao.setStatus(EnumStatusMonitoracao.TRABALHANDO.toString());
-		monitoracaoRepository.save(monitoracao);
+		monitoracaoDTO.setIdAtividade(monitoracao.getAtividade().getId());
+		monitoracaoDTO.setIdBarco(monitoracao.getIdBarco());
+		monitoracaoDTO.setDtInicioAtividade(monitoracao.getDtInicioAtividade());
+		salvarNovaBarcoMonitoracao(monitoracaoDTO, emailUsuario);
 		usuario.setStatus(EnumStatusMonitoracao.TRABALHANDO.toString());
 		usuarioService.salvar(usuario);
-		
+
+		monitoracao.setStatus(EnumStatusMonitoracao.PAUSA.toString());
+		monitoracao.setDtFimAtividade(new Date());
+		monitoracao.setDtFimAtividadeTotal(new Date());
+		monitoracaoRepository.save(monitoracao);
 		
 		return monitoracao;
-		
+
 	}
+
 }

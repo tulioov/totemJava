@@ -1,5 +1,7 @@
 package com.totem.dto;
 
+import java.util.Date;
+
 public class BarcoMonitoracaoDTO {
 	
 	
@@ -7,7 +9,15 @@ public class BarcoMonitoracaoDTO {
 	private Long idAtividade;
 	private String nfcId;
 	private String acao;
+	private Date dtInicioAtividade;
 	
+	
+	public Date getDtInicioAtividade() {
+		return dtInicioAtividade;
+	}
+	public void setDtInicioAtividade(Date dtInicioAtividade) {
+		this.dtInicioAtividade = dtInicioAtividade;
+	}
 	public String getAcao() {
 		return acao;
 	}

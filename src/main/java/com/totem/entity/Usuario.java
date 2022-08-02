@@ -10,6 +10,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
 
@@ -37,6 +38,9 @@ public class Usuario {
 	@Column(name = "EMAIL")
 	private String email;
 	
+	@Column(name = "MATRICULA", unique=true)
+	private String matricula;
+	
 	@Column(name = "USUARIO_DELETE")
 	private String usuarioDelete;
 	
@@ -56,13 +60,31 @@ public class Usuario {
 	@ManyToMany(targetEntity=Fase.class)
 	private Set<?> fase;
 	
+	@Transient
+	private String nomeBarco;
 	
+	public String getNomeBarco() {
+		return nomeBarco;
+	}
+
+	public void setNomeBarco(String nomeBarco) {
+		this.nomeBarco = nomeBarco;
+	}
+
 	public Set<?> getFase() {
 		return fase;
 	}
 
 	public void setFase(Set<?> fase) {
 		this.fase = fase;
+	}
+	
+	public String getMatricula() {
+		return matricula;
+	}
+
+	public void setMatricula(String matricula) {
+		this.matricula = matricula;
 	}
 
 	public Boolean getIsAdmin() {
