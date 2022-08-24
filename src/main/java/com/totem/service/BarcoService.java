@@ -3,7 +3,6 @@ package com.totem.service;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,33 +39,29 @@ public class BarcoService {
 	
 
 	public List<Barco> listar(String emailUsuario) {
-//		if(!usuarioService.isAdm(emailUsuario)) {
-//			throw new CustomErrorException(HttpStatus.UNAUTHORIZED, ERRO_PERMISSAO);
-//		}
 		return barcoRepository.findAll();
 	}
 	
 	public Object listar(String emailUsuario, String nfc) {
 		
-		Monitoracao monitoracao = null;
 		
-		monitoracao = monitoracaoService.isUsuarioTrabalhando(nfc);
-		if(monitoracao != null){
-			Barco barco =  barcoRepository.findByMonitoracao(monitoracao);
-			MonitorPausa monitorPausa = new MonitorPausa();
-			monitorPausa.setBarco(barco);
-			monitorPausa.setMonitoracao(monitoracao);
-			monitorPausa.setStatus(EnumStatusMonitoracao.TRABALHANDO.toString());
-			return monitorPausa;
+		if(usuarioService.findBycodRfid(nfc) == null) {
+			throw new CustomErrorException(HttpStatus.BAD_REQUEST, "Usuário não encontrado. Favor atualizar a tela ou chamar o suporte.");
 		}
 		
-		monitoracao = monitoracaoService.isUsuarioPausado(nfc);
+		Monitoracao monitoracao = null;
+		
+		monitoracao = monitoracaoService.getMonitoracaoTrabalhandoOuPausa(nfc,EnumStatusMonitoracao.TRABALHANDO.toString());
+		if(monitoracao == null) {
+			monitoracao = monitoracaoService.getMonitoracaoTrabalhandoOuPausa(nfc,EnumStatusMonitoracao.PAUSA.toString());
+		}
+		
 		if(monitoracao != null){
 			Barco barco =  barcoRepository.findByMonitoracao(monitoracao);
 			MonitorPausa monitorPausa = new MonitorPausa();
 			monitorPausa.setBarco(barco);
 			monitorPausa.setMonitoracao(monitoracao);
-			monitorPausa.setStatus(EnumStatusMonitoracao.PAUSA.toString());
+			monitorPausa.setStatus(monitoracao.getStatus());
 			return monitorPausa;
 		}
 		
@@ -74,9 +69,6 @@ public class BarcoService {
 	}
 	
 	public Barco findById (Long id, String emailUsuario) {
-//		if(!usuarioService.isAdm(emailUsuario)) {
-//			throw new CustomErrorException(HttpStatus.UNAUTHORIZED, ERRO_PERMISSAO);
-//		}
 		return barcoRepository.findById(id).get();
 	}
 	
@@ -90,9 +82,6 @@ public class BarcoService {
 	@Transactional
 	public Barco salvar(BarcoDTO barcoDTO, String emailUsuario) {
 		
-//		if(!usuarioService.isAdm(emailUsuario)) {
-//			throw new CustomErrorException(HttpStatus.UNAUTHORIZED,ERRO_PERMISSAO);
-//		}
 		Barco barco = new Barco();
 		
 		if(barcoDTO.getId() != null) {
@@ -103,7 +92,7 @@ public class BarcoService {
 		}
 		
 		if(barco.getMonitoracao() != null) {
-			Set<Monitoracao> monitor = barco.getMonitoracao();
+			List<Monitoracao> monitor = barco.getMonitoracao();
 			if(barcoDTO.getMonitoracao() == null) {
 				barco.setMonitoracao(monitor);
 			}
@@ -117,10 +106,6 @@ public class BarcoService {
 	
 	@Transactional
 	public Barco salvarBarcoMonitor(Barco barco, String emailUsuario) {
-		
-//		if(!usuarioService.isAdm(emailUsuario)) {
-//			throw new CustomErrorException(HttpStatus.UNAUTHORIZED,ERRO_PERMISSAO);
-//		}
 		
 		UtilDate utilDate = new UtilDate();
 		

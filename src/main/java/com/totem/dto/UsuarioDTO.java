@@ -10,6 +10,7 @@ public class UsuarioDTO {
 	private String nome;
 	private String especialidade;
 	private String email;
+	private String matricula;
 	private String codRfid;
 	private Boolean isAdmin;
 	private List<Long> faseList;
@@ -19,6 +20,13 @@ public class UsuarioDTO {
 	}
 	public void setEmail(String email) {
 		this.email = email;
+	}
+	
+	public String getMatricula() {
+		return matricula;
+	}
+	public void setMatricula(String matricula) {
+		this.matricula = matricula;
 	}
 	public String getUsername() {
 		return username;

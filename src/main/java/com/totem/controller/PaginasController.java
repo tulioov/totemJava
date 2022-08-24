@@ -91,11 +91,32 @@ public class PaginasController {
 		return "cadastroMaterial";
 	}
 	
-	@GetMapping("/relatorio")
-	public String relatorio(Model model, @AuthenticationPrincipal OidcUser principal){
+	@GetMapping("/importarUsuario")
+	public String importarUsuario(Model model, @AuthenticationPrincipal OidcUser principal){
 		paginaService.control(principal, model);
 		model.addAttribute("titulo" , "Controle de Tontens");
-		return "relatorio";
+		return "importarUsuario";
+	}
+	
+	@GetMapping("/importarLocais")
+	public String importarLocais(Model model, @AuthenticationPrincipal OidcUser principal){
+		paginaService.control(principal, model);
+		model.addAttribute("titulo" , "Controle de Tontens");
+		return "importarLocais";
+	}
+	
+	@GetMapping("/importarAtividade")
+	public String importarAtividade(Model model, @AuthenticationPrincipal OidcUser principal){
+		paginaService.control(principal, model);
+		model.addAttribute("titulo" , "Controle de Tontens");
+		return "importarAtividade";
+	}
+	
+	@GetMapping("/relatorioUsuario")
+	public String relatorioUsuario(Model model, @AuthenticationPrincipal OidcUser principal){
+		paginaService.control(principal, model);
+		model.addAttribute("titulo" , "Controle de Tontens");
+		return "relatorioUsuario";
 	}
 	
 }

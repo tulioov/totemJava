@@ -52,10 +52,26 @@
 					<a href="controlTotens" class="dashboard-nav-dropdown-item">Toten</a>
 				</div>
             </div>
-            <a href="/relatorio" class="dashboard-nav-item">
-            	<i class="fas fa-file-upload"></i> 
-            	Relat&oacute;rio 
-			</a>
+            <div class='dashboard-nav-dropdown'>
+            	<a href="#!" class="dashboard-nav-item dashboard-nav-dropdown-toggle">
+	            	<i class="fas fa-file-upload"></i> 
+					Importar
+				</a>
+                <div class='dashboard-nav-dropdown-menu'>
+	                <a href="/importarUsuario" class="dashboard-nav-dropdown-item">Importar Usuarios</a>
+	                <a href="/importarLocais" class="dashboard-nav-dropdown-item">Importar Locais</a>
+	                <a href="/importarAtividade" class="dashboard-nav-dropdown-item">Importar Atividade</a>
+				</div>
+            </div>
+            <div class='dashboard-nav-dropdown'>
+            	<a href="#!" class="dashboard-nav-item dashboard-nav-dropdown-toggle">
+	            	<i class="fas fa-tachometer-alt"></i> 
+					Relat&oacute;rio 
+				</a>
+                <div class='dashboard-nav-dropdown-menu'>
+	                <a href="/relatorioUsuario" class="dashboard-nav-dropdown-item">Relatorio Usuarios</a>
+				</div>
+            </div>
             <div class='dashboard-nav-dropdown'>
             	<a href="#!" class="dashboard-nav-item dashboard-nav-dropdown-toggle">
 	            	<i class="fas fa-cogs"></i> 
@@ -72,8 +88,8 @@
 							Grupo Local/Atividade
 						</a>
 		                <div class='dashboard-nav-dropdown-menu'>
-							<a href="/cadastroLocal" class="dashboard-nav-dropdown-item">Local</a>
 							<a href="/cadastroAtividade" class="dashboard-nav-dropdown-item">Atividade</a>
+							<a href="/cadastroLocal" class="dashboard-nav-dropdown-item">Local</a>
 						</div>
 		            </div>
 		            

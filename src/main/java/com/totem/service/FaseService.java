@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import com.totem.dto.FaseDTO;
 import com.totem.entity.Fase;
 import com.totem.entity.Local;
+import com.totem.entity.Usuario;
 import com.totem.exception.CustomErrorException;
 import com.totem.repository.FaseRepository;
 
@@ -67,6 +68,11 @@ public class FaseService {
 		fase.setDtDelete(new Date());
 		faseRepository.save(fase);
 		return fase;
+	}
+
+	public List<Fase> listarFaseByUsuarioId(String emailUsuario, Long id) {
+		Usuario usuario = usuarioService.findById(id);
+		return usuario.getFaseList();
 	}
 
 }

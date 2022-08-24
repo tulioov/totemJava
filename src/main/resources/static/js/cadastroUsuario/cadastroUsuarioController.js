@@ -170,10 +170,21 @@ const CadastroUsuarioController = {
 			$('#campoId').val(usuario.id);
 			$('#nomeId').val(usuario.nome);
 			$('#especialidadeId').val(usuario.especialidade);
+			$('#matriculaId').val(usuario.matricula);
 			$('#emailId').val(usuario.email);
 			$('#codRfidId').val(usuario.codRfid);
 			$('#isAdminId').prop('checked', usuario.isAdmin);
-			CadastroUsuarioController.carregarDualList(usuario.fase);
+			
+			let status = usuario.status;
+			if(usuario.status == null){
+				usuario.status = "ativo";
+			}
+			if(usuario.status == 'FINALIZADO'){
+				usuario.status = "ativo";
+			}
+			$('#statusId').html(usuario.status);
+			$('#statusId').attr("class",usuario.status);
+			CadastroUsuarioController.carregarDualList(usuario.faseList);
 			return;
 		}
 		CadastroUsuarioController.carregarDualList();

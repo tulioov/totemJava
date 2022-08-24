@@ -1,6 +1,7 @@
 package com.totem.entity;
 
 import java.util.Date;
+import java.util.List;
 import java.util.Set;
 
 import javax.persistence.Column;
@@ -8,8 +9,10 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
 
@@ -37,6 +40,9 @@ public class Usuario {
 	@Column(name = "EMAIL")
 	private String email;
 	
+	@Column(name = "MATRICULA", unique=true)
+	private String matricula;
+	
 	@Column(name = "USUARIO_DELETE")
 	private String usuarioDelete;
 	
@@ -53,16 +59,35 @@ public class Usuario {
 	@Column(name = "isAdmin")
 	private Boolean isAdmin;
 	
-	@ManyToMany(targetEntity=Fase.class)
-	private Set<?> fase;
+	@JoinColumn(name = "ID_USUARIO")
+	@ManyToMany
+	private List<Fase> faseList;
 	
+	@Transient
+	private String nomeBarco;
 	
-	public Set<?> getFase() {
-		return fase;
+	public String getNomeBarco() {
+		return nomeBarco;
 	}
 
-	public void setFase(Set<?> fase) {
-		this.fase = fase;
+	public void setNomeBarco(String nomeBarco) {
+		this.nomeBarco = nomeBarco;
+	}
+
+	public List<Fase> getFaseList() {
+		return faseList;
+	}
+
+	public void setFaseList(List<Fase> faseList) {
+		this.faseList = faseList;
+	}
+
+	public String getMatricula() {
+		return matricula;
+	}
+
+	public void setMatricula(String matricula) {
+		this.matricula = matricula;
 	}
 
 	public Boolean getIsAdmin() {

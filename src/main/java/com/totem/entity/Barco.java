@@ -2,13 +2,14 @@ package com.totem.entity;
 
 
 import java.util.Date;
-import java.util.Set;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
@@ -77,8 +78,9 @@ public class Barco {
 	@Column(name = "STATUS")
 	private String status;
 	
-	@ManyToMany(targetEntity=Monitoracao.class)
-	private Set<Monitoracao> monitoracao;
+	@JoinColumn(name = "ID_MONITORACAO")
+	@ManyToMany
+	private List<Monitoracao> monitoracao;
 	
 	@Transient
 	private Long tempoDiasFabricao;
@@ -107,13 +109,15 @@ public class Barco {
 		this.tempoDiasFabricao = tempoDiasFabricao;
 	}
 
-	public Set<Monitoracao> getMonitoracao() {
+	public List<Monitoracao> getMonitoracao() {
 		return monitoracao;
 	}
 
-	public void setMonitoracao(Set<Monitoracao> monitoracao) {
+
+	public void setMonitoracao(List<Monitoracao> monitoracao) {
 		this.monitoracao = monitoracao;
 	}
+
 
 	public Date getDtInicioPrevisto() {
 		return dtInicioPrevisto;

@@ -79,7 +79,14 @@ const MonitorUserTemplate = {
 	rowFases(index, fase){
 		return `
 			<li role="presentation" class="${index==0?'active':'disabled'} bg-white">
-		        <a href="#step${index}" data-toggle="tab" aria-controls="step${index}" role="tab"><span class="round-tab">${index}</span> <i>${fase.nome}</i></a>
+		        <a href="#step${index}" data-toggle="tab" aria-controls="step${index}" role="tab">
+		        	<span class="round-tab">
+		        		${index}
+		        	</span> 
+		        	<i>
+		        		${fase.nome}
+		        	</i>
+	        	</a>
 		    </li>
 			`
 	},
@@ -97,7 +104,7 @@ const MonitorUserTemplate = {
 	htmlAtividade(local){
 		let html = "";
 		$(local.atividadeList).each(function(index, atividade) {
-			html += `<button type="button" class="btn btn-success col-md-12 mt15" onclick="MonitorUserController.salvarAtividadeEscolhida(${atividade.id})">${atividade.nome}</button>`
+			html += `<button type="button" class="btn btn-success col-md-12 mt15" onclick="MonitorUserController.salvarAtividadeEscolhida(${atividade.id},${local.id})">${atividade.nome}</button>`
 		});
 		return html;
 	},
@@ -112,7 +119,7 @@ const MonitorUserTemplate = {
 		                <div class="row">
 		                    <div class="col-md-12">
 		                        <div class="form-group">`+
-		                        MonitorUserTemplate.htmlAtividade(local);
+		                        	MonitorUserTemplate.htmlAtividade(local);
 		                        +`</div>
 		                    </div>
 		                </div>

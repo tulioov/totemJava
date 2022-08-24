@@ -137,6 +137,12 @@ const CadastroFeriadoController = {
 		
 		$('#myModal').html(CadastroFeriadoTemplate.add()).show();
 		
+		$("#nomeId").keyup(function(){
+			const reg = /[^a-zA-Z0-9 ]+/g;
+			let texto = $("#nomeId").val().replace(reg,'');
+			$("#constanteCampoId").val(texto.replaceAll(' ','_'));
+		});
+		
 		$("#duallistboxId").bootstrapDualListbox({
 			nonSelectedListLabel: 'N\u00e3o Selecionadas',
 			selectedListLabel: 'Selecionadas'

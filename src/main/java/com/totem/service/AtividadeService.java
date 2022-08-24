@@ -8,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import com.totem.entity.Atividade;
+import com.totem.entity.Local;
 import com.totem.exception.CustomErrorException;
 import com.totem.repository.AtividadeRepository;
 
@@ -18,6 +19,9 @@ public class AtividadeService {
 
 	@Autowired
 	UsuarioService usuarioService;
+	
+	@Autowired
+	LocalService localService;
 
 	@Autowired
 	private AtividadeRepository atividadeRepository;
@@ -54,6 +58,12 @@ public class AtividadeService {
 		atividade.setDtDelete(new Date());
 		atividadeRepository.save(atividade);
 		return atividade;
+	}
+	
+	
+	public List<Atividade> listarAtividadeByLocalId(String emailUsuario, Long id) {
+		Local local = localService.findById(id,emailUsuario);
+		return local.getAtividadeList();
 	}
 
 }

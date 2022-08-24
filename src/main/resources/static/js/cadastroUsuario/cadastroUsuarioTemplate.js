@@ -30,18 +30,16 @@ const CadastroUsuarioTemplate = {
 									</div>
 								</div>
 								<div class="row mt15">
-									<div class="col-md-6">
+									<div class="col-md-4">
 										<div>Email: </div>
 										<input type="text" disabled name="email" class="form-control uppercase" id="emailId">
 									</div>
-									<div class="col-md-6">
-										<div>Status: </div>
-										<select class="form-control" id="sel1">
-											<option>Ativo</option>
-										    <option>Pausa</option>
-										    <option>Trabalhando</option>
-										    <option>Inativo</option>
-										</select>
+									<div class="col-md-4">
+										<div>Matricula: </div>
+										<input type="text" name="matricula" class="form-control uppercase" id="matriculaId">
+									</div>
+									<div class="col-md-4">
+										<div>Status: <span id="statusId"></span></div>
 									</div>
 								</div>
 								<div class="row mt15">
@@ -92,6 +90,7 @@ const CadastroUsuarioTemplate = {
 				<td>${data.id}</td>
 				<td>${data.nome}</td>
 				<td>${data.especialidade}</td>
+				<td>${data.nomeBarco}</td>
 				<td><span class="${data.status}">${data.status}</span></td>
 				<td>
 					<span onclick="CadastroUsuarioController.editar(${data.id});" class="glyphicon glyphicon-pencil"></span>
