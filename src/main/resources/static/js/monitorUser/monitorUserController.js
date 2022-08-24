@@ -163,12 +163,13 @@ const MonitorUserController = {
 		
 	},
 	
-	salvarAtividadeEscolhida(idAtividade){
+	salvarAtividadeEscolhida(idAtividade, idLocal){
 		
 		let formControl = new Object();
 		formControl  = $('#formId').serializeJSON();
 		formControl.idBarco = $('#barcoId').val();
 		formControl.idAtividade = idAtividade;
+		formControl.idLocal = idLocal;
 		formControl.nfcId = $('#nfcIdCache').val();
 		
 		let myJsonData = JSON.stringify(formControl);
@@ -233,7 +234,7 @@ const MonitorUserController = {
 	        url: "/usuario/findByNFC/"+$('#nfcIdCache').val(),
 	        success: function(retorno) {
 	        	$(retorno.response).each(function(index, usuario) {
-	        		$(usuario.fase).each(function(index, fase) {
+	        		$(usuario.faseList).each(function(index, fase) {
 	        			$(fase.localList).each(function(index, local) {
 	        				let atividadeHTML = MonitorUserTemplate.contentLocal(index,local);
 	        				$('#contentLocalId'+fase.id).html(atividadeHTML);

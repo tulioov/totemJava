@@ -39,6 +39,12 @@ public class LocalController {
 			@RequestHeader(name = "Authorization", required = true) String emailUsuario, @PathVariable("id") Long id) {
 		return ResponseEntityUtil.defaultResponse(localService.findById(id, emailUsuario));
 	}
+	
+	@GetMapping("/listarLocalByFaseId/{id}")
+	public @ResponseBody ResponseEntity<RetornoDTO> listarLocalByFaseId(
+			@RequestHeader(name = "Authorization", required = true) String emailUsuario, @PathVariable("id") Long id) {
+		return ResponseEntityUtil.defaultResponse(localService.listarLocalByFaseId(emailUsuario,id));
+	}
 
 	@GetMapping("/listar")
 	public @ResponseBody ResponseEntity<RetornoDTO> listar(

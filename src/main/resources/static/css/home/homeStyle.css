@@ -44,6 +44,18 @@
 	
 }
 
+.w-100{
+	width: 100%;
+}
+
+.cardOkean{
+	background-color: var(--azulOkean) !important;
+	color: var(--branco);
+	border-radius: 25px;
+	text-align: center;
+}
+
+
 .bg-azul{
 	background-color: var(--azulOkean) !important;
 }
@@ -133,6 +145,18 @@ body {
 .ativo{
 	color: white;
 	background-color: green;
+	border-radius: 50px;
+	padding: 2px 8px 2px 8px;
+}
+.Ok{
+	color: white;
+	background-color: green;
+	border-radius: 50px;
+	padding: 2px 8px 2px 8px;
+}
+.Falha{
+	color: white;
+	background-color: red;
 	border-radius: 50px;
 	padding: 2px 8px 2px 8px;
 }

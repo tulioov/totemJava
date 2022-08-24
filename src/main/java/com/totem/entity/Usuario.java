@@ -1,6 +1,7 @@
 package com.totem.entity;
 
 import java.util.Date;
+import java.util.List;
 import java.util.Set;
 
 import javax.persistence.Column;
@@ -8,6 +9,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
@@ -57,8 +59,9 @@ public class Usuario {
 	@Column(name = "isAdmin")
 	private Boolean isAdmin;
 	
-	@ManyToMany(targetEntity=Fase.class)
-	private Set<?> fase;
+	@JoinColumn(name = "ID_USUARIO")
+	@ManyToMany
+	private List<Fase> faseList;
 	
 	@Transient
 	private String nomeBarco;
@@ -71,14 +74,14 @@ public class Usuario {
 		this.nomeBarco = nomeBarco;
 	}
 
-	public Set<?> getFase() {
-		return fase;
+	public List<Fase> getFaseList() {
+		return faseList;
 	}
 
-	public void setFase(Set<?> fase) {
-		this.fase = fase;
+	public void setFaseList(List<Fase> faseList) {
+		this.faseList = faseList;
 	}
-	
+
 	public String getMatricula() {
 		return matricula;
 	}

@@ -111,12 +111,12 @@ public class UsuarioService {
 			return;
 		}
 
-		Set<Fase> faseList = new HashSet<>();
+		List<Fase> faseLst = new ArrayList<Fase>();
 
 		for (Long codFase : usuarioDTO.getFaseList()) {
-			faseList.add(faseService.findById(codFase));
+			faseLst.add(faseService.findById(codFase));
 		}
-		usuario.setFase(faseList);
+		usuario.setFaseList(faseLst);
 	}
 
 	public Usuario delete(Long id, String emailUsuario) {

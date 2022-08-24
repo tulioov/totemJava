@@ -3,13 +3,17 @@ package com.totem.service;
 import java.util.Date;
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import com.totem.dto.BarcoMonitoracaoDTO;
+import com.totem.dto.MonitoracaoAvulsaDTO;
 import com.totem.entity.Atividade;
 import com.totem.entity.Barco;
+import com.totem.entity.Local;
 import com.totem.entity.Monitoracao;
 import com.totem.entity.Usuario;
 import com.totem.enums.EnumStatusMonitoracao;
@@ -28,6 +32,12 @@ public class MonitoracaoService {
 
 	@Autowired
 	AtividadeService atividadeService;
+	
+	@Autowired
+	LocalService localService;
+	
+	@Autowired
+	FaseService faseService;
 
 	@Autowired
 	private MonitoracaoRepository monitoracaoRepository;
@@ -85,12 +95,14 @@ public class MonitoracaoService {
 		usuario.setStatus(EnumStatusUsuario.TRABALHANDO.toString());
 
 		Atividade atividade = atividadeService.findById(monitoracaoDTO.getIdAtividade(), emailUsuario);
+		Local local = localService.findById(monitoracaoDTO.getIdLocal(),emailUsuario);
 
 		Monitoracao monitoracao = new Monitoracao();
 		monitoracao.setIdBarco(barco.getId());
 		monitoracao.setDtInicioAtividade(monitoracaoDTO.getDtInicioAtividade()==null?new Date():monitoracaoDTO.getDtInicioAtividade());
 		monitoracao.setUsuario(usuario);
 		monitoracao.setAtividade(atividade);
+		monitoracao.setLocal(local);
 		monitoracao.setStatus(EnumStatusMonitoracao.TRABALHANDO.toString());
 
 		List<Monitoracao> lstMonitoracao = barco.getMonitoracao();
@@ -164,6 +176,43 @@ public class MonitoracaoService {
 		
 		return monitoracao;
 
+	}
+
+	public Monitoracao salvarMonitoracaoAvulsa(@Valid MonitoracaoAvulsaDTO monitoracaoAvulsaDTO, String emailUsuario) {
+		
+		
+		
+		
+		Barco barco = barcoService.findById(monitoracaoAvulsaDTO.getIdBarco(), emailUsuario);
+		
+		Monitoracao monitoracao = new Monitoracao();
+		if(monitoracaoAvulsaDTO.getIdMonitoracao() != null) {
+			monitoracao.setId(monitoracaoAvulsaDTO.getIdMonitoracao());
+		}
+		monitoracao.setIdBarco(monitoracaoAvulsaDTO.getIdBarco());
+		monitoracao.setAtividade(atividadeService.findById(monitoracaoAvulsaDTO.getIdAtividade(), emailUsuario));
+		monitoracao.setUsuario(usuarioService.findById(monitoracaoAvulsaDTO.getIdUsuario()));
+		monitoracao.setFase(faseService.findById(monitoracaoAvulsaDTO.getIdFase()));
+		monitoracao.setLocal(localService.findById(monitoracaoAvulsaDTO.getIdLocal(), emailUsuario));
+		monitoracao.setDtInicioAtividade(monitoracaoAvulsaDTO.getDtInicioAtividade());
+		monitoracao.setDtFimAtividadeTotal(monitoracaoAvulsaDTO.getDtFimAtividade());
+		monitoracao.setStatus(EnumStatusMonitoracao.AVULSA.toString());
+		
+		List<Monitoracao> lstMonitoracao = barco.getMonitoracao();
+		lstMonitoracao.add(monitoracao);
+		barco.setMonitoracao(lstMonitoracao);
+
+		monitoracaoRepository.save(monitoracao);
+		
+		Long horasTrabalhadas = barco.getHrsBarcoTrabalhadas() == null ? 0L : barco.getHrsBarcoTrabalhadas();
+		barco.setHrsBarcoTrabalhadas(monitoracao.getTempoTrabalho() + horasTrabalhadas);
+		barcoService.salvarBarcoMonitor(barco, emailUsuario);
+		
+		return monitoracao;
+	}
+
+	public List<Monitoracao> listarHoraAvulsaByBarcoId(String emailUsuario, Long barcoId) {
+		return monitoracaoRepository.findByIdBarco(barcoId);
 	}
 
 }

@@ -38,6 +38,7 @@ public class FaseController {
 			@RequestHeader(name = "Authorization", required = true) String emailUsuario, @PathVariable("id") Long id) {
 		return ResponseEntityUtil.defaultResponse(faseService.findById(id));
 	}
+	
 
 	@GetMapping("/listar")
 	public @ResponseBody ResponseEntity<RetornoDTO> listar(
@@ -50,5 +51,14 @@ public class FaseController {
 			@RequestHeader(name = "Authorization", required = true) String emailUsuario, @PathVariable("id") Long id) {
 		return ResponseEntityUtil.defaultResponse(faseService.delete(id, emailUsuario));
 	}
+	
+	@GetMapping("/listarFaseByUsuarioId/{id}")
+	public @ResponseBody ResponseEntity<RetornoDTO> listarFaseByUsuarioId(
+			@RequestHeader(name = "Authorization", required = true) String emailUsuario, @PathVariable("id") Long id) {
+		return ResponseEntityUtil.defaultResponse(faseService.listarFaseByUsuarioId(emailUsuario,id));
+	}
+	
+	
+	
 
 }

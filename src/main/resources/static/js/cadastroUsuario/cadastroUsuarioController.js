@@ -184,7 +184,7 @@ const CadastroUsuarioController = {
 			}
 			$('#statusId').html(usuario.status);
 			$('#statusId').attr("class",usuario.status);
-			CadastroUsuarioController.carregarDualList(usuario.fase);
+			CadastroUsuarioController.carregarDualList(usuario.faseList);
 			return;
 		}
 		CadastroUsuarioController.carregarDualList();

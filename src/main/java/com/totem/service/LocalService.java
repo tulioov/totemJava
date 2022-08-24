@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import com.totem.dto.LocalDTO;
 import com.totem.entity.Atividade;
+import com.totem.entity.Fase;
 import com.totem.entity.Local;
 import com.totem.exception.CustomErrorException;
 import com.totem.repository.LocalRepository;
@@ -23,6 +24,9 @@ public class LocalService {
 	
 	@Autowired
 	private AtividadeService atividadeService;
+	
+	@Autowired
+	private FaseService faseService;
 	
 	@Autowired
 	private LocalRepository localRepository;
@@ -78,5 +82,10 @@ public class LocalService {
 		local.setDtDelete(new Date());
 		localRepository.save(local);
 		return local;
+	}
+	
+	public List<Local> listarLocalByFaseId(String emailUsuario, Long id) {
+		Fase fase = faseService.findById(id);
+		return fase.getLocalList();
 	}
 }
