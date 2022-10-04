@@ -1,5 +1,19 @@
 
 const MonitorUserTemplate = {
+		
+	menuPausa(statusMonitoracao){
+		
+		
+		if(statusMonitoracao.constanteCampo == 'TRABALHANDO'){
+			return ``;
+		}
+		
+		if(statusMonitoracao.constanteCampo == 'AVULSA'){
+			return ``;
+		}
+		
+		return`<button type="button" class="btn-lg btn-warning col-md-12 mt15" onclick="MonitorUserController.continuarPausarFinalizar('${statusMonitoracao.constanteCampo}');">${statusMonitoracao.nome}</button> `;
+	},
 	
 	monitoracao(barco){
 		return `
@@ -41,6 +55,18 @@ const MonitorUserTemplate = {
 	},
 	
 	itemLinha(data){
+		
+		let classStatus = '';
+		
+		if(data.statusMonitoracao.constanteCampo == 'TRABALHANDO'){
+			classStatus = 'TRABALHANDO';
+		}
+		else if(data.statusMonitoracao.constanteCampo =='FINALIZADO'){
+			classStatus = 'FINALIZADO';
+		}else{
+			classStatus = 'PAUSA';
+		}
+		
 		return `
 			<tr>
 				<td>${data.id}</td>
@@ -48,7 +74,7 @@ const MonitorUserTemplate = {
 				<td>${data.atividade.nome}</td>
 				<td>${data.dtInicioAtividade}</td>
 				<td>${data.tempoTrabalho}</td>
-				<td><span class="${data.status}">${data.status}</span></td>
+				<td><span class="${classStatus}">${data.statusMonitoracao.nome}</span></td>
 			</tr>
 		`;
 	},

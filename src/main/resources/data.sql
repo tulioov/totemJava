@@ -51,6 +51,20 @@ select  'FASE_7', 'Fase 7'  from dual
 where not exists(select * from fase where CONSTANTE_CAMPO='FASE_7');
 
 
+
+insert into status_monitoracao  (CONSTANTE_CAMPO,NOME)
+select  'TRABALHANDO', 'Trabalhando'  from dual 
+where not exists(select * from status_monitoracao where CONSTANTE_CAMPO='TRABALHANDO');
+
+insert into status_monitoracao  (CONSTANTE_CAMPO,NOME)
+select  'FINALIZADO', 'Finalizado'  from dual 
+where not exists(select * from status_monitoracao where CONSTANTE_CAMPO='FINALIZADO');
+
+insert into status_monitoracao  (CONSTANTE_CAMPO,NOME)
+select  'AVULSA', 'Avulsa'  from dual 
+where not exists(select * from status_monitoracao where CONSTANTE_CAMPO='AVULSA');
+
+
 /*
 CREATE TABLE IF NOT EXISTS  sub_atividade (
 	cod_sub_atividade INT AUTO_INCREMENT PRIMARY KEY,

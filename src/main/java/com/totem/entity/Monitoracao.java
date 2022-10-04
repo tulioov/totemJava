@@ -32,12 +32,9 @@ public class Monitoracao {
 	@Column(name = "DT_FIM_ATIVIDADE")
 	private Date dtFimAtividade;
 	
-	@JsonFormat(pattern="dd/MM/yyyy HH:mm")
-	@Column(name = "DT_FIM_ATIVIDADE_TOTAL")
-	private Date dtFimAtividadeTotal;
-	
-	@Column(name = "STATUS")
-	private String status;
+	@OneToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name = "ID_STATUS_MONITORACAO", referencedColumnName = "COD_STATUS_MONITORACAO")
+	private StatusMonitoracao statusMonitoracao;
 	
 	@Column(name = "ID_BARCO")
 	private Long idBarco;
@@ -61,6 +58,9 @@ public class Monitoracao {
 	@Transient
 	private Long tempoTrabalho;
 	
+	@Transient
+	private Long tempoTrabalhoFimIni;
+	
 	public Long getIdBarco() {
 		return idBarco;
 	}
@@ -83,14 +83,6 @@ public class Monitoracao {
 
 	public void setId(Long id) {
 		this.id = id;
-	}
-
-	public Date getDtFimAtividadeTotal() {
-		return dtFimAtividadeTotal;
-	}
-
-	public void setDtFimAtividadeTotal(Date dtFimAtividadeTotal) {
-		this.dtFimAtividadeTotal = dtFimAtividadeTotal;
 	}
 
 	public Usuario getUsuario() {
@@ -121,7 +113,17 @@ public class Monitoracao {
 		long dt = (new Date().getTime() - dtInicioAtividade.getTime());
 		return (dt *24*60) / 86400000L;
 	}
-
+	
+	public Long getTempoTrabalhoFimIni() {
+		
+		if(dtInicioAtividade != null && dtFimAtividade != null) {
+			long dt = (dtFimAtividade.getTime() - dtInicioAtividade.getTime());
+			return (dt *24*60) / 86400000L;
+		}
+		return null;
+		
+	}
+	
 	public Date getDtInicioAtividade() {
 		return dtInicioAtividade;
 	}
@@ -138,12 +140,12 @@ public class Monitoracao {
 		this.dtFimAtividade = dtFimAtividade;
 	}
 
-	public String getStatus() {
-		return status;
+	public StatusMonitoracao getStatusMonitoracao() {
+		return statusMonitoracao;
 	}
 
-	public void setStatus(String status) {
-		this.status = status;
+	public void setStatusMonitoracao(StatusMonitoracao statusMonitoracao) {
+		this.statusMonitoracao = statusMonitoracao;
 	}
-
+	
 }

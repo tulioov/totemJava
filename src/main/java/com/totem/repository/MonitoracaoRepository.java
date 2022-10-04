@@ -15,7 +15,9 @@ public interface MonitoracaoRepository extends CrudRepository<Monitoracao, Long>
 	
 	List<Monitoracao> findByUsuario(Usuario usuario);
 
-	Monitoracao findByUsuarioAndStatusEqualsAndDtFimAtividadeTotalIsNull(Usuario usuario, String status);
+	Monitoracao findByUsuarioAndStatusMonitoracaoConstanteCampoContainingAndDtFimAtividadeIsNull(Usuario usuario, String status);
+	
+	Monitoracao findByUsuarioAndDtFimAtividadeIsNull(Usuario usuario);
 	
 	List<Monitoracao> findByIdBarco(Long idBarco);
 	

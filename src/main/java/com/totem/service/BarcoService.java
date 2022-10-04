@@ -15,7 +15,7 @@ import com.totem.dto.MonitorPausa;
 import com.totem.entity.Barco;
 import com.totem.entity.Feriado;
 import com.totem.entity.Monitoracao;
-import com.totem.enums.EnumStatusMonitoracao;
+import com.totem.enums.EnumStatusUsuario;
 import com.totem.exception.CustomErrorException;
 import com.totem.repository.BarcoRepository;
 import com.totem.util.UtilDate;
@@ -51,9 +51,9 @@ public class BarcoService {
 		
 		Monitoracao monitoracao = null;
 		
-		monitoracao = monitoracaoService.getMonitoracaoTrabalhandoOuPausa(nfc,EnumStatusMonitoracao.TRABALHANDO.toString());
+		monitoracao = monitoracaoService.getMonitoracaoTrabalhandoOuPausa(nfc,EnumStatusUsuario.TRABALHANDO.toString());
 		if(monitoracao == null) {
-			monitoracao = monitoracaoService.getMonitoracaoTrabalhandoOuPausa(nfc,EnumStatusMonitoracao.PAUSA.toString());
+			monitoracao = monitoracaoService.getMonitoracaoTrabalhandoOuPausa(nfc,EnumStatusUsuario.PAUSA.toString());
 		}
 		
 		if(monitoracao != null){
@@ -61,7 +61,7 @@ public class BarcoService {
 			MonitorPausa monitorPausa = new MonitorPausa();
 			monitorPausa.setBarco(barco);
 			monitorPausa.setMonitoracao(monitoracao);
-			monitorPausa.setStatus(monitoracao.getStatus());
+			monitorPausa.setStatus(monitoracao.getStatusMonitoracao().getConstanteCampo());
 			return monitorPausa;
 		}
 		

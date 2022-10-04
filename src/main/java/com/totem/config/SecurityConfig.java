@@ -30,6 +30,5 @@ public class SecurityConfig extends AADWebSecurityConfigurerAdapter{
     .deleteCookies("JSESSIONID")
     .invalidateHttpSession(true);
     }
-    
    
 }
