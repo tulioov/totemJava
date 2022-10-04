@@ -23,6 +23,12 @@ public class PaginasController {
 		return "login";
 	}
 	
+	@GetMapping("/cadastroStatusMonitoracao")
+	public String cadastroMenuPausa(Model model, @AuthenticationPrincipal OidcUser principal){
+		paginaService.control(principal, model);
+		return "cadastroStatusMonitoracao";
+	}
+	
 	@GetMapping("/cadastroFeriado")
 	public String cadastroFeriado(Model model, @AuthenticationPrincipal OidcUser principal){
 		paginaService.control(principal, model);

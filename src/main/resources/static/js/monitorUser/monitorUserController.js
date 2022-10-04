@@ -44,7 +44,7 @@ const MonitorUserController = {
 				$('#tableMonitorUser').DataTable().destroy();
 				
 				$(data.monitoracao).each(function(inde, dat) {
-					if(dat.status !== 'FINALIZADO' && dat.dtFimAtividadeTotal == null){
+					if(dat.statusMonitoracao.constanteCampo !== 'FINALIZADO' && dat.dtFimAtividade == null){
 						$("#tableMonitorUser").find('tbody').append(MonitorUserTemplate.itemLinha(dat));
 					}
 				});
@@ -79,6 +79,41 @@ const MonitorUserController = {
 	        }
 	    });
 	},
+	
+	listMenuPausa(){
+		
+		$.ajax({
+			headers: {
+	            'Authorization': email,
+	            'Content-Type':'application/json'
+	        },
+	        type: "GET",
+	        async: false,
+	        contentType: "application/json",
+	        url: "/statusMonitoracao/listar",
+	        success: function(retorno) {
+	        	
+	        	
+	        	let html = `
+	        		<div class="col-md-12 mt15">
+	        		`;
+	        	
+        		for (const menuPausa of retorno.response){	
+        			html += MonitorUserTemplate.menuPausa(menuPausa)
+        		}
+        		
+        		html += `
+        				</div>
+        				`;		
+        		
+        		$('#imgEscolhaBarco').append(html);
+        		return ;
+	        },
+	        error: function (data) {  
+	        	MonitorUserController.erro(data,'alertMsgIdTable');
+	        }
+	    });
+	},
 		
 	abrirEscolhaBarco(){
 		
@@ -95,6 +130,7 @@ const MonitorUserController = {
 	            'Content-Type':'application/json'
 	        },
 	        type: "GET",
+	        async: false,
 	        contentType: "application/json",
 	        url: "/barco/escolhaBarco/"+$('#nfcIdCache').val(),
 	        success: function(retorno) {
@@ -102,21 +138,16 @@ const MonitorUserController = {
 	        	$('#contentId').hide();
 	        	$('#contentIdBarco').html(MonitorUserTemplate.modalEscolhaBarco());
 	        	
-	        	if(retorno.response.status == "TRABALHANDO"){
-	        		$('#imgEscolhaBarco').append(
-	    					`<div class="col-md-12 mt15">
-	    						<button type="button" class="btn-lg btn-warning col-md-12 mt15" onclick="MonitorUserController.continuarPausarFinalizar('PAUSA');">Pausar Atividade</button>
-	    						<button type="button" class="btn-lg btn-danger col-md-12 mt15" onclick="MonitorUserController.continuarPausarFinalizar('FINALIZADO');">Finalizar Atividade</button>
-	    					</div>`);
+	        	if(retorno.response.status != undefined && retorno.response.status == "TRABALHANDO"){
+	        		MonitorUserController.listMenuPausa();
 	        		return;
 	        	}
 	        	
-        		if(retorno.response.status == "PAUSA"){
+        		if(retorno.response.status != undefined && retorno.response.status.includes("PAUSA")){
         			$('#imgEscolhaBarco').append(
 	    					`
 	    					<div class="col-md-12 mt15">
-	    						<button type="button" class="btn-lg btn-success col-md-12 mt15" onclick="MonitorUserController.continuarPausarFinalizar();">Continuar Trabalhando na ${retorno.response.barco.nome} na Atividade: ${retorno.response.monitoracao.atividade.nome}</button>
-	    						<button type="button" class="btn-lg btn-danger col-md-12 mt15" onclick="MonitorUserController.continuarPausarFinalizar('FINALIZADO');">Finalizar Atividade</button>
+	    						<button type="button" class="btn-lg btn-success col-md-12 mt15" onclick="MonitorUserController.continuarPausarFinalizar('CONTINUAR');">Continuar Trabalhando na ${retorno.response.barco.nome} na Atividade: ${retorno.response.monitoracao.atividade.nome}</button>
 	    					</div>`);
 	        		return;
 	        	}

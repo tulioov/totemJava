@@ -19,7 +19,6 @@
 	var nome = '${nome}';
 	var email = '${email}';
 	var isAdm = ${isAdm};
-	
 </script>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
@@ -78,7 +77,8 @@
 					Cadastro
 				</a>
                 <div class='dashboard-nav-dropdown-menu'>
-                    <a href="/cadastroFeriado" class="dashboard-nav-dropdown-item">Feriado</a>
+       				<a href="/cadastroStatusMonitoracao" class="dashboard-nav-dropdown-item">Menu Monitoracao</a>
+					<a href="/cadastroFeriado" class="dashboard-nav-dropdown-item">Feriado</a>
 					<a href="/cadastroBarco" class="dashboard-nav-dropdown-item">Barco</a>
 					<a href="/cadastroUsuario" onclick="CadastroUsuarioController.listar();" class="dashboard-nav-dropdown-item">Usuario</a>
 					<a href="/cadasdroFases" class="dashboard-nav-dropdown-item">Fase</a>

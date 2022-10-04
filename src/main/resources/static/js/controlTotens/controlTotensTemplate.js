@@ -28,12 +28,14 @@ const ControlTotensTemplate = {
 	itemLinha(data){
 		return `
 			<tr>
-				<td>${data.id}</td>
 				<td>${data.usuario.nome}</td>
+				<td>${data.fase}</td>
+				<td>${data.local.nome}</td>
 				<td>${data.atividade.nome}</td>
 				<td>${data.dtInicioAtividade}</td>
-				<td>${data.tempoTrabalho}</td>
-				<td>${data.status}</td>
+				<td>${data.dtFimAtividade}</td>
+				<td>${data.tempoTrabalhoFimIni}</td>
+				<td>${data.statusMonitoracao.nome}</td>
 			</tr>
 		`;
 	},
@@ -47,7 +49,7 @@ const ControlTotensTemplate = {
 				<td>${data.local.nome}</td>
 				<td>${data.atividade.nome}</td>
 				<td>${data.dtInicioAtividade}</td>
-				<td>${data.dtFimAtividadeTotal}</td>
+				<td>${data.dtFimAtividade}</td>
 				<td>
 					<span onclick="ControlTotensController.editarHrAvulsa(${data.id});" class="glyphicon glyphicon-pencil"></span>
 					<span onclick="ControlTotensController.deletarHrAvulsa(${data.id});" class="glyphicon glyphicon-trash"></span>
@@ -182,6 +184,8 @@ const ControlTotensTemplate = {
 								        <th>Atividade</th>
 								        <th>Dt Inicio</th>
 								        <th>Dt Fim</th>
+								        <th>Tempo(Minutos)</th>
+								        <th>Status</th>
 								    </tr>
 									</thead>
 									<tbody>

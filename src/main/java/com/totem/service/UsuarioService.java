@@ -49,11 +49,9 @@ public class UsuarioService {
 
 		for (Usuario usuario : lstUsuario) {
 			if (EnumStatusUsuario.PAUSA.toString().equals(usuario.getStatus()) || EnumStatusUsuario.TRABALHANDO.toString().equals(usuario.getStatus())) {
-				Monitoracao monitoracao = monitoracaoService.findByUsuarioAndStatusEquals(usuario,
-						EnumStatusUsuario.TRABALHANDO.toString());
+				Monitoracao monitoracao = monitoracaoService.findByUsuarioAndStatusEquals(usuario, EnumStatusUsuario.TRABALHANDO.toString());
 				if(monitoracao == null) {
-					monitoracao = monitoracaoService.findByUsuarioAndStatusEquals(usuario,
-							EnumStatusUsuario.PAUSA.toString());
+					monitoracao = monitoracaoService.findByUsuarioAndStatusEquals(usuario, EnumStatusUsuario.PAUSA.toString());
 				}
 				Barco barco = barcoService.findById(monitoracao.getIdBarco(), emailUsuario);
 				usuario.setNomeBarco(barco.getNome());
