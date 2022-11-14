@@ -1,6 +1,9 @@
 package com.totem.entity;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.concurrent.TimeUnit;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -114,11 +117,25 @@ public class Monitoracao {
 		return (dt *24*60) / 86400000L;
 	}
 	
-	public Long getTempoTrabalhoFimIni() {
+	private String addZeroUmDigits(Long numero) {
+		
+		String n = Long.toString(numero);
+		return (n.length()<2)?"0"+numero:Long.toString(numero);
+	}
+	
+	public String getTempoTrabalhoFimIni() {
 		
 		if(dtInicioAtividade != null && dtFimAtividade != null) {
 			long dt = (dtFimAtividade.getTime() - dtInicioAtividade.getTime());
-			return (dt *24*60) / 86400000L;
+			
+			String days_difference = addZeroUmDigits(TimeUnit.MILLISECONDS.toDays(dt) % 365);  
+			String years_difference = addZeroUmDigits(TimeUnit.MILLISECONDS.toDays(dt) / 365l);  
+			String seconds_difference = addZeroUmDigits(TimeUnit.MILLISECONDS.toSeconds(dt) % 60);  
+			String minutes_difference = addZeroUmDigits(TimeUnit.MILLISECONDS.toMinutes(dt) % 60);   
+			String hours_difference = addZeroUmDigits(TimeUnit.MILLISECONDS.toHours(dt) % 24);   
+			
+			return hours_difference + ":"+ minutes_difference + ":"+ seconds_difference + " - " + days_difference + "/" +years_difference ;
+			//return (dt *24*60) / 86400000L;
 		}
 		return null;
 		

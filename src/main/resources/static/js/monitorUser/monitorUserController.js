@@ -73,7 +73,7 @@ const MonitorUserController = {
 	        },
 	        type: "GET",
 	        contentType: "application/json",
-	        url: "barco/listar",
+	        url: "barco/findByDtDeleteIsNull",
 	        success: function(retorno) {
 	        	MonitorUserController.reproduzirListaBarcos(retorno.response);
 	        }

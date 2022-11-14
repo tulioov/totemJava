@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.totem.dto.BarcoMonitoracaoDTO;
+import com.totem.dto.FiltroPesquisaMonitoracaoDTO;
 import com.totem.dto.MonitoracaoAvulsaDTO;
 import com.totem.service.MonitoracaoService;
 import com.totem.util.ResponseEntityUtil;
@@ -62,6 +63,10 @@ public class MonitoracaoController {
 		return ResponseEntityUtil.defaultResponse(monitoracaoService.listarHoraAvulsaByBarcoId(emailUsuario,barcoId));
 	}
 	
-
+	@PostMapping("/listarMonitoracaoByUsuarios/")
+	public @ResponseBody ResponseEntity<RetornoDTO> listarMonitoracaoByUsuarios(
+			@RequestHeader(name = "Authorization", required = true) String emailUsuario, @RequestBody FiltroPesquisaMonitoracaoDTO filtroPesquisaMonitoracaoDTO) {
+		return ResponseEntityUtil.defaultResponse(monitoracaoService.listarMonitoracaoByUsuarios(emailUsuario, filtroPesquisaMonitoracaoDTO));
+	}
 
 }
