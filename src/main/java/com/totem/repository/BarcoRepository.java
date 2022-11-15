@@ -13,6 +13,8 @@ public interface BarcoRepository extends CrudRepository<Barco, Long> {
 
 	List<Barco> findAll();
 	
+	List<Barco> findByDtDeleteIsNull();
+	
 	Barco findByMonitoracao(Monitoracao monitoracao);
 
 }

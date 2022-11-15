@@ -184,7 +184,7 @@ const ControlTotensTemplate = {
 								        <th>Atividade</th>
 								        <th>Dt Inicio</th>
 								        <th>Dt Fim</th>
-								        <th>Tempo(Minutos)</th>
+								        <th>Tempo decorrido</th>
 								        <th>Status</th>
 								    </tr>
 									</thead>

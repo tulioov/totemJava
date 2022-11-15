@@ -42,6 +42,10 @@ public class BarcoService {
 		return barcoRepository.findAll();
 	}
 	
+	public List<Barco> findByDtDeleteIsNull(String emailUsuario) {
+		return barcoRepository.findByDtDeleteIsNull();
+	}
+	
 	public Object listar(String emailUsuario, String nfc) {
 		
 		
@@ -65,7 +69,7 @@ public class BarcoService {
 			return monitorPausa;
 		}
 		
-		return barcoRepository.findAll();
+		return barcoRepository.findByDtDeleteIsNull();
 	}
 	
 	public Barco findById (Long id, String emailUsuario) {

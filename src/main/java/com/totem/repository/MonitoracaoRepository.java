@@ -21,5 +21,7 @@ public interface MonitoracaoRepository extends CrudRepository<Monitoracao, Long>
 	
 	List<Monitoracao> findByIdBarco(Long idBarco);
 	
+	List<Monitoracao> findByUsuarioIdIn(List<Long> usuarioId);
+	
 }
 

@@ -7,7 +7,7 @@
 	<meta charset="ISO-8859-1">
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/css/bootstrap-select.min.css">
 	<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.3/css/jquery.dataTables.css">
-	<title>Cadastro de Usuario</title>
+	<title>Relatorio Usuario</title>
 </head>
 <body>
 
@@ -26,10 +26,7 @@
 					<div class="row">
 						<div class="col-md-6">
 							<div>Nome do Funcionario: </div>
-							<select class="selectpicker" data-live-search="true" multiple title="Escolha até mais de um">
-							  <option>User01</option>
-							  <option>User02</option>
-							  <option>User03</option>
+							<select id="selectUsuarioId" class="selectpicker" data-live-search="true" multiple title="Escolha até mais de um">
 							</select>
 						</div>
 					</div>
@@ -46,33 +43,39 @@
 				</div>
 				<div class="row mt15">
 					<div class="col-md-12">		
-					    <button id="pesquiaseIdButton" type="button" class="btn btn-primary pull-right" onClick="">
+					    <button id="pesquiaseIdButton" type="button" class="btn btn-primary pull-right" onClick="RelatorioController.pesquisa()">
 							Pesquisar
 						</button>
 					</div>
 				</div>
 			</div>
 		</form>
-		<div class="panel panel-default mt15">
-			<div class="row">
-				<div class="col-md-12">
-					<table id="tablePesquisa">
-						<thead>
-					    <tr>
-					        <th>Matricula</th>
-					        <th>Nome</th>
-					        <th class="text-center">Action</th>
-					    </tr>
-						</thead>
-						<tbody></tbody>
-					</table>
-				</div>
+		<div class="panel panel-default">
+			<div class="panel-heading">Painel de pesquisa</div>
+			<div class="panel-body">
+				<div class="row">
+					<div class="col-md-12">
+						<table id="tablePesquisa">
+							<thead>
+						    <tr>
+						        <th>Matricula</th>
+						        <th>Nome</th>
+						        <th>Atividade</th>
+						        <th>Tempo decorrido</th>
+						        <th>Status</th>
+						    </tr>
+							</thead>
+							<tbody></tbody>
+						</table>
+					</div>
+			    </div>
 		    </div>
 	    </div>
-	</div>
-	
+    </div>
+	<script src="../externo/serializejson/serializejson.js"></script>
 	<script src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.js"></script>
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/js/bootstrap-select.min.js"></script>
+	<script src="../js/util/selectUtil.js"></script>
 	<script src="../js/relatorio/relatorioTemplate.js"></script>
 	<script src="../js/relatorio/relatorioController.js"></script>
 </body>

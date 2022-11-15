@@ -37,7 +37,7 @@ const ControlTotensController = {
 	        },
 	        type: "GET",
 	        contentType: "application/json",
-	        url: "barco/listar",
+	        url: "barco/findByDtDeleteIsNull",
 	        success: function(retorno) {
 	        	barcos = retorno.response;
 	        	$(retorno.response).each(function(index, barco) {
