@@ -42,9 +42,14 @@
 					</div>
 				</div>
 				<div class="row mt15">
-					<div class="col-md-12">		
+					<div class="col-md-6">		
 					    <button id="pesquiaseIdButton" type="button" class="btn btn-primary pull-right" onClick="RelatorioController.pesquisa()">
 							Pesquisar
+						</button>
+					</div>
+					<div class="col-md-6">		
+					    <button id=donloadIdButton" type="button" class="btn btn-primary pull-right" onClick="RelatorioController.donwload()">
+							Download
 						</button>
 					</div>
 				</div>

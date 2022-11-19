@@ -1,5 +1,6 @@
 package com.totem.repository;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.data.repository.CrudRepository;
@@ -22,6 +23,8 @@ public interface MonitoracaoRepository extends CrudRepository<Monitoracao, Long>
 	List<Monitoracao> findByIdBarco(Long idBarco);
 	
 	List<Monitoracao> findByUsuarioIdIn(List<Long> usuarioId);
+
+	List<Monitoracao> findBydtInicioAtividadeBetween(Date dataInidio, Date dataFim);
 	
 }
 

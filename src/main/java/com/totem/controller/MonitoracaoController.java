@@ -63,10 +63,10 @@ public class MonitoracaoController {
 		return ResponseEntityUtil.defaultResponse(monitoracaoService.listarHoraAvulsaByBarcoId(emailUsuario,barcoId));
 	}
 	
-	@PostMapping("/listarMonitoracaoByUsuarios/")
-	public @ResponseBody ResponseEntity<RetornoDTO> listarMonitoracaoByUsuarios(
+	@PostMapping("/listarMonitoracaoByFiltro/")
+	public @ResponseBody ResponseEntity<RetornoDTO> listarMonitoracaoByFiltro(
 			@RequestHeader(name = "Authorization", required = true) String emailUsuario, @RequestBody FiltroPesquisaMonitoracaoDTO filtroPesquisaMonitoracaoDTO) {
-		return ResponseEntityUtil.defaultResponse(monitoracaoService.listarMonitoracaoByUsuarios(emailUsuario, filtroPesquisaMonitoracaoDTO));
+		return ResponseEntityUtil.defaultResponse(monitoracaoService.listarMonitoracaoByFiltro(emailUsuario, filtroPesquisaMonitoracaoDTO));
 	}
 
 }
