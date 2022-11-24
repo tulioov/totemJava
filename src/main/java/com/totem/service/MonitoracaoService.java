@@ -246,14 +246,21 @@ public class MonitoracaoService {
 		return monitoracaoRepository.findByIdBarco(barcoId);
 	}
 
-	public List<Monitoracao> listarMonitoracaoByUsuarios(String emailUsuario, FiltroPesquisaMonitoracaoDTO filtroPesquisaMonitoracaoDTO) {
+	public List<Monitoracao> listarMonitoracaoByFiltro(String emailUsuario, FiltroPesquisaMonitoracaoDTO filtroPesquisaMonitoracaoDTO) {
 		
 		if (!usuarioService.isAdm(emailUsuario)) {
 			throw new CustomErrorException(HttpStatus.UNAUTHORIZED, ERRO_PERMISSAO);
 		}
 		
-		if(filtroPesquisaMonitoracaoDTO.getDataInidio() == null || filtroPesquisaMonitoracaoDTO.getDataFim() == null) {
+		boolean isData = filtroPesquisaMonitoracaoDTO.getDataInidio() != null && filtroPesquisaMonitoracaoDTO.getDataFim() != null;
+		boolean isUsuario = !filtroPesquisaMonitoracaoDTO.getUsuarioLstId().isEmpty();
+		
+		if(!isData && isUsuario) {
 			return monitoracaoRepository.findByUsuarioIdIn(filtroPesquisaMonitoracaoDTO.getUsuarioLstId());
+		}
+		
+		if(isData && !isUsuario) {
+			return monitoracaoRepository.findBydtInicioAtividadeBetween(filtroPesquisaMonitoracaoDTO.getDataInidio(),filtroPesquisaMonitoracaoDTO.getDataFim());
 		}
 		
 		return null;
