@@ -115,14 +115,19 @@ const MonitorUserController = {
 	    });
 	},
 		
-	abrirEscolhaBarco(){
+	abrirEscolhaBarco(id){
 		
-		if($('#nfcId').val()===''){
+		if($('#nfcId').val()==='' && id==null){
 			return;
 		}
+		let urlService = "/barco/escolhaBarcoByNFC/"+$('#nfcIdCache').val();
+		
 		$('#nfcIdCache').val($('#nfcId').val());
 		$('#nfcId').val('');
-		
+
+		if(id != null){
+			urlService = "/barco/escolhaBarcoByIdUsuario/" + id;
+		}		
 		
 		$.ajax({
 			headers: {
@@ -132,11 +137,12 @@ const MonitorUserController = {
 	        type: "GET",
 	        async: false,
 	        contentType: "application/json",
-	        url: "/barco/escolhaBarco/"+$('#nfcIdCache').val(),
+	        url: urlService,
+	        
 	        success: function(retorno) {
 	        	
-	        	$('#contentId').hide();
-	        	$('#contentIdBarco').html(MonitorUserTemplate.modalEscolhaBarco());
+	        	//$('#contentId').hide();
+	        	$('#myModal').html(MonitorUserTemplate.modalEscolhaBarco());
 	        	
 	        	if(retorno.response.status != undefined && retorno.response.status == "TRABALHANDO"){
 	        		MonitorUserController.listMenuPausa();
@@ -156,7 +162,7 @@ const MonitorUserController = {
 	        		$('#imgEscolhaBarco').append(
         				`
         				<div class="col-md-4 mt15">
-        					<span class="btnBarco" data-toggle="modal" data-target="#myModal" onclick="javascript:MonitorUserController.abrirEscolhaFase(${barco.id});">${barco.nome}</span>
+        					<span class="btnBarco" onclick="MonitorUserController.abrirEscolhaFase(${barco.id},${id});">${barco.nome}</span>
         				</div>`
     				);
         		}
@@ -165,7 +171,7 @@ const MonitorUserController = {
 	        	MonitorUserController.erro(data,'alertMsgIdTable');
 	        }
 	    });
-		MonitorUserController.tempoProgressbar("progressBarEscolhaBarcoId", "escolhaBarco");
+		//MonitorUserController.tempoProgressbar("progressBarEscolhaBarcoId", "escolhaBarco");
 	},
 	
 	continuarPausarFinalizar(acao){
@@ -229,7 +235,7 @@ const MonitorUserController = {
 	},
 	
 	
-	tempoProgressbar(idProgress, acao){
+	/*tempoProgressbar(idProgress, acao){
 		
 		var valorBar = $('#'+idProgress).attr("value");
 		
@@ -251,9 +257,15 @@ const MonitorUserController = {
 			MonitorUserController.tempoProgressbar(idProgress, acao);
 	    }, 1000);
 		
-	},
+	},*/
 	
-	carregarAtividadesUsuario(){
+	carregarAtividadesUsuario(idUsuario){
+		
+		let urlService = "/usuario/findByNFC/"+$('#nfcIdCache').val();
+		
+		if(idUsuario != null){
+			urlService = "/usuario/findById/"+idUsuario;
+		}
 		
 		$.ajax({
 			headers: {
@@ -262,7 +274,7 @@ const MonitorUserController = {
 	        },
 	        type: "GET",
 	        contentType: "application/json",
-	        url: "/usuario/findByNFC/"+$('#nfcIdCache').val(),
+	        url: urlService,
 	        success: function(retorno) {
 	        	$(retorno.response).each(function(index, usuario) {
 	        		$(usuario.faseList).each(function(index, fase) {
@@ -286,8 +298,9 @@ const MonitorUserController = {
 	    });
 	},
 	
-	abrirEscolhaFase(idBarco){
+	abrirEscolhaFase(idBarco, idUsuario){
 		
+		$('#myModal').html("");
 		$('#myModal').html(MonitorUserTemplate.abrirEscolhaFase(idBarco));
 		
 		$.ajax({
@@ -303,12 +316,12 @@ const MonitorUserController = {
 	        		$('#rowFasesId').append(MonitorUserTemplate.rowFases(index,fase));
 	        		$('#contentFasesId').append(MonitorUserTemplate.contentFases(index,fase));
         		});
-	        	MonitorUserController.carregarAtividadesUsuario();
+	        	MonitorUserController.carregarAtividadesUsuario(idUsuario);
 	        },
 	        error: function (data) {  
 	        	MonitorUserController.erro(data,'alertMsgIdTable');
 	        },
-	        complete: function(data) { 
+	        complete: function() { 
 	        	$('#tableAtividade').DataTable( {
 	        	    language: {
 	        	        url: '//cdn.datatables.net/plug-ins/1.11.3/i18n/pt_br.json'
@@ -316,7 +329,37 @@ const MonitorUserController = {
 	        	});
 	        }
 	    });
-		MonitorUserController.tempoProgressbar("progressBarFaseId","escolhaFase")
+		//MonitorUserController.tempoProgressbar("progressBarFaseId","escolhaFase")
+	},
+	
+	addFuncionario(){
+		
+		$('#myModal').html(MonitorUserTemplate.modalFuncionario());
+		
+		$('#tableUsuario').dataTable().fnClearTable();
+	    $('#tableUsuario').dataTable().fnDestroy();
+		$.ajax({
+			headers: {
+	            'Authorization': email,
+	            'Content-Type':'application/json'
+	        },
+	        type: "GET",
+	        contentType: "application/json",
+	        url: "/usuario/listar",
+	        success: function(retorno) {
+	        	$(retorno.response).each(function(index, data) {
+	        		$("#tableUsuario").find('tbody').append(MonitorUserTemplate.itemLinhaUsuario(data));
+        		});
+	        },
+	        complete: function(data) { 
+	        	$('#tableUsuario').DataTable( {
+	        	    language: {
+	        	        url: '//cdn.datatables.net/plug-ins/1.11.3/i18n/pt_br.json'
+	        	    }
+	        	});
+	        }
+	    });
+		
 	}
 };
 

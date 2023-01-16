@@ -57,9 +57,8 @@ public class MonitoracaoService {
 				.findByUsuarioAndStatusMonitoracaoConstanteCampoContainingAndDtFimAtividadeIsNull(usuario, status);
 	}
 
-	public Monitoracao getMonitoracaoTrabalhandoOuPausa(String nfc, String status) {
+	public Monitoracao getMonitoracaoTrabalhandoOuPausa(Usuario usuario, String status) {
 
-		Usuario usuario = usuarioService.buscarUsuarioPorNFC(nfc);
 		Monitoracao monitoracao = monitoracaoRepository
 				.findByUsuarioAndStatusMonitoracaoConstanteCampoContainingAndDtFimAtividadeIsNull(usuario, status);
 

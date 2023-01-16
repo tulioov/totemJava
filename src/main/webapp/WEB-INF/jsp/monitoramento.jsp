@@ -33,6 +33,12 @@
            	<a onclick="$('#alertMsgIdTable').addClass('oculta');" class="close">&times;</a>
            	<div></div>
 		</div>
+		<div class="row">
+			<button type="submit" onclick="MonitorUserController.addFuncionario();" class="btn btn-primary" data-toggle="modal" data-target="#myModal">
+				Add Funcion&aacute;rio
+			</button>
+			<hr/>
+		</div>
 		<div id="contentId">
 		</div>
 	</div>

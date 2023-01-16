@@ -63,6 +63,7 @@ public class UsuarioService {
 	}
 
 	public Usuario findById(Long id) {
+		System.out.println(id);
 		return usuarioRepository.findById(id).get();
 	}
 
