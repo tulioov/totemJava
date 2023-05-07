@@ -161,8 +161,8 @@ const CadastroBarcoController = {
 			$('#campoId').val(barco.id);
 			$('#nomeId').val(barco.nome);
 			$('#hrsBarcoPrevistaId').val(barco.hrsBarcoPrevista/60);
-			$('#dtInicioPrevistoId').val(barco.dtInicioPrevisto.split('/').reverse().join('-'));
-			$('#dtFimPrevistoId').val(barco.dtFimPrevisto.split('/').reverse().join('-'));
+			$('#dtInicioPrevistoId').val(barco.dtInicioPrevisto!=null?barco.dtInicioPrevisto.split('/').reverse().join('-'):'');
+			$('#dtFimPrevistoId').val(barco.dtFimPrevisto!=null?barco.dtFimPrevisto.split('/').reverse().join('-'):'');
 			$('#constanteCampoId').val(barco.constanteCampo);
 			$('#base64image').attr('src', barco.imagem); 
 			$('#base64image').val(barco.imagem);

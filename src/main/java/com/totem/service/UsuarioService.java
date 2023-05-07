@@ -38,9 +38,9 @@ public class UsuarioService {
 
 	public List<Usuario> listar(String emailUsuario) {
 
-		if (!isAdm(emailUsuario)) {
-			throw new CustomErrorException(HttpStatus.UNAUTHORIZED, ERRO_PERMISSAO);
-		}
+//		if (!isAdm(emailUsuario)) {
+//			throw new CustomErrorException(HttpStatus.UNAUTHORIZED, ERRO_PERMISSAO);
+//		}
 
 		List<Usuario> lstUsuario = usuarioRepository.findAll();
 		List<Usuario> lstRetorno = new ArrayList<>();
@@ -63,7 +63,6 @@ public class UsuarioService {
 	}
 
 	public Usuario findById(Long id) {
-		System.out.println(id);
 		return usuarioRepository.findById(id).get();
 	}
 
@@ -80,12 +79,23 @@ public class UsuarioService {
 		if (!isAdm(emailUsuario)) {
 			throw new CustomErrorException(HttpStatus.UNAUTHORIZED, ERRO_PERMISSAO);
 		}
-		@Valid
 		Usuario usuario = new Usuario();
 		BeanUtils.copyProperties(usuarioDTO, usuario);
 		addListFaseInUsuario(usuarioDTO, usuario);
 
-		usuarioRepository.save(usuario);
+		try {
+			usuario = usuarioRepository.save(usuario);
+		} catch (Exception e) {
+			boolean isCodRfdNull = usuarioDTO.getCodRfid() == null || usuarioDTO.getCodRfid().isEmpty();
+			boolean isMatricula = usuarioDTO.getMatricula() == null|| usuarioDTO.getMatricula().isEmpty();
+			if(isCodRfdNull) {
+				usuario.setCodRfid(usuario.getId().toString());
+			}
+			if(isMatricula) {
+				usuario.setMatricula(usuario.getId().toString());
+			}
+			usuarioRepository.save(usuario);
+		}
 		return usuario;
 	}
 

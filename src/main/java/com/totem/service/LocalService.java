@@ -88,4 +88,8 @@ public class LocalService {
 		Fase fase = faseService.findById(id);
 		return fase.getLocalList();
 	}
+
+	public void salvar(Local local, String emailUsuario) {
+		localRepository.save(local);
+	}
 }

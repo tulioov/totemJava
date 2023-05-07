@@ -221,7 +221,7 @@ const MonitorUserTemplate = {
 				<td>${data.nomeBarco}</td>
 				<td><span class="${data.status}">${data.status}</span></td>
 				<td>
-					<span onclick="MonitorUserController.abrirEscolhaBarco(${data.id});" class="glyphicon glyphicon-briefcase"></span>
+					<span onclick="MonitorUserController.abrirEscolhaBarco(${data.id},${data.codRfid});" class="glyphicon glyphicon-briefcase"></span>
 				</td>
 			</tr>
 		`;

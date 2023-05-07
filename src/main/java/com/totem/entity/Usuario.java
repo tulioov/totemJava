@@ -2,7 +2,6 @@ package com.totem.entity;
 
 import java.util.Date;
 import java.util.List;
-import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -40,7 +39,7 @@ public class Usuario {
 	@Column(name = "EMAIL")
 	private String email;
 	
-	@Column(name = "MATRICULA", unique=true)
+	@Column(name = "MATRICULA")
 	private String matricula;
 	
 	@Column(name = "USUARIO_DELETE")
@@ -53,11 +52,14 @@ public class Usuario {
 	@Column(name = "STATUS")
 	private String status;
 	
-	@Column(name = "COD_RFID", unique=true)
+	@Column(name = "COD_RFID")
 	private String codRfid;
 	
 	@Column(name = "isAdmin")
 	private Boolean isAdmin;
+	
+	@Column(name = "isLider")
+	private Boolean isLider;
 	
 	@JoinColumn(name = "ID_USUARIO")
 	@ManyToMany
@@ -160,6 +162,14 @@ public class Usuario {
 
 	public void setStatus(String status) {
 		this.status = status;
+	}
+
+	public Boolean getIsLider() {
+		return isLider;
+	}
+
+	public void setIsLider(Boolean isLider) {
+		this.isLider = isLider;
 	}
 
 }

@@ -45,7 +45,6 @@ public class Barco {
 	@Column(name = "DT_FIM_PREVISTO")
 	private Date dtFimPrevisto;
 	
-	@Lob
 	@Column(name = "imagem")
 	private String imagem;
 	

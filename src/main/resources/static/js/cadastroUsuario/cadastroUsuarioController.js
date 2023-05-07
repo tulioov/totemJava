@@ -59,6 +59,7 @@ const CadastroUsuarioController = {
 		formControl  = $('#formId').serializeJSON();
 		formControl.faseList = $('#duallistboxId').val();
 		formControl.isAdmin = $('#isAdminId').prop('checked');
+		formControl.isLider = $('#isLiderId').prop('checked');
 		formControl.email = $('#emailId').val();
 		
 		let myJsonData = JSON.stringify(formControl);
@@ -174,6 +175,7 @@ const CadastroUsuarioController = {
 			$('#emailId').val(usuario.email);
 			$('#codRfidId').val(usuario.codRfid);
 			$('#isAdminId').prop('checked', usuario.isAdmin);
+			$('#isLiderId').prop('checked', usuario.isLider);
 			
 			let status = usuario.status;
 			if(usuario.status == null){

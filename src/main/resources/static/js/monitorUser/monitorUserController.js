@@ -115,10 +115,10 @@ const MonitorUserController = {
 	    });
 	},
 		
-	abrirEscolhaBarco(id){
+	abrirEscolhaBarco(id, codRfid){
 		
-		if($('#nfcId').val()==='' && id==null){
-			return;
+		if($('#nfcId').val()==='' || id==null){
+			$('#nfcId').val(codRfid);
 		}
 		let urlService = "/barco/escolhaBarcoByNFC/"+$('#nfcIdCache').val();
 		
