@@ -10,8 +10,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.Lob;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.validation.constraints.NotEmpty;
@@ -45,9 +45,6 @@ public class Barco {
 	@Column(name = "DT_FIM_PREVISTO")
 	private Date dtFimPrevisto;
 	
-	@Column(name = "imagem")
-	private String imagem;
-	
 	@Column(name = "NOME")
 	@NotEmpty(message = "Barco deve conter um nome.")	
 	@Size(min = 3 , max = 250, message = "Nome deve conter minimo de 3 caracter")
@@ -80,6 +77,10 @@ public class Barco {
 	@JoinColumn(name = "ID_MONITORACAO")
 	@ManyToMany
 	private List<Monitoracao> monitoracao;
+	
+	@ManyToOne
+    @JoinColumn(name = "ID_BARCO_TEMPLATE")
+	private BarcoTemplate barcoTemplate;
 	
 	@Transient
 	private Long tempoDiasFabricao;
@@ -176,15 +177,6 @@ public class Barco {
 		this.constanteCampo = constanteCampo;
 	}
 
-
-	public String getImagem() {
-		return imagem;
-	}
-
-	public void setImagem(String imagem) {
-		this.imagem = imagem;
-	}
-
 	public Long getHrsBarcoAutomatizada() {
 		return hrsBarcoAutomatizada;
 	}
@@ -236,6 +228,14 @@ public class Barco {
 
 	public void setStatus(String status) {
 		this.status = status;
+	}
+
+	public BarcoTemplate getBarcoTemplate() {
+		return barcoTemplate;
+	}
+
+	public void setBarcoTemplate(BarcoTemplate barcoTemplate) {
+		this.barcoTemplate = barcoTemplate;
 	}
 	
 }

@@ -1,20 +1,23 @@
-const CadastroAtividadeController = {
+
+const CadastroEspecialidadeController = {
+		
 	tempoEspera(divId){
 		setTimeout(function () {
 			$('#'+divId).hide(); 
 		}, 1500); 
 	},
+		
 	erro(data, alertComponent){
 		$("#myModal").scrollTop(0);
     	$("#"+alertComponent).find('div').html("");
     	if(data.responseJSON.statusCode === 404){
     		$("#"+alertComponent).removeClass("oculta").addClass("alert-danger").find('div').append(data.responseJSON.response+"<br>");
-    		CadastroAtividadeController.tempoEspera(alertComponent);
+    		CadastroEspecialidadeController.tempoEspera(alertComponent);
     		return;
     	}
     	if(data.responseJSON.statusCode === 401){
     		$("#"+alertComponent).removeClass("oculta").addClass("alert-danger").find('div').append(data.responseJSON.response.message+"<br>");
-    		CadastroAtividadeController.tempoEspera(alertComponent);
+    		CadastroEspecialidadeController.tempoEspera(alertComponent);
     		return;
     	}
     	if(data.responseJSON.statusCode === 500){
@@ -27,75 +30,13 @@ const CadastroAtividadeController = {
     			return;
     		}
     		$("#"+property+"Id").addClass("errorInput");
-    		$("#"+alertComponent).removeClass("oculta").addClass("alert-danger").find('div').append(retorno[property]+"<br>");
-    		CadastroAtividadeController.tempoEspera(alertComponent);
+    		$("#alertMsgId").removeClass("oculta").addClass("alert-danger").find('div').append(retorno[property]+"<br>");
+    		CadastroEspecialidadeController.tempoEspera(alertComponent);
 		}
 	},
-	salvar(){
-		$.ajax({
-			headers: {
-	            'Authorization': email,
-	            'Content-Type':'application/json'
-	        },
-	        type: "POST",
-	        url: "/atividade/salvar",
-	        dataType: "json",
-	        cache: false,
-	        data : JSON.stringify($('#formId').serializeJSON()),
-	        success: function(retorno) {
-	        	$("#myModal").scrollTop(0);
-	        	$("#alertMsgId").removeClass("oculta").addClass("alert-success").find('div').append("Salvo com sucesso!");
-	        	setTimeout(function(){
-	        		$("#alertMsgId").addClass("oculta").find('div').removeClass("alert-success").html("");
-	        		$('#myModal').modal('hide');
-	        		CadastroAtividadeController.listar();
-        		},2000); 
-	        },
-	        error: function (data) {   
-	        	CadastroAtividadeController.erro(data,"alertMsgId");
-	        },
-	    });
-	},
-	editar(id){
-		$.ajax({
-			headers: {
-	            'Authorization': email,
-	            'Content-Type':'application/json'
-	        },
-	        type: "GET",
-	        contentType: "application/json",
-	        url: "/atividade/findById/"+id,
-	        success: function(retorno) {
-	        	CadastroAtividadeController.addUser(retorno.response)
-	        }, error: function (data) {   
-	        	CadastroAtividadeController.erro(data,"alertMsgId");
-	        }
-	    });
-	},
-	deletar(id){
-		$.ajax({
-			headers: {
-	            'Authorization': email,
-	            'Content-Type':'application/json'
-	        },
-	        type: "DELETE",
-	        contentType: "application/json",
-	        url: "/atividade/deletar/"+id,
-	        success: function(retorno) {
-	        	$("#myModal").scrollTop(0);
-	        	$("#alertMsgIdTable").removeClass("oculta").addClass("alert-success").find('div').append("Deletado com sucesso!");
-	        	setTimeout(function(){
-	        		$("#alertMsgIdTable").addClass("oculta").removeClass("alert-success").find('div').html("");
-	        		CadastroAtividadeController.listar();
-        		},2000); 
-	        }, error: function (data) {  
-	        	CadastroAtividadeController.erro(data,"alertMsgIdTable");
-	        }
-	    });
-	},
-	listar(){
-		$('#tableAtividade').dataTable().fnClearTable();
-	    $('#tableAtividade').dataTable().fnDestroy();
+		
+	
+	carregarDualList(atividadeList){
 		$.ajax({
 			headers: {
 	            'Authorization': email,
@@ -106,14 +47,115 @@ const CadastroAtividadeController = {
 	        url: "/atividade/listar",
 	        success: function(retorno) {
 	        	$(retorno.response).each(function(index, data) {
-	        		$("#tableAtividade").find('tbody').append(CadastroAtividadeTemplate.itemLinha(data));
+	        		if (atividadeList != undefined){
+        				if(atividadeList.some(especialidade => especialidade.id === data.id)){
+	        				$("#duallistboxId").append(`<option value="${data.id}" selected="selected" >${data.nome}</option>`);
+        				}else{
+        					$("#duallistboxId").append(`<option value="${data.id}">${data.nome}</option>`);
+        				}
+	        		}else{
+	        			$("#duallistboxId").append(`<option value="${data.id}">${data.nome}</option>`);
+	        		}
         		});
+	        },complete: function(data) { 
+	        	$("#duallistboxId").bootstrapDualListbox('refresh');
+	        }
+	    });
+	},
+	salvar(){
+		
+		let formControl = new Object();
+		formControl  = $('#formId').serializeJSON();
+		formControl.atividadeList = $('#duallistboxId').val();
+		let myJsonData = JSON.stringify(formControl);
+		
+		$.ajax({
+			headers: {
+	            'Authorization': email,
+	            'Content-Type':'application/json'
+	        },
+	        type: "POST",
+	        url: "/especialidade/salvar",
+	        dataType: "json",
+	        cache: false,
+	        data : myJsonData,
+	        success: function(retorno) {
+	        	$("#myModal").scrollTop(0);
+	        	$("#alertMsgId").removeClass("oculta").addClass("alert-success").find('div').append("Salvo com sucesso!");
+	        	setTimeout(function(){
+	        		$("#alertMsgId").addClass("oculta").find('div').removeClass("alert-success").html("");
+	        		$('#myModal').modal('hide');
+	        		CadastroEspecialidadeController.listar();
+        		},2000); 
+	        },
+	        error: function (data) {   
+	        	CadastroEspecialidadeController.erro(data,"alertMsgId");
+	        },
+	    });
+	},
+	
+	editar(id){
+		$.ajax({
+			headers: {
+	            'Authorization': email,
+	            'Content-Type':'application/json'
+	        },
+	        type: "GET",
+	        contentType: "application/json",
+	        url: "/especialidade/findById/"+id,
+	        success: function(retorno) {
+	        	CadastroEspecialidadeController.addUser(retorno.response)
 	        }, 
+	        error: function (data) {   
+	        	CadastroEspecialidadeController.erro(data,"alertMsgId");
+	        }
+	    });
+	},
+	
+	deletar(id){
+		$.ajax({
+			headers: {
+	            'Authorization': email,
+	            'Content-Type':'application/json'
+	        },
+	        type: "DELETE",
+	        contentType: "application/json",
+	        url: "/especialidade/deletar/"+id,
+	        success: function(retorno) {
+	        	$("#myModal").scrollTop(0);
+	        	$("#alertMsgIdTable").removeClass("oculta").addClass("alert-success").find('div').append("Deletado com sucesso!");
+	        	setTimeout(function(){
+	        		$("#alertMsgIdTable").addClass("oculta").removeClass("alert-success").find('div').html("");
+	        		CadastroEspecialidadeController.listar();
+        		},2000); 
+	        }, error: function (data) {  
+	        	CadastroEspecialidadeController.erro(data,'alertMsgIdTable');
+	        }
+	    });
+	},
+		
+	listar(){
+		
+		$('#tableEspecialidade').dataTable().fnClearTable();
+	    $('#tableEspecialidade').dataTable().fnDestroy();
+		$.ajax({
+			headers: {
+	            'Authorization': email,
+	            'Content-Type':'application/json'
+	        },
+	        type: "GET",
+	        contentType: "application/json",
+	        url: "/especialidade/listar",
+	        success: function(retorno) {
+	        	$(retorno.response).each(function(index, data) {
+	        		$("#tableEspecialidade").find('tbody').append(CadastroEspecialidadeTemplate.itemLinha(data));
+        		});
+	        },
 	        error: function (data) {  
-	        	CadastroAtividadeController.erro(data,"alertMsgIdTable");
+	        	CadastroEspecialidadeController.erro(data,'alertMsgIdTable');
 	        },
 	        complete: function(data) { 
-	        	$('#tableAtividade').DataTable( {
+	        	$('#tableEspecialidade').DataTable( {
 	        	    language: {
 	        	        url: '//cdn.datatables.net/plug-ins/1.11.3/i18n/pt_br.json'
 	        	    }
@@ -121,29 +163,37 @@ const CadastroAtividadeController = {
 	        }
 	    });
 	},
-	addUser(atividade){
-		$('#myModal').html(CadastroAtividadeTemplate.add()).show();
+	
+	addUser(especialidade){
+		
+		$('#myModal').html(CadastroEspecialidadeTemplate.add()).show();
 		
 		$("#nomeId").keyup(function(){
 			const reg = /[^a-zA-Z0-9 ]+/g;
 			let texto = $("#nomeId").val().replace(reg,'');
 			$("#constanteCampoId").val(texto.replaceAll(' ','_'));
 		});
-		$('[name=duallistbox]').bootstrapDualListbox({
+		
+		$("#duallistboxId").bootstrapDualListbox({
 			nonSelectedListLabel: 'N\u00e3o Selecionadas',
 			selectedListLabel: 'Selecionadas'
 		});
-		if(atividade != undefined){
-			$('#campoId').val(atividade.id);
-			$('#codigoId').val(atividade.codigo);
-			$('#nomeId').val(atividade.nome);
-			$('#descricaoId').val(atividade.descricao);
-			$('#constanteCampoId').val(atividade.constanteCampo);
-			$('#tempoEstimadoId').val(atividade.tempoEstimado);
-			$('#tempoRealId').val(atividade.tempoReal);
+		
+		if(especialidade != undefined){
+			$('#campoId').val(especialidade.id);
+			$('#codigoId').val(especialidade.codigo);
+			$('#nomeId').val(especialidade.nome);
+			$('#constanteCampoId').val(especialidade.constanteCampo);
+			CadastroEspecialidadeController.carregarDualList(especialidade.atividadeList);
+			return;
 		}
+		CadastroEspecialidadeController.carregarDualList();
 	}
 };
+
 $( document ).ready(function() {
-	CadastroAtividadeController.listar();
+	CadastroEspecialidadeController.listar();
 });
+
+
+

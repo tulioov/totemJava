@@ -13,6 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.totem.dto.BarcoDTO;
 import com.totem.dto.MonitorPausa;
 import com.totem.entity.Barco;
+import com.totem.entity.BarcoTemplate;
 import com.totem.entity.Feriado;
 import com.totem.entity.Monitoracao;
 import com.totem.entity.Usuario;
@@ -29,6 +30,9 @@ public class BarcoService {
 	
 	@Autowired
 	MonitoracaoService monitoracaoService;
+	
+	@Autowired
+	BarcoTemplateService barcoTemplateService;
 	
 	@Autowired
 	private FeriadoService feriadoService;
@@ -107,6 +111,11 @@ public class BarcoService {
 			if(barcoOp.isPresent()) {
 				barco = barcoOp.get();
 			}
+		}
+		
+		if(barcoDTO.getBarcoTemplateId() != null) {
+			BarcoTemplate barcoTemplate = barcoTemplateService.findById(barcoDTO.getBarcoTemplateId());
+			barco.setBarcoTemplate(barcoTemplate);
 		}
 		
 		if(barco.getMonitoracao() != null) {

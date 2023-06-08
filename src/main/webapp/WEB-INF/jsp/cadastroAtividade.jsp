@@ -40,7 +40,7 @@
 			    <tr>
 			        <th>ID</th>
 			        <th>Nome</th>
-			        <th>Constante Campo</th>
+			        <th>Descri&ccedil;&atilde;o</th>
 			        <th>Status</th>
 			        <th>A&ccedil;&atilde;o</th>
 			    </tr>

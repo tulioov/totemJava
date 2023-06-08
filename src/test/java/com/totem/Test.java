@@ -18,10 +18,10 @@ public class Test {
 
 	public static void main(String[] args) throws MalformedURLException, IOException {
 
-
+		testLdap();
 	}
 
-	private void testLdap() {
+	private static void testLdap() {
 
 		HttpHeaders headers = new HttpHeaders();
 		RestTemplate restTemplate = new RestTemplate();

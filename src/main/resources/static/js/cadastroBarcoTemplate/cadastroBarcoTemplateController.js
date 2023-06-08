@@ -1,7 +1,5 @@
 
-let imageUploadBarco;
-
-const CadastroBarcoController = {
+const CadastroBarcoTemplateController = {
 		
 	tempoEspera(divId){
 		setTimeout(function () {
@@ -14,12 +12,12 @@ const CadastroBarcoController = {
     	$("#"+alertComponent).find('div').html("");
     	if(data.responseJSON.statusCode === 404){
     		$("#"+alertComponent).removeClass("oculta").addClass("alert-danger").find('div').append(data.responseJSON.response+"<br>");
-    		CadastroBarcoController.tempoEspera(alertComponent);
+    		CadastroBarcoTemplateController.tempoEspera(alertComponent);
     		return;
     	}
     	if(data.responseJSON.statusCode === 401){
     		$("#"+alertComponent).removeClass("oculta").addClass("alert-danger").find('div').append(data.responseJSON.response.message+"<br>");
-    		CadastroBarcoController.tempoEspera(alertComponent);
+    		CadastroBarcoTemplateController.tempoEspera(alertComponent);
     		return;
     	}
     	if(data.responseJSON.statusCode === 500){
@@ -33,19 +31,43 @@ const CadastroBarcoController = {
     		}
     		$("#"+property+"Id").addClass("errorInput");
     		$("#"+alertComponent).removeClass("oculta").addClass("alert-danger").find('div').append(retorno[property]+"<br>");
-    		CadastroBarcoController.tempoEspera(alertComponent);
+    		CadastroBarcoTemplateController.tempoEspera(alertComponent);
 		}
+	},
+	
+	carregarDualList(atividadeList){
+		$.ajax({
+			headers: {
+	            'Authorization': email,
+	            'Content-Type':'application/json'
+	        },
+	        type: "GET",
+	        contentType: "application/json",
+	        url: "/atividade/listar",
+	        success: function(retorno) {
+	        	$(retorno.response).each(function(index, data) {
+	        		if (atividadeList != undefined){
+        				if(atividadeList.some(atividade => atividade.id === data.id)){
+	        				$("#duallistboxId").append(`<option value="${data.id}" selected="selected" >${data.nome}</option>`);
+        				}else{
+        					$("#duallistboxId").append(`<option value="${data.id}">${data.nome}</option>`);
+        				}
+	        		}else{
+	        			$("#duallistboxId").append(`<option value="${data.id}">${data.nome}</option>`);
+	        		}
+        		});
+	        },complete: function(data) { 
+	        	$("#duallistboxId").bootstrapDualListbox('refresh');
+	        }
+	    });
 	},
 		
 	salvar(){
 		
 		let formControl = new Object();
 		formControl  = $('#formId').serializeJSON();
+		formControl.atividadeList = $('#duallistboxId').val();
 		formControl.imagem = $('#base64image').val();
-		formControl.dtInicioPrevisto = $("#dtInicioPrevistoId").val().split('-').reverse().join('/');
-		formControl.dtFimPrevisto = $("#dtFimPrevistoId").val().split('-').reverse().join('/');
-		formControl.hrsBarcoPrevista = $('#hrsBarcoPrevistaId').val()*60;
-		formControl.barcoTemplateId = $('#barcoTemplateSelect').val();
 		let myJsonData = JSON.stringify(formControl);
 		
 		$.ajax({
@@ -54,7 +76,7 @@ const CadastroBarcoController = {
 	            'Content-Type':'application/json'
 	        },
 	        type: "POST",
-	        url: "/barco/salvar",
+	        url: "/barcoTemplate/salvar",
 	        dataType: "json",
 	        cache: false,
 	        data : myJsonData,
@@ -64,11 +86,11 @@ const CadastroBarcoController = {
 	        	setTimeout(function(){
 	        		$("#alertMsgId").addClass("oculta").find('div').removeClass("alert-success").html("");
 	        		$('#myModal').modal('hide');
-	        		CadastroBarcoController.listar();
+	        		CadastroBarcoTemplateController.listar();
         		},2000); 
 	        },
 	        error: function (data) {   
-	        	CadastroBarcoController.erro(data,"alertMsgId");
+	        	CadastroBarcoTemplateController.erro(data,"alertMsgId");
 	        },
 	    });
 	},
@@ -81,12 +103,12 @@ const CadastroBarcoController = {
 	        },
 	        type: "GET",
 	        contentType: "application/json",
-	        url: "/barco/findById/"+id,
+	        url: "/barcoTemplate/findById/"+id,
 	        success: function(retorno) {
-	        	CadastroBarcoController.addUser(retorno.response)
+	        	CadastroBarcoTemplateController.addUser(retorno.response)
 	        }, error: function (data) {   
-	        	CadastroBarcoController.erro(data,"alertMsgId");
-	        },
+	        	CadastroBarcoTemplateController.erro(data,"alertMsgId");
+	        }
 	    });
 	},
 	
@@ -98,23 +120,23 @@ const CadastroBarcoController = {
 	        },
 	        type: "DELETE",
 	        contentType: "application/json",
-	        url: "/barco/deletar/"+id,
+	        url: "/barcoTemplate/deletar/"+id,
 	        success: function(retorno) {
 	        	$("#myModal").scrollTop(0);
 	        	$("#alertMsgIdTable").removeClass("oculta").addClass("alert-success").find('div').append("Deletado com sucesso!");
 	        	setTimeout(function(){
 	        		$("#alertMsgIdTable").addClass("oculta").removeClass("alert-success").find('div').html("");
-	        		CadastroBarcoController.listar();
+	        		CadastroBarcoTemplateController.listar();
         		},2000); 
-	        }, error: function (data) {   
-	        	CadastroBarcoController.erro(data,"alertMsgIdTable");
-	        },
+	        }, error: function (data) {  
+	        	CadastroBarcoTemplateController.erro(data,"alertMsgIdTable");
+	        }
 	    });
 	},
 		
 	listar(){
-		$('#tableBarco').dataTable().fnClearTable();
-	    $('#tableBarco').dataTable().fnDestroy();
+		$('#tableBarcoTemplate').dataTable().fnClearTable();
+	    $('#tableBarcoTemplate').dataTable().fnDestroy();
 		$.ajax({
 			headers: {
 	            'Authorization': email,
@@ -122,17 +144,16 @@ const CadastroBarcoController = {
 	        },
 	        type: "GET",
 	        contentType: "application/json",
-	        url: "/barco/listar",
+	        url: "/barcoTemplate/listar",
 	        success: function(retorno) {
 	        	$(retorno.response).each(function(index, data) {
-	        		$("#tableBarco").find('tbody').append(CadastroBarcoTemplate.itemLinha(data));
+	        		$("#tableBarcoTemplate").find('tbody').append(CadastroBarcoTemplateTemplate.itemLinha(data));
         		});
-	        },
-	        error: function (data) {   
-	        	CadastroBarcoController.erro(data,"alertMsgIdTable");
+	        },error: function (data) {   
+	        	CadastroBarcoTemplateController.erro(data,"alertMsgIdTable");
 	        },
 	        complete: function(data) { 
-	        	$('#tableBarco').DataTable( {
+	        	$('#tableBarcoTemplate').DataTable( {
 	        	    language: {
 	        	        url: '//cdn.datatables.net/plug-ins/1.11.3/i18n/pt_br.json'
 	        	    }
@@ -141,9 +162,9 @@ const CadastroBarcoController = {
 	    });
 	},
 	
-	addUser(barco){
+	addUser(barcoTemplate){
 		
-		$('#myModal').html(CadastroBarcoTemplate.add()).show();
+		$('#myModal').html(CadastroBarcoTemplateTemplate.add()).show();
 		
 		$("#nomeId").keyup(function(){
 			const reg = /[^a-zA-Z0-9 ]+/g;
@@ -151,25 +172,23 @@ const CadastroBarcoController = {
 			$("#constanteCampoId").val(texto.replaceAll(' ','_'));
 		});
 		
-		CadastroBarcoController.bs_input_file();
-		
-		$('#barcoTemplateSelect').on('change', function(){
-			let image = $("#barcoTemplateSelect").find(':selected').attr('srcImage');
-			$('#base64image').attr('src', image==null?"":image);
+		$("#duallistboxId").bootstrapDualListbox({
+			nonSelectedListLabel: 'N\u00e3o Selecionadas',
+			selectedListLabel: 'Selecionadas'
 		});
 		
-		if(barco != undefined){
-			$('#campoId').val(barco.id);
-			$('#nomeId').val(barco.nome);
-			$('#hrsBarcoPrevistaId').val(barco.hrsBarcoPrevista/60);
-			$('#dtInicioPrevistoId').val(barco.dtInicioPrevisto!=null?barco.dtInicioPrevisto.split('/').reverse().join('-'):'');
-			$('#dtFimPrevistoId').val(barco.dtFimPrevisto!=null?barco.dtFimPrevisto.split('/').reverse().join('-'):'');
-			$('#constanteCampoId').val(barco.constanteCampo);
-			SelectUtil.carregarSelect("barcoTemplate/listar","barcoTemplateSelect",barco.barcoTemplate==null?undefined:barco.barcoTemplate.id,barco.barcoTemplate==null?undefined:barco.barcoTemplate.imagem);
-			$('#base64image').attr('src', barco.barcoTemplate==null?undefined:barco.barcoTemplate.imagem);
+		CadastroBarcoTemplateController.bs_input_file();
+		
+		if(barcoTemplate != undefined){
+			$('#campoId').val(barcoTemplate.id);
+			$('#base64image').attr('src', barcoTemplate.imagem); 
+			$('#base64image').val(barcoTemplate.imagem);
+			$('#nomeId').val(barcoTemplate.nome);
+			$('#constanteCampoId').val(barcoTemplate.constanteCampo);
+			CadastroBarcoTemplateController.carregarDualList(barcoTemplate.atividadeList);
 			return;
 		}
-		SelectUtil.carregarSelect("barcoTemplate/listar","barcoTemplateSelect",undefined);
+		CadastroBarcoTemplateController.carregarDualList();
 	},
 	
 	upImg(){
@@ -190,7 +209,7 @@ const CadastroBarcoController = {
 	    $(".input-file").before(
 	        function () {
 	            if (!$(this).prev().hasClass('input-ghost')) {
-	                var element = $("<input id='imageId' type='file' onchange='CadastroBarcoController.upImg();' class='input-ghost' style='visibility:hidden; height:0'>");
+	                var element = $("<input id='imageId' type='file' onchange='CadastroBarcoTemplateController.upImg();' class='input-ghost' style='visibility:hidden; height:0'>");
 	                element.attr("name", $(this).attr("name"));
 	                element.change(function () {
 	                    element.next(element).find('input').val((element.val()).split('\\').pop());
@@ -208,9 +227,11 @@ const CadastroBarcoController = {
 	        }
 	    );
 	}
-	
 };
 
 $( document ).ready(function() {
-	CadastroBarcoController.listar();
+	CadastroBarcoTemplateController.listar();
 });
+
+
+

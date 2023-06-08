@@ -7,12 +7,11 @@
 <head>
 	<meta charset="ISO-8859-1">
 	<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.3/css/jquery.dataTables.css">
-	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/css/bootstrap-select.min.css">
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
 	<link href="../externo/dual-list/bootstrap-duallistbox.css" rel="stylesheet" />
 	
 	
-	<title>Cadastro de Barco</title>
+	<title>Cadastro de Especialidade</title>
 </head>
 <body>
 
@@ -24,8 +23,8 @@
 	<input type="hidden" name="localizacao" id="localizacao">
 	<div class="container">
 		<div class="row">
-			<button type="submit" onclick="CadastroBarcoController.addUser();" class="btn btn-primary" data-toggle="modal" data-target="#myModal">
-				Add Barco
+			<button type="submit" onclick="CadastroEspecialidadeController.addUser();" class="btn btn-primary" data-toggle="modal" data-target="#myModal">
+				Add Especialidade
 			</button>
 			<div id="alertMsgIdTable" class=" mt15 alert fade in oculta ">
               	<a onclick="$('#alertMsgIdTable').addClass('oculta');" class="close">&times;</a>
@@ -36,13 +35,12 @@
 		<div class="modal scroll" id="myModal">
 		</div>
 		<div class="row">
-			<table id="tableBarco" class="display">
+			<table id="tableEspecialidade" class="display">
 				<thead>
 			    <tr>
 			        <th>ID</th>
 			        <th>Nome</th>
-			        <th>Nome</th>
-			        <th>Horas previstas</th>
+			        <th>Constante Campo</th>
 			        <th>Status</th>
 			        <th>A&ccedil;&atilde;o</th>
 			    </tr>
@@ -51,12 +49,10 @@
 			</table>
 	    </div>
 	</div>
-	<script src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.js"></script>
-	<script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/js/bootstrap-select.min.js"></script>
-	<script src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.js"></script>
 	<script src="../externo/serializejson/serializejson.js"></script>
-	<script src="../js/util/selectUtil.js"></script>
-	<script src="../js/cadastroBarco/cadastroBarcoTemplate.js"></script>
-	<script src="../js/cadastroBarco/cadastroBarcoController.js"></script>
+	<script src="../externo/dual-list/jquery.bootstrap-duallistbox.js"></script>
+	<script src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.js"></script>
+	<script src="../js/cadastroEspecialidade/cadastroEspecialidadeTemplate.js"></script>
+	<script src="../js/cadastroEspecialidade/cadastroEspecialidadeController.js"></script>
 </body>
 </html>

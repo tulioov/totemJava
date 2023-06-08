@@ -25,8 +25,9 @@ CREATE TABLE IF NOT EXISTS  atividade (
 	constante_campo VARCHAR(100) NOT NULL
 );
 */
+/*
 insert into fase  (CONSTANTE_CAMPO,NOME)
-select  'FASE_0', 'Fase 0'  from FASE 
+select  'FASE_0', ' '  from FASE 
 where not exists(select * from fase where CONSTANTE_CAMPO='FASE_0');
 insert into fase  (CONSTANTE_CAMPO,NOME)
 select  'FASE_1', 'Fase 1'  from FASE 
@@ -49,7 +50,7 @@ where not exists(select * from fase where CONSTANTE_CAMPO='FASE_6');
 insert into fase  (CONSTANTE_CAMPO,NOME)
 select  'FASE_7', 'Fase 7'  from FASE 
 where not exists(select * from fase where CONSTANTE_CAMPO='FASE_7');
-
+*/
 
 /*
 insert into status_monitoracao  (CONSTANTE_CAMPO,NOME)

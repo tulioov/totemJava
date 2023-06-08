@@ -30,7 +30,7 @@ public class AtividadeService {
 		if (!usuarioService.isAdm(emailUsuario)) {
 			throw new CustomErrorException(HttpStatus.UNAUTHORIZED, ERRO_PERMISSAO);
 		}
-		return atividadeRepository.findAll();
+		return atividadeRepository.findByUsuarioDeleteIsNull();
 	}
 
 	public Atividade findById(Long id, String emailUsuario) {
