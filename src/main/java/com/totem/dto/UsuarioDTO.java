@@ -13,6 +13,7 @@ public class UsuarioDTO {
 	private String matricula;
 	private String codRfid;
 	private Boolean isAdmin;
+	private Boolean isLider;
 	private List<Long> faseList;
 	
 	public String getEmail() {
@@ -66,6 +67,12 @@ public class UsuarioDTO {
 	}
 	public Boolean getIsAdmin() {
 		return isAdmin;
+	}
+	public Boolean getIsLider() {
+		return isLider;
+	}
+	public void setIsLider(Boolean isLider) {
+		this.isLider = isLider;
 	}
 	public void setIsAdmin(Boolean isAdmin) {
 		this.isAdmin = isAdmin;

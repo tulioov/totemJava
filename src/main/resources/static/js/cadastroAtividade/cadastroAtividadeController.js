@@ -137,6 +137,7 @@ const CadastroAtividadeController = {
 			$('#campoId').val(atividade.id);
 			$('#codigoId').val(atividade.codigo);
 			$('#nomeId').val(atividade.nome);
+			$('#descricaoId').val(atividade.descricao);
 			$('#constanteCampoId').val(atividade.constanteCampo);
 			$('#tempoEstimadoId').val(atividade.tempoEstimado);
 			$('#tempoRealId').val(atividade.tempoReal);

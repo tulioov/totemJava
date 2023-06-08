@@ -4,7 +4,7 @@ const ControlTotensTemplate = {
 		
 	carregarPainel(barco){
 		return`
-				<div class="col-md-4 ">
+				<div class="col-md-4 mt15">
 					<div class="cardOkean" style="width: 30rem;">
 			  			<div class="card-body">
 				    		<h5 class="card-title">${barco.nome}</h5>

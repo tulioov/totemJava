@@ -9,15 +9,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
-import com.totem.dto.LocalDTO;
+import com.totem.dto.EspecialidadeDTO;
 import com.totem.entity.Atividade;
+import com.totem.entity.Especialidade;
 import com.totem.entity.Fase;
-import com.totem.entity.Local;
 import com.totem.exception.CustomErrorException;
-import com.totem.repository.LocalRepository;
+import com.totem.repository.EspecialidadeRepository;
 
 @Service
-public class LocalService {
+public class EspecialidadeService {
 
 	@Autowired
 	UsuarioService usuarioService;
@@ -29,67 +29,63 @@ public class LocalService {
 	private FaseService faseService;
 	
 	@Autowired
-	private LocalRepository localRepository;
+	private EspecialidadeRepository especialidadeRepository;
 	
 	private static final String ERRO_PERMISSAO = "Usuário sem permissão";
 
-	public List<Local> listar(String emailUsuario) {
+	public List<Especialidade> listar(String emailUsuario) {
 
 		if (!usuarioService.isAdm(emailUsuario)) {
 			throw new CustomErrorException(HttpStatus.UNAUTHORIZED, ERRO_PERMISSAO);
 		}
 
-		return localRepository.findAll();
+		return especialidadeRepository.findAll();
 	}
 
-	public Local findById(Long id, String emailUsuario) {
+	public Especialidade findById(Long id, String emailUsuario) {
 		if (!usuarioService.isAdm(emailUsuario)) {
 			throw new CustomErrorException(HttpStatus.UNAUTHORIZED, ERRO_PERMISSAO);
 		}
-		return localRepository.findById(id).get();
+		return especialidadeRepository.findById(id).get();
 	}
 
-	public Local salvar(LocalDTO localDTO, String emailUsuario) {
+	public Especialidade salvar(EspecialidadeDTO especialidadeDTO, String emailUsuario) {
 
 		if (!usuarioService.isAdm(emailUsuario)) {
 			throw new CustomErrorException(HttpStatus.UNAUTHORIZED, ERRO_PERMISSAO);
 		}
 
 		List<Atividade> atividadeList = new ArrayList<>();
-		Local local = new Local();
+		Especialidade especialidade = new Especialidade();
 
-		if (localDTO.getAtividadeList() != null) {
+		if (especialidadeDTO.getAtividadeList() != null) {
 
-			for (Long codAtividade : localDTO.getAtividadeList()) {
+			for (Long codAtividade : especialidadeDTO.getAtividadeList()) {
 				atividadeList.add(atividadeService.findById(codAtividade, emailUsuario));
 			}
 
 		}
 
-		BeanUtils.copyProperties(localDTO, local);
-		local.setAtividadeList(atividadeList);
-		localRepository.save(local);
-		return local;
+		BeanUtils.copyProperties(especialidadeDTO, especialidade);
+		especialidade.setAtividadeList(atividadeList);
+		especialidadeRepository.save(especialidade);
+		return especialidade;
 	}
-	public Local delete(Long id, String emailUsuario) {
+	public Especialidade delete(Long id, String emailUsuario) {
 
 		if (!usuarioService.isAdm(emailUsuario)) {
 			throw new CustomErrorException(HttpStatus.UNAUTHORIZED, ERRO_PERMISSAO);
 		}
 
-		Local local = localRepository.findById(id).get();
-		local.setUsuarioDelete(emailUsuario);
-		local.setDtDelete(new Date());
-		localRepository.save(local);
-		return local;
+		Especialidade especialidade = especialidadeRepository.findById(id).get();
+		especialidade.setUsuarioDelete(emailUsuario);
+		especialidade.setDtDelete(new Date());
+		especialidadeRepository.save(especialidade);
+		return especialidade;
 	}
 	
-	public List<Local> listarLocalByFaseId(String emailUsuario, Long id) {
-		Fase fase = faseService.findById(id);
-		return fase.getLocalList();
-	}
 
-	public void salvar(Local local, String emailUsuario) {
-		localRepository.save(local);
+	public void salvar(Especialidade especialidade, String emailUsuario) {
+		especialidadeRepository.save(especialidade);
 	}
 }

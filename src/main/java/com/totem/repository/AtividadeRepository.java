@@ -11,4 +11,8 @@ import com.totem.entity.Atividade;
 public interface AtividadeRepository extends CrudRepository<Atividade, Long> {
 
 	List<Atividade> findAll();
+	
+	List<Atividade> findByUsuarioDeleteIsNull();
 }
+
+

@@ -13,8 +13,10 @@ import org.springframework.transaction.annotation.Transactional;
 import com.totem.dto.BarcoDTO;
 import com.totem.dto.MonitorPausa;
 import com.totem.entity.Barco;
+import com.totem.entity.BarcoTemplate;
 import com.totem.entity.Feriado;
 import com.totem.entity.Monitoracao;
+import com.totem.entity.Usuario;
 import com.totem.enums.EnumStatusUsuario;
 import com.totem.exception.CustomErrorException;
 import com.totem.repository.BarcoRepository;
@@ -28,6 +30,9 @@ public class BarcoService {
 	
 	@Autowired
 	MonitoracaoService monitoracaoService;
+	
+	@Autowired
+	BarcoTemplateService barcoTemplateService;
 	
 	@Autowired
 	private FeriadoService feriadoService;
@@ -46,18 +51,31 @@ public class BarcoService {
 		return barcoRepository.findByDtDeleteIsNull();
 	}
 	
-	public Object listar(String emailUsuario, String nfc) {
+	public Object listar(String emailUsuario, String id, String acao) {
 		
 		
-		if(usuarioService.findBycodRfid(nfc) == null) {
+		if(usuarioService.findBycodRfid(id) == null && acao.equals("nfc")) {
+			throw new CustomErrorException(HttpStatus.BAD_REQUEST, "Usuário não encontrado. Favor atualizar a tela ou chamar o suporte.");
+		}
+		
+		if(usuarioService.findById(Long.valueOf(id)) == null) {
 			throw new CustomErrorException(HttpStatus.BAD_REQUEST, "Usuário não encontrado. Favor atualizar a tela ou chamar o suporte.");
 		}
 		
 		Monitoracao monitoracao = null;
+		Usuario usuario = null;
+				
+		if(acao.equals("nfc")) {
+			usuario = usuarioService.buscarUsuarioPorNFC(id);
+		}
 		
-		monitoracao = monitoracaoService.getMonitoracaoTrabalhandoOuPausa(nfc,EnumStatusUsuario.TRABALHANDO.toString());
+		if(acao.equals("idUsuario")) {
+			usuario = usuarioService.findById(Long.valueOf(id));
+		}
+		
+		monitoracao = monitoracaoService.getMonitoracaoTrabalhandoOuPausa(usuario,EnumStatusUsuario.TRABALHANDO.toString());
 		if(monitoracao == null) {
-			monitoracao = monitoracaoService.getMonitoracaoTrabalhandoOuPausa(nfc,EnumStatusUsuario.PAUSA.toString());
+			monitoracao = monitoracaoService.getMonitoracaoTrabalhandoOuPausa(usuario,EnumStatusUsuario.PAUSA.toString());
 		}
 		
 		if(monitoracao != null){
@@ -93,6 +111,11 @@ public class BarcoService {
 			if(barcoOp.isPresent()) {
 				barco = barcoOp.get();
 			}
+		}
+		
+		if(barcoDTO.getBarcoTemplateId() != null) {
+			BarcoTemplate barcoTemplate = barcoTemplateService.findById(barcoDTO.getBarcoTemplateId());
+			barco.setBarcoTemplate(barcoTemplate);
 		}
 		
 		if(barco.getMonitoracao() != null) {

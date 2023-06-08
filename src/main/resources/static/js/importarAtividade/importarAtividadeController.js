@@ -1,8 +1,42 @@
 
 const ImportAtividadeController = {
 		
-	salvar(){
-		alert("Desenvolvimento em andamento pelo suporte de TI");
+	salvar() {
+		let objects = $('#tableAtividade').find('tr').find('td.uppercase');
+		let listObjetos = [];
+
+		//		$(object).each(function(index, data) {
+		let index = 0
+		for ( ;index<objects.length ; ) {
+			let Atividade = {};
+			Atividade.codigo = parseInt(objects[index].innerHTML);
+			Atividade.nome = objects[index + 1].innerHTML;
+			Atividade.constanteCampo = objects[index + 2].innerHTML;
+			Atividade.tempoEstimado = parseInt(objects[index + 3].innerHTML);
+			index = index + 4;
+			listObjetos.push(Atividade);
+		}
+		
+		let formControl = new Object();
+        formControl.lstAtividade = listObjetos;
+        formControl.tipoObject = "atividade";
+		let myJsonData = JSON.stringify(formControl);
+		
+		$.ajax({
+			headers: {
+	            'Authorization': email,
+	            'Content-Type':'application/json'
+	        },
+	        type: "POST",
+	        url: "/import/planilha",
+	        dataType: "json",
+	        cache: false,
+	        data : myJsonData,
+	        success: function(retorno) {
+	        },
+	        error: function (data) {   
+	        },
+	    });
 	},
 		
 	downloadTemplateExcel(){

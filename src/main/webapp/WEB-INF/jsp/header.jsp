@@ -90,6 +90,8 @@
 		                <div class='dashboard-nav-dropdown-menu'>
 							<a href="/cadastroAtividade" class="dashboard-nav-dropdown-item">Atividade</a>
 							<a href="/cadastroLocal" class="dashboard-nav-dropdown-item">Local</a>
+							<a href="/cadastroBarcoTemplate" class="dashboard-nav-dropdown-item">Barco Template</a>
+							<a href="/cadastroEspecialidade" class="dashboard-nav-dropdown-item">Especialidade</a>
 						</div>
 		            </div>
 		            

@@ -1,6 +1,6 @@
 const SelectUtil = {
 		
-	carregarSelect(url,selectId){
+	carregarSelect(url,selectId,selecionadoId){
 		
 		$.ajax({
 			headers: {
@@ -12,9 +12,17 @@ const SelectUtil = {
 	        url: url,
 	        success: function(retorno) {
 	        	$(retorno.response).each(function(index, data) {
-	        		$('#'+selectId).append('<option value='+data.id+' >'+data.nome+'</option>');
+	        		let srcImageOption = '';
+	        		if(data.imagem!=null){
+	        			srcImageOption = 'srcImage="'+data.imagem+'"';
+	        		}
+	        		$('#'+selectId).append('<option value='+data.id+' '+srcImageOption+' >'+data.nome+'</option>');
 	        	});
 	        	$('.selectpicker').selectpicker('refresh');
+	        	if(selecionadoId != undefined){
+	        		$('#'+selectId).val(selecionadoId).change().selectpicker('refresh');
+	        	}
+	        	
 	        }
 	    });
 	},

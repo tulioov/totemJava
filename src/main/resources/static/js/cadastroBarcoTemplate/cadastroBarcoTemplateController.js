@@ -1,15 +1,23 @@
 
-const CadastroUsuarioController = {
+const CadastroBarcoTemplateController = {
+		
+	tempoEspera(divId){
+		setTimeout(function () {
+			$('#'+divId).hide(); 
+		}, 1500); 
+	},
 		
 	erro(data, alertComponent){
 		$("#myModal").scrollTop(0);
     	$("#"+alertComponent).find('div').html("");
     	if(data.responseJSON.statusCode === 404){
     		$("#"+alertComponent).removeClass("oculta").addClass("alert-danger").find('div').append(data.responseJSON.response+"<br>");
+    		CadastroBarcoTemplateController.tempoEspera(alertComponent);
     		return;
     	}
     	if(data.responseJSON.statusCode === 401){
     		$("#"+alertComponent).removeClass("oculta").addClass("alert-danger").find('div').append(data.responseJSON.response.message+"<br>");
+    		CadastroBarcoTemplateController.tempoEspera(alertComponent);
     		return;
     	}
     	if(data.responseJSON.statusCode === 500){
@@ -23,10 +31,11 @@ const CadastroUsuarioController = {
     		}
     		$("#"+property+"Id").addClass("errorInput");
     		$("#"+alertComponent).removeClass("oculta").addClass("alert-danger").find('div').append(retorno[property]+"<br>");
+    		CadastroBarcoTemplateController.tempoEspera(alertComponent);
 		}
 	},
-		
-	carregarDualList(faseList){
+	
+	carregarDualList(atividadeList){
 		$.ajax({
 			headers: {
 	            'Authorization': email,
@@ -34,11 +43,11 @@ const CadastroUsuarioController = {
 	        },
 	        type: "GET",
 	        contentType: "application/json",
-	        url: "/fase/listar",
+	        url: "/atividade/listar",
 	        success: function(retorno) {
 	        	$(retorno.response).each(function(index, data) {
-	        		if (faseList != undefined){
-        				if(faseList.some(fase => fase.id === data.id)){
+	        		if (atividadeList != undefined){
+        				if(atividadeList.some(atividade => atividade.id === data.id)){
 	        				$("#duallistboxId").append(`<option value="${data.id}" selected="selected" >${data.nome}</option>`);
         				}else{
         					$("#duallistboxId").append(`<option value="${data.id}">${data.nome}</option>`);
@@ -57,11 +66,8 @@ const CadastroUsuarioController = {
 		
 		let formControl = new Object();
 		formControl  = $('#formId').serializeJSON();
-		formControl.faseList = $('#duallistboxId').val();
-		formControl.isAdmin = $('#isAdminId').prop('checked');
-		formControl.isLider = $('#isLiderId').prop('checked');
-		formControl.email = $('#emailId').val();
-		
+		formControl.atividadeList = $('#duallistboxId').val();
+		formControl.imagem = $('#base64image').val();
 		let myJsonData = JSON.stringify(formControl);
 		
 		$.ajax({
@@ -70,7 +76,7 @@ const CadastroUsuarioController = {
 	            'Content-Type':'application/json'
 	        },
 	        type: "POST",
-	        url: "/usuario/salvar",
+	        url: "/barcoTemplate/salvar",
 	        dataType: "json",
 	        cache: false,
 	        data : myJsonData,
@@ -80,11 +86,11 @@ const CadastroUsuarioController = {
 	        	setTimeout(function(){
 	        		$("#alertMsgId").addClass("oculta").find('div').removeClass("alert-success").html("");
 	        		$('#myModal').modal('hide');
-	        		CadastroUsuarioController.listar();
+	        		CadastroBarcoTemplateController.listar();
         		},2000); 
 	        },
 	        error: function (data) {   
-	        	CadastroUsuarioController.erro(data,"alertMsgId");
+	        	CadastroBarcoTemplateController.erro(data,"alertMsgId");
 	        },
 	    });
 	},
@@ -97,12 +103,11 @@ const CadastroUsuarioController = {
 	        },
 	        type: "GET",
 	        contentType: "application/json",
-	        url: "/usuario/findById/"+id,
+	        url: "/barcoTemplate/findById/"+id,
 	        success: function(retorno) {
-	        	CadastroUsuarioController.addUser(retorno.response)
-	        }, 
-	        error: function (data) {   
-	        	CadastroUsuarioController.erro(data,"alertMsgId");
+	        	CadastroBarcoTemplateController.addUser(retorno.response)
+	        }, error: function (data) {   
+	        	CadastroBarcoTemplateController.erro(data,"alertMsgId");
 	        }
 	    });
 	},
@@ -115,24 +120,23 @@ const CadastroUsuarioController = {
 	        },
 	        type: "DELETE",
 	        contentType: "application/json",
-	        url: "/usuario/deletar/"+id,
+	        url: "/barcoTemplate/deletar/"+id,
 	        success: function(retorno) {
 	        	$("#myModal").scrollTop(0);
 	        	$("#alertMsgIdTable").removeClass("oculta").addClass("alert-success").find('div').append("Deletado com sucesso!");
 	        	setTimeout(function(){
 	        		$("#alertMsgIdTable").addClass("oculta").removeClass("alert-success").find('div').html("");
-	        		CadastroUsuarioController.listar();
+	        		CadastroBarcoTemplateController.listar();
         		},2000); 
-	        }, 
-	        error: function (data) {  
-	        	CadastroUsuarioController.erro(data,"alertMsgIdTable");
+	        }, error: function (data) {  
+	        	CadastroBarcoTemplateController.erro(data,"alertMsgIdTable");
 	        }
 	    });
 	},
 		
 	listar(){
-		$('#tableUsuario').dataTable().fnClearTable();
-	    $('#tableUsuario').dataTable().fnDestroy();
+		$('#tableBarcoTemplate').dataTable().fnClearTable();
+	    $('#tableBarcoTemplate').dataTable().fnDestroy();
 		$.ajax({
 			headers: {
 	            'Authorization': email,
@@ -140,17 +144,16 @@ const CadastroUsuarioController = {
 	        },
 	        type: "GET",
 	        contentType: "application/json",
-	        url: "/usuario/listar",
+	        url: "/barcoTemplate/listar",
 	        success: function(retorno) {
 	        	$(retorno.response).each(function(index, data) {
-	        		$("#tableUsuario").find('tbody').append(CadastroUsuarioTemplate.itemLinha(data));
+	        		$("#tableBarcoTemplate").find('tbody').append(CadastroBarcoTemplateTemplate.itemLinha(data));
         		});
-	        },
-	        error: function (data) {  
-	        	CadastroUsuarioController.erro(data,"alertMsgIdTable");
+	        },error: function (data) {   
+	        	CadastroBarcoTemplateController.erro(data,"alertMsgIdTable");
 	        },
 	        complete: function(data) { 
-	        	$('#tableUsuario').DataTable( {
+	        	$('#tableBarcoTemplate').DataTable( {
 	        	    language: {
 	        	        url: '//cdn.datatables.net/plug-ins/1.11.3/i18n/pt_br.json'
 	        	    }
@@ -159,43 +162,75 @@ const CadastroUsuarioController = {
 	    });
 	},
 	
-	addUser(usuario){
+	addUser(barcoTemplate){
 		
-		$('#myModal').html(CadastroUsuarioTemplate.addUser()).show();
-		$('#duallistboxId').bootstrapDualListbox({
+		$('#myModal').html(CadastroBarcoTemplateTemplate.add()).show();
+		
+		$("#nomeId").keyup(function(){
+			const reg = /[^a-zA-Z0-9 ]+/g;
+			let texto = $("#nomeId").val().replace(reg,'');
+			$("#constanteCampoId").val(texto.replaceAll(' ','_'));
+		});
+		
+		$("#duallistboxId").bootstrapDualListbox({
 			nonSelectedListLabel: 'N\u00e3o Selecionadas',
 			selectedListLabel: 'Selecionadas'
 		});
 		
-		if(usuario != undefined){
-			$('#campoId').val(usuario.id);
-			$('#nomeId').val(usuario.nome);
-			$('#especialidadeId').val(usuario.especialidade);
-			$('#matriculaId').val(usuario.matricula);
-			$('#emailId').val(usuario.email);
-			$('#codRfidId').val(usuario.codRfid);
-			$('#isAdminId').prop('checked', usuario.isAdmin);
-			$('#isLiderId').prop('checked', usuario.isLider);
-			
-			let status = usuario.status;
-			if(usuario.status == null){
-				usuario.status = "ativo";
-			}
-			if(usuario.status == 'FINALIZADO'){
-				usuario.status = "ativo";
-			}
-			$('#statusId').html(usuario.status);
-			$('#statusId').attr("class",usuario.status);
-			CadastroUsuarioController.carregarDualList(usuario.faseList);
+		CadastroBarcoTemplateController.bs_input_file();
+		
+		if(barcoTemplate != undefined){
+			$('#campoId').val(barcoTemplate.id);
+			$('#base64image').attr('src', barcoTemplate.imagem); 
+			$('#base64image').val(barcoTemplate.imagem);
+			$('#nomeId').val(barcoTemplate.nome);
+			$('#constanteCampoId').val(barcoTemplate.constanteCampo);
+			CadastroBarcoTemplateController.carregarDualList(barcoTemplate.atividadeList);
 			return;
 		}
-		CadastroUsuarioController.carregarDualList();
-	}
+		CadastroBarcoTemplateController.carregarDualList();
+	},
 	
+	upImg(){
+		let file = $('#imageId')[0].files[0];
+		var reader = new FileReader();
+			reader.readAsDataURL(file);
+			reader.onload = function () {
+			fileBase64 = reader.result;
+			$('#base64image').attr('src', fileBase64); 
+			$('#base64image').val(fileBase64);
+		};
+		   reader.onerror = function (error) {
+		   console.log('Error: ', error);
+	    };
+	},
+	
+	bs_input_file() {
+	    $(".input-file").before(
+	        function () {
+	            if (!$(this).prev().hasClass('input-ghost')) {
+	                var element = $("<input id='imageId' type='file' onchange='CadastroBarcoTemplateController.upImg();' class='input-ghost' style='visibility:hidden; height:0'>");
+	                element.attr("name", $(this).attr("name"));
+	                element.change(function () {
+	                    element.next(element).find('input').val((element.val()).split('\\').pop());
+	                });
+	                $(this).find("button.btn-choose").click(function () {
+	                    element.click();
+	                });
+	                $(this).find('input').css("cursor", "pointer");
+	                $(this).find('input').mousedown(function () {
+	                    $(this).parents('.input-file').prev().click();
+	                    return false;
+	                });
+	                return element;
+	            }
+	        }
+	    );
+	}
 };
 
 $( document ).ready(function() {
-	CadastroUsuarioController.listar();
+	CadastroBarcoTemplateController.listar();
 });
 
 

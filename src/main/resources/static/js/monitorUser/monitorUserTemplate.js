@@ -81,24 +81,32 @@ const MonitorUserTemplate = {
 		
 	modalEscolhaBarco(){
 		return`
-			<div>
-				<div class="panel-group" >
-				    <div class="panel panel-default">
-				        <div class="panel-heading">
-				            <h4 class="panel-title">
-								Escolha sua A\u00e7\u00e3o					            
-							</h4>
-				        </div>
-				        <div class="progress">
-							<div id="progressBarEscolhaBarcoId" class="progress-bar bg-success" role="progressbar" style="width: 100%" value=100 aria-valuemin="0" aria-valuemax="100">Tempo de espera</div>
-						</div>
-		            	<div class="card card-body">
-			            	<div id="imgEscolhaBarco" class="row">
+			<div class="modal-dialog modal-lg ">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h4 class="modal-title">Escolha sua A\u00e7\u00e3o</h4>
+					</div>
+					<div class="modal-body">
+						<form id="formId">
+							<div class="panel panel-default">
+								<div class="panel-heading">Cadastro de Usu\u00e1rio</div>
+								<div class="panel-body">
+									<div class="progress">
+										<div id="progressBarEscolhaBarcoId" class="progress-bar bg-success" role="progressbar" style="width: 100%" value=100 aria-valuemin="0" aria-valuemax="100">Tempo de espera</div>
+									</div>
+					            	<div class="card card-body">
+						            	<div id="imgEscolhaBarco" class="row">
+										</div>
+								    </div>
+								</div>
 							</div>
-					    </div>
-				    </div>
+						</form>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-danger" onClick="$('#myModal').hide();" data-dismiss="modal">Fechar</button>
+					</div>
 				</div>
-		    </div>
+			</div>
 		`
 	},
 	
@@ -196,6 +204,66 @@ const MonitorUserTemplate = {
 			    </div>
 			    <script src="../js/monitorUser/steps.js"></script>
 			`
+	},
+	
+	itemLinhaUsuario(data){
+		if(data.status == null){
+			data.status = "ativo";
+		}
+		if(data.status == 'FINALIZADO'){
+			data.status = "ativo";
+		}
+		return `
+			<tr>
+				<td>${data.id}</td>
+				<td>${data.nome}</td>
+				<td>${data.especialidade}</td>
+				<td>${data.nomeBarco}</td>
+				<td><span class="${data.status}">${data.status}</span></td>
+				<td>
+					<span onclick="MonitorUserController.abrirEscolhaBarco(${data.id},${data.codRfid});" class="glyphicon glyphicon-briefcase"></span>
+				</td>
+			</tr>
+		`;
+	},
+	
+	modalFuncionario(){
+		return `
+		<div class="modal-dialog modal-lg ">
+	        <div class="modal-content">
+	            <div class="modal-header">
+	                <h4 class="modal-title">Adicionar Usu\u00e1rio</h4>
+	            </div>
+	            <div class="modal-body">
+	                <form id="formId">
+		                <div class="panel panel-default">
+		                	<div class="panel-heading">Cadastro de Usu\u00e1rio</div>
+		                	<div class="panel-body">
+			                	<div class="row">
+									<table id="tableUsuario" class="display">
+										<thead>
+									    <tr>
+									        <th>ID</th>
+									        <th>Nome</th>
+									        <th>Especialidade</th>
+									        <th>Barco</th>
+									        <th>Status</th>
+									        <th>A&ccedil;&atilde;o</th>
+									    </tr>
+										</thead>
+										<tbody></tbody>
+									</table>
+							    </div>
+							</div>
+						</div>
+			        </form>
+	            </div>
+	            <div class="modal-footer">
+	                <button type="button" class="btn btn-danger" onClick="$('#myModal').hide();" data-dismiss="modal">Fechar</button>
+	            </div>
+	        </div>
+	    </div>
+		`;
 	},
 	
 };

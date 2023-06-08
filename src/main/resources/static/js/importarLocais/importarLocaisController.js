@@ -1,8 +1,41 @@
 
 const ImportLocaisController = {
 		
-	salvar(){
-		alert("Desenvolvimento em andamento pelo suporte de TI");
+	salvar() {
+		let objects = $('#tableLocais').find('tr').find('td.uppercase');
+		let listObjetos = [];
+
+		//		$(object).each(function(index, data) {
+		let index = 0
+		for ( ;index<objects.length ; ) {
+			let Local = {};
+			Local.codigo = parseInt(objects[index].innerHTML);
+			Local.nome = objects[index + 1].innerHTML;
+			Local.constanteCampo = objects[index + 2].innerHTML;
+			index = index + 3;
+			listObjetos.push(Local);
+		}
+		
+		let formControl = new Object();
+        formControl.lstLocal = listObjetos;
+        formControl.tipoObject = "local";
+		let myJsonData = JSON.stringify(formControl);
+		
+		$.ajax({
+			headers: {
+	            'Authorization': email,
+	            'Content-Type':'application/json'
+	        },
+	        type: "POST",
+	        url: "/import/planilha",
+	        dataType: "json",
+	        cache: false,
+	        data : myJsonData,
+	        success: function(retorno) {
+	        },
+	        error: function (data) {   
+	        },
+	    });
 	},
 		
 	downloadTemplateExcel(){

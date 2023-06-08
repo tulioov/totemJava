@@ -23,24 +23,20 @@ const CadastroBarcoTemplate = {
 									<img style='display:block; width:100px;height:100px;' 
 										id='base64image'
 									/>
-								    <div>Imagem: </div>
-									<div class="form-group">
-										<div class="input-group input-file" name="Fichier1">
-								    		<input  type="text" class="form-control" placeholder='Escolha uma imagem...' />			
-								            <span class="input-group-btn">
-								        		<button class="btn btn-default btn-choose" type="button">Escolha</button>
-								    		</span>
-										</div>
-									</div>
 								</div>
 			                	<div class="row">
-									<div class="col-md-4">
+									<div class="col-md-3">
 										<div>Nome: </div>
 										<input type="text" name="nome" class="form-control uppercase"  id="nomeId">
 									</div>
-									<div class="col-md-4">
+									<div class="col-md-3">
 										<div>Constante Campo: </div>
 										<input type="text" name="constanteCampo" oninput="this.value = this.value.replace(' ', '');" class="form-control uppercase" id="constanteCampoId">
+									</div>
+									<div class="col-md-4">
+										<div>Barco Template para Atividades: </div>
+										<select id="barcoTemplateSelect" name="barcoTemplateSelect" class="selectpicker"  data-live-search="true" title="Escolha uma opcao">
+										</select>
 									</div>
 								</div>
 								

@@ -31,3 +31,11 @@ build/
 
 ### VS Code ###
 .vscode/
+/.gitignore
+/.mvn/
+/README.md
+/mvnw
+/mvnw.cmd
+/okean.p12
+/pom.xml
+/src/

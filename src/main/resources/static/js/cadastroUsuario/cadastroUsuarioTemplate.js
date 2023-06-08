@@ -32,7 +32,7 @@ const CadastroUsuarioTemplate = {
 								<div class="row mt15">
 									<div class="col-md-4">
 										<div>Email: </div>
-										<input type="text" disabled name="email" class="form-control uppercase" id="emailId">
+										<input type="email" name="email" class="form-control uppercase" id="emailId">
 									</div>
 									<div class="col-md-4">
 										<div>Matricula: </div>
@@ -43,16 +43,25 @@ const CadastroUsuarioTemplate = {
 									</div>
 								</div>
 								<div class="row mt15">
-									<div class="col-md-6">
+									<div class="col-md-4">
 										<div>RFID: </div>
 										<input type="text" name="codRfid" class="form-control" id="codRfidId">
 									</div>
-									<div class="col-md-6">
+									<div class="col-md-4">
 										<div class="material-switch mt15">
 											<div>Admin: </div>
 											Nao
 		                            		<input id="isAdminId" name="isAdmin" type="checkbox"/>
 		                            		<label for="isAdminId" class="label-success mt15"></label>
+		                            		Sim
+		                        		</div>
+	                        		</div>
+	                        		<div class="col-md-4">
+										<div class="material-switch mt15">
+											<div>Lider: </div>
+											Nao
+		                            		<input id="isLiderId" name="isLider" type="checkbox"/>
+		                            		<label for="isLiderId" class="label-success mt15"></label>
 		                            		Sim
 		                        		</div>
 	                        		</div>

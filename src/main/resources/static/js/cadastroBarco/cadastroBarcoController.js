@@ -45,6 +45,7 @@ const CadastroBarcoController = {
 		formControl.dtInicioPrevisto = $("#dtInicioPrevistoId").val().split('-').reverse().join('/');
 		formControl.dtFimPrevisto = $("#dtFimPrevistoId").val().split('-').reverse().join('/');
 		formControl.hrsBarcoPrevista = $('#hrsBarcoPrevistaId').val()*60;
+		formControl.barcoTemplateId = $('#barcoTemplateSelect').val();
 		let myJsonData = JSON.stringify(formControl);
 		
 		$.ajax({
@@ -150,23 +151,25 @@ const CadastroBarcoController = {
 			$("#constanteCampoId").val(texto.replaceAll(' ','_'));
 		});
 		
-		$('[name=duallistbox]').bootstrapDualListbox({
-			nonSelectedListLabel: 'N\u00e3o Selecionadas',
-			selectedListLabel: 'Selecionadas'
-		});
-		
 		CadastroBarcoController.bs_input_file();
+		
+		$('#barcoTemplateSelect').on('change', function(){
+			let image = $("#barcoTemplateSelect").find(':selected').attr('srcImage');
+			$('#base64image').attr('src', image==null?"":image);
+		});
 		
 		if(barco != undefined){
 			$('#campoId').val(barco.id);
 			$('#nomeId').val(barco.nome);
 			$('#hrsBarcoPrevistaId').val(barco.hrsBarcoPrevista/60);
-			$('#dtInicioPrevistoId').val(barco.dtInicioPrevisto.split('/').reverse().join('-'));
-			$('#dtFimPrevistoId').val(barco.dtFimPrevisto.split('/').reverse().join('-'));
+			$('#dtInicioPrevistoId').val(barco.dtInicioPrevisto!=null?barco.dtInicioPrevisto.split('/').reverse().join('-'):'');
+			$('#dtFimPrevistoId').val(barco.dtFimPrevisto!=null?barco.dtFimPrevisto.split('/').reverse().join('-'):'');
 			$('#constanteCampoId').val(barco.constanteCampo);
-			$('#base64image').attr('src', barco.imagem); 
-			$('#base64image').val(barco.imagem);
+			SelectUtil.carregarSelect("barcoTemplate/listar","barcoTemplateSelect",barco.barcoTemplate==null?undefined:barco.barcoTemplate.id,barco.barcoTemplate==null?undefined:barco.barcoTemplate.imagem);
+			$('#base64image').attr('src', barco.barcoTemplate==null?undefined:barco.barcoTemplate.imagem);
+			return;
 		}
+		SelectUtil.carregarSelect("barcoTemplate/listar","barcoTemplateSelect",undefined);
 	},
 	
 	upImg(){

@@ -24,8 +24,6 @@ public class BarcoDTO {
 	@JsonFormat(pattern="dd/MM/yyyy")
 	private Date dtFimPrevisto;
 	
-	private String imagem;
-	
 	private Long hrsBarcoPrevista;
 	
 	@Size(min = 3 , max = 250, message = "Nome deve conter minimo de 3 caracter")
@@ -36,6 +34,17 @@ public class BarcoDTO {
 	private String constanteCampo;
 	
 	private Set<?> monitoracao;
+	
+	private Long barcoTemplateId;
+	
+
+	public Long getBarcoTemplateId() {
+		return barcoTemplateId;
+	}
+
+	public void setBarcoTemplateId(Long barcoTemplateId) {
+		this.barcoTemplateId = barcoTemplateId;
+	}
 
 	public Long getHrsBarcoPrevista() {
 		return hrsBarcoPrevista;
@@ -83,14 +92,6 @@ public class BarcoDTO {
 
 	public void setDtFimPrevisto(Date dtFimPrevisto) {
 		this.dtFimPrevisto = dtFimPrevisto;
-	}
-
-	public String getImagem() {
-		return imagem;
-	}
-
-	public void setImagem(String imagem) {
-		this.imagem = imagem;
 	}
 
 	public String getNome() {

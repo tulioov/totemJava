@@ -76,6 +76,20 @@ public class PaginasController {
 		return "cadastroAtividade";
 	}
 	
+	@GetMapping("/cadastroEspecialidade")
+	public String cadastroEspecialidade(Model model, @AuthenticationPrincipal OidcUser principal){
+		paginaService.control(principal, model);
+		model.addAttribute("titulo" , "Controle de Tontens");
+		return "cadastroEspecialidade";
+	}
+	
+	@GetMapping("/cadastroBarcoTemplate")
+	public String cadastroBarcoTemplate(Model model, @AuthenticationPrincipal OidcUser principal){
+		paginaService.control(principal, model);
+		model.addAttribute("titulo" , "Controle de Tontens");
+		return "cadastroBarcoTemplate";
+	}
+	
 	@GetMapping("/cadastroLocal")
 	public String cadastroAtividade(Model model, @AuthenticationPrincipal OidcUser principal){
 		paginaService.control(principal, model);
@@ -117,6 +131,7 @@ public class PaginasController {
 		model.addAttribute("titulo" , "Controle de Tontens");
 		return "importarAtividade";
 	}
+	
 	
 	@GetMapping("/relatorioUsuario")
 	public String relatorioUsuario(Model model, @AuthenticationPrincipal OidcUser principal){

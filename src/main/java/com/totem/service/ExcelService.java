@@ -76,15 +76,15 @@ public class ExcelService {
 			nome.setCellStyle(cellStyle);
 			nome.setCellValue(monitoracao.getUsuario().getNome());
 			
-			Cell atividade = row.createCell(1);
+			Cell atividade = row.createCell(2);
 			atividade.setCellStyle(cellStyle);
 			atividade.setCellValue(monitoracao.getAtividade().getNome());
 			
-			Cell tempoDecorrido = row.createCell(1);
+			Cell tempoDecorrido = row.createCell(3);
 			tempoDecorrido.setCellStyle(cellStyle);
 			tempoDecorrido.setCellValue(monitoracao.getTempoTrabalhoFimIni());
 			
-			Cell status = row.createCell(1);
+			Cell status = row.createCell(4);
 			status.setCellStyle(cellStyle);
 			status.setCellValue(monitoracao.getStatusMonitoracao().getNome());
 		}
