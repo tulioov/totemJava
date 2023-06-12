@@ -49,6 +49,7 @@ const CadastroUsuarioController = {
         		});
 	        },complete: function(data) { 
 	        	$("#duallistboxId").bootstrapDualListbox('refresh');
+	        	$('.selectpicker').selectpicker('refresh');
 	        }
 	    });
 	},
@@ -58,6 +59,7 @@ const CadastroUsuarioController = {
 		let formControl = new Object();
 		formControl  = $('#formId').serializeJSON();
 		formControl.faseList = $('#duallistboxId').val();
+		formControl.especialidadeList = $('#especialidadeSelect').val();
 		formControl.isAdmin = $('#isAdminId').prop('checked');
 		formControl.isLider = $('#isLiderId').prop('checked');
 		formControl.email = $('#emailId').val();
@@ -186,9 +188,11 @@ const CadastroUsuarioController = {
 			}
 			$('#statusId').html(usuario.status);
 			$('#statusId').attr("class",usuario.status);
+			SelectUtil.carregarSelectByList("especialidade/listar","especialidadeSelect",usuario.especialidadeList);
 			CadastroUsuarioController.carregarDualList(usuario.faseList);
 			return;
 		}
+		SelectUtil.carregarSelect("especialidade/listar","especialidadeSelect",undefined);
 		CadastroUsuarioController.carregarDualList();
 	}
 	

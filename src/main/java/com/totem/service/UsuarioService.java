@@ -3,8 +3,6 @@ package com.totem.service;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.validation.Valid;
-
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -12,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import com.totem.dto.UsuarioDTO;
 import com.totem.entity.Barco;
+import com.totem.entity.Especialidade;
 import com.totem.entity.Fase;
 import com.totem.entity.Monitoracao;
 import com.totem.entity.Usuario;
@@ -29,6 +28,9 @@ public class UsuarioService {
 
 	@Autowired
 	private FaseService faseService;
+	
+	@Autowired
+	private EspecialidadeService especialidadeService;
 
 	@Autowired
 	private MonitoracaoService monitoracaoService;
@@ -82,6 +84,7 @@ public class UsuarioService {
 		Usuario usuario = new Usuario();
 		BeanUtils.copyProperties(usuarioDTO, usuario);
 		addListFaseInUsuario(usuarioDTO, usuario);
+		addListEspecialidadeInUsuario(usuarioDTO, usuario);
 
 		try {
 			usuario = usuarioRepository.save(usuario);
@@ -125,6 +128,22 @@ public class UsuarioService {
 		}
 		usuario.setFaseList(faseLst);
 	}
+	
+	private void addListEspecialidadeInUsuario(UsuarioDTO usuarioDTO, Usuario usuario) {
+
+		if (usuarioDTO.getEspecialidadeList() == null || usuarioDTO.getEspecialidadeList().isEmpty()) {
+			return;
+		}
+
+		List<Especialidade> especialidadeLst = new ArrayList<Especialidade>();
+
+		for (Long cod : usuarioDTO.getEspecialidadeList()) {
+			especialidadeLst.add(especialidadeService.findById(cod));
+		}
+		usuario.setEspecialidadeList(especialidadeLst);
+	}
+	
+	
 
 	public Usuario delete(Long id, String emailUsuario) {
 

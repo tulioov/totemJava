@@ -25,8 +25,9 @@ const CadastroUsuarioTemplate = {
 										<input type="text" name="nome" class="form-control uppercase" id="nomeId">
 									</div>
 									<div class="col-md-4">
-										<div>Especialidade: </div>
-										<input type="text" name="especialidade" class="form-control uppercase" id="especialidadeId">
+										<div>Especialidade:: </div>
+										<select id="especialidadeSelect" name="especialidadeSelect" multiple class="selectpicker"  data-live-search="true" title="Escolha uma opcao">
+										</select>
 									</div>
 								</div>
 								<div class="row mt15">

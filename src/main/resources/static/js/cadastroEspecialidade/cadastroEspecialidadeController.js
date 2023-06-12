@@ -181,7 +181,6 @@ const CadastroEspecialidadeController = {
 		
 		if(especialidade != undefined){
 			$('#campoId').val(especialidade.id);
-			$('#codigoId').val(especialidade.codigo);
 			$('#nomeId').val(especialidade.nome);
 			$('#constanteCampoId').val(especialidade.constanteCampo);
 			CadastroEspecialidadeController.carregarDualList(especialidade.atividadeList);

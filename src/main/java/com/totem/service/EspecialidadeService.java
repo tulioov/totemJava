@@ -48,6 +48,10 @@ public class EspecialidadeService {
 		}
 		return especialidadeRepository.findById(id).get();
 	}
+	
+	public Especialidade findById(Long id) {
+		return especialidadeRepository.findById(id).get();
+	}
 
 	public Especialidade salvar(EspecialidadeDTO especialidadeDTO, String emailUsuario) {
 

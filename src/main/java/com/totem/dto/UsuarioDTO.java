@@ -15,6 +15,7 @@ public class UsuarioDTO {
 	private Boolean isAdmin;
 	private Boolean isLider;
 	private List<Long> faseList;
+	private List<Long> especialidadeList;
 	
 	public String getEmail() {
 		return email;
@@ -82,5 +83,11 @@ public class UsuarioDTO {
 	}
 	public void setFaseList(List<Long> faseList) {
 		this.faseList = faseList;
+	}
+	public List<Long> getEspecialidadeList() {
+		return especialidadeList;
+	}
+	public void setEspecialidadeList(List<Long> especialidadeList) {
+		this.especialidadeList = especialidadeList;
 	}
 }

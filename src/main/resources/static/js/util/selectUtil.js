@@ -27,6 +27,42 @@ const SelectUtil = {
 	    });
 	},
 	
+	carregarSelectByList(url,selectId,selecionadoIdLst){
+		
+		$.ajax({
+			headers: {
+	            'Authorization': email,
+	            'Content-Type':'application/json'
+	        },
+	        type: "GET",
+	        contentType: "application/json",
+	        url: url,
+	        success: function(retorno) {
+	        	$(retorno.response).each(function(index, data) {
+	        		let srcImageOption = '';
+	        		if(data.imagem!=null){
+	        			srcImageOption = 'srcImage="'+data.imagem+'"';
+	        		}
+	        		$('#'+selectId).append('<option value='+data.id+' '+srcImageOption+' >'+data.nome+'</option>');
+	        	});
+	        	$('.selectpicker').selectpicker('refresh');
+	        	
+	        	
+	        	$(selecionadoIdLst).each(function(index, selecionadoId) {
+	        		if(selecionadoId != undefined){
+		        		$('#'+selectId).val(selecionadoId.id).change().selectpicker('refresh');
+		        	}
+	        	});
+	        	
+	        	
+	        	
+	        	
+	        	
+	        	
+	        }
+	    });
+	},
+	
 	carregarSelectChange(url, selectId, selectChangeId){
 		$('#'+selectChangeId).on('change', function() {
 			$.ajax({

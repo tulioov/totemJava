@@ -31,11 +31,6 @@ public class Usuario {
 	@Size(min = 3 , max = 250, message = "Nome deve conter minimo de 3 caracter")
 	private String nome;
 	
-	@Column(name = "ESPECIALIDADE")
-	@NotEmpty(message = "Usuario deve conter uma especialidade.")	
-	@Size(min = 3 , max = 250, message = "Especialidade deve conter minimo de 3 caracter")
-	private String especialidade;
-	
 	@Column(name = "EMAIL")
 	private String email;
 	
@@ -65,9 +60,21 @@ public class Usuario {
 	@ManyToMany
 	private List<Fase> faseList;
 	
+	@JoinColumn(name = "ID_USUARIO")
+	@ManyToMany
+	private List<Especialidade> especialidadeList;
+	
 	@Transient
 	private String nomeBarco;
 	
+	public List<Especialidade> getEspecialidadeList() {
+		return especialidadeList;
+	}
+
+	public void setEspecialidadeList(List<Especialidade> especialidadeList) {
+		this.especialidadeList = especialidadeList;
+	}
+
 	public String getNomeBarco() {
 		return nomeBarco;
 	}
@@ -122,14 +129,6 @@ public class Usuario {
 
 	public void setNome(String nome) {
 		this.nome = nome;
-	}
-
-	public String getEspecialidade() {
-		return especialidade;
-	}
-
-	public void setEspecialidade(String especialidade) {
-		this.especialidade = especialidade;
 	}
 
 	public String getEmail() {

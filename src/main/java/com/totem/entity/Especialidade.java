@@ -30,9 +30,6 @@ public class Especialidade {
 	@Size(min = 3 , max = 250, message = "Nome deve conter minimo de 3 caracter")
 	private String nome;
 	
-	@Column(name = "CODIGO", unique=true)
-	private String codigo;
-	
 	@Column(name = "CONSTANTE_CAMPO", unique=true)
 	@NotEmpty(message = "Constante Campo deve conter uma constanteCampo.")	
 	@Size(min = 3 , max = 250, message = "Contante Campo deve conter minimo de 3 caracter")
@@ -97,12 +94,5 @@ public class Especialidade {
 		this.dtDelete = dtDelete;
 	}
 
-	public String getCodigo() {
-		return codigo;
-	}
-
-	public void setCodigo(String codigo) {
-		this.codigo = codigo;
-	}
 	
 }
