@@ -37,6 +37,9 @@ public class UsuarioService {
 
 	@Autowired
 	private BarcoService barcoService;
+	
+	@Autowired
+	private AtividadeService atividadeService;
 
 	public List<Usuario> listar(String emailUsuario) {
 
@@ -166,5 +169,6 @@ public class UsuarioService {
 	public Usuario buscarUsuarioPorNFC(String nfc) {
 		return usuarioRepository.findByCodRfid(nfc);
 	}
+
 
 }

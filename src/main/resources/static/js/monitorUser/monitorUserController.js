@@ -162,7 +162,7 @@ const MonitorUserController = {
 	        		$('#imgEscolhaBarco').append(
         				`
         				<div class="col-md-4 mt15">
-        					<span class="btnBarco" onclick="MonitorUserController.abrirEscolhaFase(${barco.id},${id});">${barco.nome}</span>
+        					<span class="btnBarco" onclick="MonitorUserController.abrirEscolhaFase(${barco.id},${barco.barcoTemplate!=null?barco.barcoTemplate.id:null},${id});">${barco.nome}</span>
         				</div>`
     				);
         		}
@@ -259,7 +259,7 @@ const MonitorUserController = {
 		
 	},*/
 	
-	carregarAtividadesUsuario(idUsuario){
+	carregarLocal(idUsuario,idBarcoTemplate){
 		
 		let urlService = "/usuario/findByNFC/"+$('#nfcIdCache').val();
 		
@@ -279,26 +279,44 @@ const MonitorUserController = {
 	        	$(retorno.response).each(function(index, usuario) {
 	        		$(usuario.faseList).each(function(index, fase) {
 	        			$(fase.localList).each(function(index, local) {
-	        				let atividadeHTML = MonitorUserTemplate.contentLocal(index,local);
-	        				$('#contentLocalId'+fase.id).html(atividadeHTML);
+	        				let localBtn = MonitorUserTemplate.contentLocal(index,local,idUsuario,idBarcoTemplate);
+	        				$('#contentLocalId'+fase.id).html(localBtn);
 	        			});
 	        		});
         		});
 	        },
 	        error: function (data) {  
 	        	MonitorUserController.erro(data,'alertMsgIdTable');
-	        },
-	        complete: function(data) { 
-	        	$('#tableAtividade').DataTable( {
-	        	    language: {
-	        	        url: '//cdn.datatables.net/plug-ins/1.11.3/i18n/pt_br.json'
-	        	    }
-	        	});
 	        }
 	    });
 	},
 	
-	abrirEscolhaFase(idBarco, idUsuario){
+	htmlAtividade(object, idLocal,idUsuario,idBarcoTemplate){
+		
+		console.log(object);
+		
+		$.ajax({
+			headers: {
+	            'Authorization': email,
+	            'Content-Type':'application/json'
+	        },
+	        type: "GET",
+	        contentType: "application/json",
+	        url: "/atividade/listarAtividadeByLocalIdEspecIdBarcoTemplateId/"+idLocal+"/"+idUsuario+"/"+idBarcoTemplate,
+	        success: function(retorno) {
+	        	$(retorno.response).each(function(index, atividade) {
+	        		let atividadeBtn = MonitorUserTemplate.htmlAtividade(idLocal, atividade);
+	        		$('#'+object).find('.form-group').append(atividadeBtn);
+        		});
+	        },
+	        error: function (data) {  
+	        	MonitorUserController.erro(data,'alertMsgIdTable');
+	        }
+	    });
+		
+	},
+	
+	abrirEscolhaFase(idBarco,idBarcoTemplate, idUsuario){
 		
 		$('#myModal').html("");
 		$('#myModal').html(MonitorUserTemplate.abrirEscolhaFase(idBarco));
@@ -316,7 +334,7 @@ const MonitorUserController = {
 	        		$('#rowFasesId').append(MonitorUserTemplate.rowFases(index,fase));
 	        		$('#contentFasesId').append(MonitorUserTemplate.contentFases(index,fase));
         		});
-	        	MonitorUserController.carregarAtividadesUsuario(idUsuario);
+	        	MonitorUserController.carregarLocal(idUsuario,idBarcoTemplate);
 	        },
 	        error: function (data) {  
 	        	MonitorUserController.erro(data,'alertMsgIdTable');

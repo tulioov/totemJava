@@ -135,26 +135,21 @@ const MonitorUserTemplate = {
 			`
 	},
 	
-	htmlAtividade(local){
-		let html = "";
-		$(local.atividadeList).each(function(index, atividade) {
-			html += `<button type="button" class="btn btn-success col-md-12 mt15" onclick="MonitorUserController.salvarAtividadeEscolhida(${atividade.id},${local.id})">${atividade.nome}</button>`
-		});
+	htmlAtividade(idLocal, atividade){
+		let html = `<button type="button" class="btn btn-success col-md-12 mt15" onclick="MonitorUserController.salvarAtividadeEscolhida(${atividade.id},${idLocal})">${atividade.nome}</button>`
 		return html;
 	},
 	
-	contentLocal(index,local){
+	contentLocal(index,local,idUsuario,idBarcoTemplate){
 		
 		return` 
 			<div class="list-content">
-		        <a class="btn btn-info" href="#cmb${index}${local.id}"  data-toggle="collapse" aria-expanded="false" aria-controls="cmb${index}${local.id}">${local.nome}<i class="fa fa-chevron-down"></i></a>
+		        <a class="btn btn-info" onclick="MonitorUserController.htmlAtividade('cmb${index}${local.id}',${local.id},${idUsuario},${idBarcoTemplate})" href="#cmb${index}${local.id}"  data-toggle="collapse" aria-expanded="false" aria-controls="cmb${index}${local.id}">${local.nome}<i class="fa fa-chevron-down"></i></a>
 		        <div class="collapse" id="cmb${index}${local.id}">
 		            <div class="list-box">
 		                <div class="row">
 		                    <div class="col-md-12">
-		                        <div class="form-group">`+
-		                        	MonitorUserTemplate.htmlAtividade(local);
-		                        +`</div>
+		                        <div class="form-group"></div>
 		                    </div>
 		                </div>
 		            </div>
@@ -213,11 +208,22 @@ const MonitorUserTemplate = {
 		if(data.status == 'FINALIZADO'){
 			data.status = "ativo";
 		}
+		
+		let especialidadeNome = "Em preenchimento";
+		
+		$(data.especialidadeList).each(function(index, especialidade) {
+			especialidadeNome = "";
+			if(especialidade != undefined){
+				especialidadeNome += especialidade.nome+" ";
+			}
+			
+		});
+		
 		return `
 			<tr>
 				<td>${data.id}</td>
 				<td>${data.nome}</td>
-				<td>${data.especialidade}</td>
+				<td>${especialidadeNome}</td>
 				<td>${data.nomeBarco}</td>
 				<td><span class="${data.status}">${data.status}</span></td>
 				<td>

@@ -56,5 +56,14 @@ public class AtividadeController {
 			@RequestHeader(name = "Authorization", required = true) String emailUsuario, @PathVariable("id") Long id) {
 		return ResponseEntityUtil.defaultResponse(atividadeService.delete(id, emailUsuario));
 	}
+	
+	@GetMapping("/listarAtividadeByLocalIdEspecIdBarcoTemplateId/{localId}/{idUsuario}/{barcotemplateId}")
+	public @ResponseBody ResponseEntity<RetornoDTO> listarAtividadeByLocalIdEspecIdBarcoTemplateId(
+			@RequestHeader(name = "Authorization", required = true) String emailUsuario, 
+			@PathVariable("localId") Long localId,
+			@PathVariable("idUsuario") Long idUsuario,
+			@PathVariable("barcotemplateId") Long barcotemplateId) {
+		return ResponseEntityUtil.defaultResponse(atividadeService.listarAtividadeByLocalIdEspecIdBarcoTemplateId(emailUsuario,localId,idUsuario,barcotemplateId));
+	}
 
 }

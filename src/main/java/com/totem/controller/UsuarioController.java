@@ -55,5 +55,5 @@ public class UsuarioController {
 			@RequestHeader(name = "Authorization", required = true) String emailUsuario, @PathVariable("id") Long id) {
 		return ResponseEntityUtil.defaultResponse(usuarioService.delete(id, emailUsuario));
 	}
-
+	
 }

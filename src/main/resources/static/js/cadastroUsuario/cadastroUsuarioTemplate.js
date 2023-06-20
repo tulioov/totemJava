@@ -88,6 +88,7 @@ const CadastroUsuarioTemplate = {
 	},
 	
 	itemLinha(data){
+		
 		let status = data.status;
 		if(data.status == null){
 			data.status = "ativo";
@@ -95,11 +96,22 @@ const CadastroUsuarioTemplate = {
 		if(data.status == 'FINALIZADO'){
 			data.status = "ativo";
 		}
+		
+		let especialidadeNome = "Em preenchimento";
+		
+		$(data.especialidadeList).each(function(index, especialidade) {
+			especialidadeNome = "";
+			if(especialidade != undefined){
+				especialidadeNome += especialidade.nome+" ";
+			}
+			
+		});
+		
 		return `
 			<tr>
 				<td>${data.id}</td>
 				<td>${data.nome}</td>
-				<td>${data.especialidade}</td>
+				<td>${especialidadeNome}</td>
 				<td>${data.nomeBarco}</td>
 				<td><span class="${data.status}">${data.status}</span></td>
 				<td>

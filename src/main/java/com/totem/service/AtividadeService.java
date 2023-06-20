@@ -1,5 +1,6 @@
 package com.totem.service;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -8,20 +9,23 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import com.totem.entity.Atividade;
+import com.totem.entity.Especialidade;
 import com.totem.entity.Local;
+import com.totem.entity.Usuario;
 import com.totem.exception.CustomErrorException;
 import com.totem.repository.AtividadeRepository;
 
 @Service
 public class AtividadeService {
-	
-	private static final String ERRO_PERMISSAO = "Usuário sem permissão";  
+
+	private static final String ERRO_PERMISSAO = "Usuário sem permissão";
 
 	@Autowired
 	UsuarioService usuarioService;
-	
+
 	@Autowired
 	LocalService localService;
+
 
 	@Autowired
 	private AtividadeRepository atividadeRepository;
@@ -34,9 +38,9 @@ public class AtividadeService {
 	}
 
 	public Atividade findById(Long id, String emailUsuario) {
-//		if (!usuarioService.isAdm(emailUsuario)) {
-//			throw new CustomErrorException(HttpStatus.UNAUTHORIZED, ERRO_PERMISSAO);
-//		}
+		// if (!usuarioService.isAdm(emailUsuario)) {
+		// throw new CustomErrorException(HttpStatus.UNAUTHORIZED, ERRO_PERMISSAO);
+		// }
 		return atividadeRepository.findById(id).get();
 	}
 
@@ -59,11 +63,33 @@ public class AtividadeService {
 		atividadeRepository.save(atividade);
 		return atividade;
 	}
-	
-	
+
 	public List<Atividade> listarAtividadeByLocalId(String emailUsuario, Long id) {
-		Local local = localService.findById(id,emailUsuario);
+		Local local = localService.findById(id, emailUsuario);
 		return local.getAtividadeList();
+	}
+
+	public List<Atividade> listarAtividadeByLocalIdEspecIdBarcoTemplateId(String emailUsuario, Long localId,
+			Long idUsuario, Long barcotemplateId) {
+		
+		Usuario usuario = usuarioService.findById(idUsuario);
+		
+		List<Atividade> lstAtividadeRetorno = new ArrayList<>();
+		
+		for (Especialidade especialidade : usuario.getEspecialidadeList()) {
+			List<Atividade> lstAtividade = atividadeRepository.listarAtividadeByLocalIdEspecIdBarcoTemplateId(localId, especialidade.getId(),
+					barcotemplateId);
+			for (Atividade atividade : lstAtividade) {
+				if(!lstAtividadeRetorno.contains(atividade)) {
+					lstAtividadeRetorno.add(atividade);
+				}
+				
+			}
+		}
+		
+		
+		
+		return lstAtividadeRetorno;
 	}
 
 }
