@@ -136,7 +136,7 @@ const MonitorUserTemplate = {
 	},
 	
 	htmlAtividade(idLocal, atividade){
-		let html = `<button type="button" class="btn btn-success col-md-12 mt15" onclick="MonitorUserController.salvarAtividadeEscolhida(${atividade.id},${idLocal})">${atividade.nome}</button>`
+		let html = `<button type="button" class="btn btnAtividade btn-success col-md-12 mt15" onclick="MonitorUserController.salvarAtividadeEscolhida(${atividade.id},${idLocal})">${atividade.nome}</button>`
 		return html;
 	},
 	

@@ -93,10 +93,17 @@ public class MonitoracaoService {
 	}
 
 	public Barco salvarNovaBarcoMonitoracao(BarcoMonitoracaoDTO monitoracaoDTO, String emailUsuario) {
+		
+		Usuario usuario = null;
 
 		Barco barco = barcoService.findById(monitoracaoDTO.getIdBarco(), emailUsuario);
 
-		Usuario usuario = usuarioService.buscarUsuarioPorNFC(monitoracaoDTO.getNfcId());
+		if(!monitoracaoDTO.getNfcId().equals("")){
+			usuario = usuarioService.buscarUsuarioPorNFC(monitoracaoDTO.getNfcId());
+		}else {
+			usuario = usuarioService.findById(monitoracaoDTO.getIdUsuario());
+		}
+		
 		usuario.setStatus(EnumStatusUsuario.TRABALHANDO.toString());
 
 		Atividade atividade = atividadeService.findById(monitoracaoDTO.getIdAtividade(), emailUsuario);
@@ -163,7 +170,14 @@ public class MonitoracaoService {
 
 	public Object continuarPausarFinalizar(BarcoMonitoracaoDTO monitoracaoDTO, String emailUsuario) {
 
-		Usuario usuario = usuarioService.buscarUsuarioPorNFC(monitoracaoDTO.getNfcId());
+		Usuario usuario = null;
+		
+		if(!monitoracaoDTO.getNfcId().equals("")){
+			usuario = usuarioService.buscarUsuarioPorNFC(monitoracaoDTO.getNfcId());
+		}else {
+			usuario = usuarioService.findById(monitoracaoDTO.getIdUsuario());
+		}
+		
 		Monitoracao monitoracao = monitoracaoRepository.findByUsuarioAndDtFimAtividadeIsNull(usuario);
 
 		if (monitoracao == null) {

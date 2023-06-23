@@ -19,6 +19,7 @@
 
 	<input type="hidden" name="action" id="action">
 	<input type="hidden" name="action" id="nfcIdCache">
+	<input type="hidden" name="action" id="usuarioIdCache">
 	
 	<div class="container">
 		<div class="modal" id="myModal"></div>

@@ -8,9 +8,20 @@ public class BarcoMonitoracaoDTO {
 	private Long idAtividade;
 	private Long idLocal;
 	private Long idFase;
+	private Long idUsuario;
 	private String nfcId;
 	private String acao;
 	private Date dtInicioAtividade;
+	
+	
+
+	public Long getIdUsuario() {
+		return idUsuario;
+	}
+
+	public void setIdUsuario(Long idUsuario) {
+		this.idUsuario = idUsuario;
+	}
 
 	public Long getIdFase() {
 		return idFase;

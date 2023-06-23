@@ -115,7 +115,7 @@ const MonitorUserController = {
 	    });
 	},
 		
-	abrirEscolhaBarco(id, codRfid){
+	abrirEscolhaBarco(idUsuario, codRfid){
 		
 		if($('#nfcId').val()==='' || id==null){
 			$('#nfcId').val(codRfid);
@@ -125,8 +125,9 @@ const MonitorUserController = {
 		$('#nfcIdCache').val($('#nfcId').val());
 		$('#nfcId').val('');
 
-		if(id != null){
-			urlService = "/barco/escolhaBarcoByIdUsuario/" + id;
+		if(idUsuario != null){
+			urlService = "/barco/escolhaBarcoByIdUsuario/" + idUsuario;
+			$('#usuarioIdCache').val(idUsuario);
 		}		
 		
 		$.ajax({
@@ -162,7 +163,7 @@ const MonitorUserController = {
 	        		$('#imgEscolhaBarco').append(
         				`
         				<div class="col-md-4 mt15">
-        					<span class="btnBarco" onclick="MonitorUserController.abrirEscolhaFase(${barco.id},${barco.barcoTemplate!=null?barco.barcoTemplate.id:null},${id});">${barco.nome}</span>
+        					<span class="btnBarco" onclick="MonitorUserController.abrirEscolhaFase(${barco.id},${barco.barcoTemplate!=null?barco.barcoTemplate.id:null},${idUsuario});">${barco.nome}</span>
         				</div>`
     				);
         		}
@@ -180,6 +181,7 @@ const MonitorUserController = {
 		formControl  = $('#formId').serializeJSON();
 		formControl.acao = acao;
 		formControl.nfcId = $('#nfcIdCache').val();
+		formControl.idUsuario = $('#usuarioIdCache').val();
 		
 		let myJsonData = JSON.stringify(formControl);
 		
@@ -208,6 +210,7 @@ const MonitorUserController = {
 		formControl.idAtividade = idAtividade;
 		formControl.idLocal = idLocal;
 		formControl.nfcId = $('#nfcIdCache').val();
+		formControl.idUsuario = $('#usuarioIdCache').val();
 		
 		let myJsonData = JSON.stringify(formControl);
 		
@@ -295,25 +298,30 @@ const MonitorUserController = {
 		
 		console.log(object);
 		
-		$.ajax({
-			headers: {
-	            'Authorization': email,
-	            'Content-Type':'application/json'
-	        },
-	        type: "GET",
-	        contentType: "application/json",
-	        url: "/atividade/listarAtividadeByLocalIdEspecIdBarcoTemplateId/"+idLocal+"/"+idUsuario+"/"+idBarcoTemplate,
-	        success: function(retorno) {
-	        	$(retorno.response).each(function(index, atividade) {
-	        		let atividadeBtn = MonitorUserTemplate.htmlAtividade(idLocal, atividade);
-	        		$('#'+object).find('.form-group').append(atividadeBtn);
-        		});
-	        },
-	        error: function (data) {  
-	        	MonitorUserController.erro(data,'alertMsgIdTable');
-	        }
-	    });
 		
+//		let isBtnFechado = document.getElementById(object).querySelector('.collapse') != null;
+		let isPossuiBtn = document.getElementById(object).querySelector('.btnAtividade') != null;
+		
+		if(!isPossuiBtn){
+			$.ajax({
+				headers: {
+		            'Authorization': email,
+		            'Content-Type':'application/json'
+		        },
+		        type: "GET",
+		        contentType: "application/json",
+		        url: "/atividade/listarAtividadeByLocalIdEspecIdBarcoTemplateId/"+idLocal+"/"+idUsuario+"/"+idBarcoTemplate,
+		        success: function(retorno) {
+		        	$(retorno.response).each(function(index, atividade) {
+		        		let atividadeBtn = MonitorUserTemplate.htmlAtividade(idLocal, atividade);
+		        		$('#'+object).find('.form-group').append(atividadeBtn);
+	        		});
+		        },
+		        error: function (data) {  
+		        	MonitorUserController.erro(data,'alertMsgIdTable');
+		        }
+		    });
+		}
 	},
 	
 	abrirEscolhaFase(idBarco,idBarcoTemplate, idUsuario){
