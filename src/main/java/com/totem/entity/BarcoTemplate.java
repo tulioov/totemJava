@@ -27,6 +27,11 @@ public class BarcoTemplate {
 
 	@Column(name = "imagem")
 	private String imagem;
+	
+	@Column(name = "PREFIXO", unique = true)
+	@NotEmpty(message = "Prefixo deve conter um nome")
+	@Size(min = 3, max = 250, message = "Prefixo deve conter minimo de 3 caracter")
+	private String prefixo;
 
 	@Column(name = "NOME", unique = true)
 	@NotEmpty(message = "Nome deve conter um nome")
@@ -48,6 +53,14 @@ public class BarcoTemplate {
 	@JsonFormat(pattern = "dd/MM/yyyy")
 	@Column(name = "DT_DELETE")
 	private Date dtDelete;
+	
+	public String getPrefixo() {
+		return prefixo;
+	}
+
+	public void setPrefixo(String prefixo) {
+		this.prefixo = prefixo;
+	}
 
 	public Long getId() {
 		return id;

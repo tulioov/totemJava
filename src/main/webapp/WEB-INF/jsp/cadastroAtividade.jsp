@@ -38,8 +38,7 @@
 			<table id="tableAtividade" class="display">
 				<thead>
 			    <tr>
-			        <th>ID</th>
-			        <th>Nome</th>
+			        <th>Constante</th>
 			        <th>Descri&ccedil;&atilde;o</th>
 			        <th>Status</th>
 			        <th>A&ccedil;&atilde;o</th>

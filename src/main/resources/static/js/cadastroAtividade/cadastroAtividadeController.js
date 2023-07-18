@@ -126,13 +126,27 @@ const CadastroAtividadeController = {
 		
 		$("#nomeId").keyup(function(){
 			const reg = /[^a-zA-Z0-9 ]+/g;
-			let texto = $("#nomeId").val().replace(reg,'');
-			$("#constanteCampoId").val(texto.replaceAll(' ','_'));
+			
+			let codigotxt = $("#codigoId").val().replace(reg,'');
+			let nomeIdtxt = $("#nomeId").val().replace(reg,'');
+			$("#constanteCampoId").val((codigotxt+'-'+nomeIdtxt).replaceAll(' ','_'));
+			
 		});
+		
+		$("#codigoId").keyup(function(){
+			const reg = /[^a-zA-Z0-9 ]+/g;
+			
+			let codigotxt = $("#codigoId").val().replace(reg,'');
+			let nomeIdtxt = $("#nomeId").val().replace(reg,'');
+			$("#constanteCampoId").val((codigotxt+'-'+nomeIdtxt).replaceAll(' ','_'));
+			
+		});
+		
 		$('[name=duallistbox]').bootstrapDualListbox({
 			nonSelectedListLabel: 'N\u00e3o Selecionadas',
 			selectedListLabel: 'Selecionadas'
 		});
+		
 		if(atividade != undefined){
 			$('#campoId').val(atividade.id);
 			$('#codigoId').val(atividade.codigo);

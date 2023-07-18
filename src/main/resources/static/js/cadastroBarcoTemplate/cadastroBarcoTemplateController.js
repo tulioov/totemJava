@@ -184,6 +184,7 @@ const CadastroBarcoTemplateController = {
 			$('#base64image').attr('src', barcoTemplate.imagem); 
 			$('#base64image').val(barcoTemplate.imagem);
 			$('#nomeId').val(barcoTemplate.nome);
+			$('#prefixoId').val(barcoTemplate.prefixo);
 			$('#constanteCampoId').val(barcoTemplate.constanteCampo);
 			CadastroBarcoTemplateController.carregarDualList(barcoTemplate.atividadeList);
 			return;

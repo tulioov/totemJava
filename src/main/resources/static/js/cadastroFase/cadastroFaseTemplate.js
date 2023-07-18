@@ -20,13 +20,24 @@ const CadastroFaseTemplate = {
 		                	<div class="panel-heading">Cadastro de Fase</div>
 		                	<div class="panel-body">
 			                	<div class="row">
-									<div class="col-md-4">
+									<div class="col-md-6">
 										<div>Nome: </div>
 										<input type="text" name="nome" class="form-control uppercase" id="nomeId">
 									</div>
-									<div class="col-md-4">
+									<div class="col-md-6">
 										<div>Constante Campo: </div>
 										<input type="text" name="constanteCampo" oninput="this.value = this.value.replace(' ', '');" class="form-control uppercase" id="constanteCampoId">
+									</div>
+								</div>
+								<div class="row">
+									<div class="col-md-6">
+										<div>Barco Template: </div>
+										<select id="barcoTemplateSelect" name="barcoTemplateSelect"  class="selectpicker"  data-live-search="true" title="Escolha uma opcao">
+										</select>
+									</div>
+									<div class="col-md-6">
+										<div>Descri\u00e7\u00e3o: </div>
+										<input disabled type="text" name="descricao" class="form-control uppercase" id="descricaoId">
 									</div>
 								</div>
 							</div>
@@ -34,7 +45,7 @@ const CadastroFaseTemplate = {
 						<div class="panel panel-default">
 							<div class="panel-heading">Rela\u00e7\u00e3o Fase e Local</div>
                 			<div class="panel-body">
-								<select multiple="multiple" size="10"  id="duallistboxId">
+								<select multiple="multiple" class="dualListClass" size="10"  id="duallistLocalId">
 								</select>
 							</div>
 						</div>

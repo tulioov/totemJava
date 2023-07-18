@@ -6,6 +6,7 @@ public class BarcoTemplateDTO {
 
 	private Long id;
 	private String nome;
+	private String prefixo;
 	private String constanteCampo;
 	private List<Long> atividadeList;
 	private String imagem;
@@ -16,6 +17,14 @@ public class BarcoTemplateDTO {
 
 	public void setId(Long id) {
 		this.id = id;
+	}
+
+	public String getPrefixo() {
+		return prefixo;
+	}
+
+	public void setPrefixo(String prefixo) {
+		this.prefixo = prefixo;
 	}
 
 	public String getNome() {

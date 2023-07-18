@@ -38,6 +38,11 @@ public class Fase {
 	@JoinColumn(name = "ID_FASE")
 	@ManyToMany
 	private List<Local> localList;
+	
+	@JoinColumn(name = "ID_BARCO_TEMPLATE")
+	@ManyToMany
+	@NotEmpty(message = "Fase deve conter um barco")
+	private List<BarcoTemplate> barcoTemplateList;
 
 	@Column(name = "USUARIO_DELETE")
 	private String usuarioDelete;
@@ -70,6 +75,14 @@ public class Fase {
 		this.constanteCampo = constanteCampo;
 	}
 	
+	public List<BarcoTemplate> getBarcoTemplateList() {
+		return barcoTemplateList;
+	}
+
+	public void setBarcoTemplateList(List<BarcoTemplate> barcoTemplateList) {
+		this.barcoTemplateList = barcoTemplateList;
+	}
+
 	public List<Local> getLocalList() {
 		return localList;
 	}

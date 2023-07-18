@@ -29,6 +29,7 @@
 			    	<th>Codigo</th>
 			        <th>Nome</th>
 			        <th>Constante Campo</th>
+			        <th>Descri&ccedil;&atilde;o</th>
 			        <th>Tempo Estimado (min)</th>
 			        <th class="text-center">Status</th>
 			    </tr>

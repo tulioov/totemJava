@@ -34,11 +34,15 @@ const CadastroBarcoTemplateTemplate = {
 									</div>
 								</div>
 			                	<div class="row">
-									<div class="col-md-4">
+			                		<div class="col-md-3">
+										<div>Prefixo: </div>
+										<input type="text" name="prefixo" class="form-control uppercase" id="prefixoId">
+									</div>
+									<div class="col-md-3">
 										<div>Nome: </div>
 										<input type="text" name="nome" class="form-control uppercase" id="nomeId">
 									</div>
-									<div class="col-md-4">
+									<div class="col-md-3">
 										<div>Constante Campo: </div>
 										<input type="text" name="constanteCampo" oninput="this.value = this.value.replace(' ', '');" class="form-control uppercase" id="constanteCampoId">
 									</div>

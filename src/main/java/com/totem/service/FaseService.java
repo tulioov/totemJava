@@ -10,6 +10,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import com.totem.dto.FaseDTO;
+import com.totem.entity.BarcoTemplate;
 import com.totem.entity.Fase;
 import com.totem.entity.Local;
 import com.totem.entity.Usuario;
@@ -24,6 +25,9 @@ public class FaseService {
 	
 	@Autowired
 	LocalService localService;
+	
+	@Autowired
+	BarcoTemplateService barcoTemplateService;
 	
 	@Autowired
     private FaseRepository faseRepository;
@@ -46,13 +50,19 @@ public class FaseService {
 		}
 		
 		List<Local> localList = new ArrayList<>();
+		List<BarcoTemplate> barcoTempalteList = new ArrayList<>();
+		
 		Fase fase = new Fase();
 		
 		for (Long codLocal : faseDTO.getLocalList()) {
 			localList.add(localService.findById(codLocal, emailUsuario));
 		}
+		for (Long barcoTemplateId : faseDTO.getBarcoTemplateList()) {
+			barcoTempalteList.add(barcoTemplateService.findById(barcoTemplateId));
+		}
 		
 		BeanUtils.copyProperties(faseDTO, fase);
+		fase.setBarcoTemplateList(barcoTempalteList);
 		fase.setLocalList(localList);
 		
 		faseRepository.save(fase);

@@ -9,11 +9,12 @@ const ImportAtividadeController = {
 		let index = 0
 		for ( ;index<objects.length ; ) {
 			let Atividade = {};
-			Atividade.codigo = parseInt(objects[index].innerHTML);
+			Atividade.codigo = objects[index].innerHTML;
 			Atividade.nome = objects[index + 1].innerHTML;
 			Atividade.constanteCampo = objects[index + 2].innerHTML;
-			Atividade.tempoEstimado = parseInt(objects[index + 3].innerHTML);
-			index = index + 4;
+			Atividade.descricao = objects[index + 3].innerHTML;
+			Atividade.tempoEstimado = parseInt(objects[index + 4].innerHTML);
+			index = index + 5;
 			listObjetos.push(Atividade);
 		}
 		
@@ -50,7 +51,7 @@ const ImportAtividadeController = {
                 CreatedDate: new Date(2017,12,19)
         };
 		wb.SheetNames.push("Atividade");
-		let colunas = [ 'Codigo' , 'Nome', 'Tempo' ];
+		let colunas = [ 'Fase' , 'Embarca\u00e7\u00e3o', 'Descri\u00e7\u00e3o', 'Tempo' ];
 		var ws_data = [colunas];
 		var ws = XLSX.utils.aoa_to_sheet(ws_data);
 		wb.Sheets["Atividade"] = ws;

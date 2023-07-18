@@ -150,23 +150,64 @@ const MonitorUserController = {
 	        		return;
 	        	}
 	        	
+	        	
         		if(retorno.response.status != undefined && retorno.response.status.includes("PAUSA")){
-        			$('#imgEscolhaBarco').append(
+	    			$('#imgEscolhaBarco').find('tbody').append(
 	    					`
-	    					<div class="col-md-12 mt15">
-	    						<button type="button" class="btn-lg btn-success col-md-12 mt15" onclick="MonitorUserController.continuarPausarFinalizar('CONTINUAR');">Continuar Trabalhando na ${retorno.response.barco.nome} na Atividade: ${retorno.response.monitoracao.atividade.nome}</button>
-	    					</div>`);
+	    					<tr>
+								<td class='uppercase'>${retorno.response.barco.id}</td>
+								<td class='uppercase'>${retorno.response.barco.nome}</td>
+								<td>
+									<span class="${data.status}">
+										<button type="button" class="btn-lg btn-success col-md-12 mt15" onclick="MonitorUserController.continuarPausarFinalizar('CONTINUAR');">Continuar Trabalhando na ${retorno.response.barco.nome} na Atividade: ${retorno.response.monitoracao.atividade.nome}</button>
+									</span>
+								</td>
+							</tr>
+	    					`);
 	        		return;
 	        	}
 	        	
-        		for (const barco of retorno.response){	
-	        		$('#imgEscolhaBarco').append(
-        				`
-        				<div class="col-md-4 mt15">
-        					<span class="btnBarco" onclick="MonitorUserController.abrirEscolhaFase(${barco.id},${barco.barcoTemplate!=null?barco.barcoTemplate.id:null},${idUsuario});">${barco.nome}</span>
-        				</div>`
-    				);
-        		}
+	    		for (const barco of retorno.response){	
+	    			$('#imgEscolhaBarco').find('tbody').append(
+    					`
+    					<tr>
+							<td class='uppercase'>${barco.id}</td>
+							<td class='uppercase'>${barco.nome}</td>
+							<td>
+								<button class="btnBarco" onclick="MonitorUserController.abrirEscolhaFase(${barco.id},${barco.barcoTemplate!=null?barco.barcoTemplate.id:null},${idUsuario});">
+		    						${barco.nome}
+								</button>
+							</td>
+						</tr>
+    					`
+					);
+	    		}
+	    		
+	        	
+//        		if(retorno.response.status != undefined && retorno.response.status.includes("PAUSA")){
+//        			$('#imgEscolhaBarco').append(
+//	    					`
+//	    					<div class="col-md-12 mt15">
+//	    						<button type="button" class="btn-lg btn-success col-md-12 mt15" onclick="MonitorUserController.continuarPausarFinalizar('CONTINUAR');">Continuar Trabalhando na ${retorno.response.barco.nome} na Atividade: ${retorno.response.monitoracao.atividade.nome}</button>
+//	    					</div>`);
+//	        		return;
+//	        	}
+//	        	
+//        		for (const barco of retorno.response){	
+//	        		$('#imgEscolhaBarco').append(
+//        				`
+//        				<div class="col-md-4 mt15">
+//        					<span class="btnBarco" onclick="MonitorUserController.abrirEscolhaFase(${barco.id},${barco.barcoTemplate!=null?barco.barcoTemplate.id:null},${idUsuario});">${barco.nome}</span>
+//        				</div>`
+//    				);
+//        		}
+	        },
+	        complete: function(data) { 
+	        	$('#imgEscolhaBarco').DataTable( {
+	    		    language: {
+	    		        url: '//cdn.datatables.net/plug-ins/1.11.3/i18n/pt_br.json'
+	    		    }
+	    		});
 	        },
 	        error: function (data) {  
 	        	MonitorUserController.erro(data,'alertMsgIdTable');

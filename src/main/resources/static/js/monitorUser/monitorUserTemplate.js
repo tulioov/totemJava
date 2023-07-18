@@ -20,7 +20,7 @@ const MonitorUserTemplate = {
 			<h3>Processo de fabrica\u00e7\u00e3o do barco ${barco.nome}</h3>
 			<div class="row">
 				<div class="col-md-4 ">
-					<img style='width:16em;height:9em;' src='${barco.imagem}'/>
+					<img style='width:16em;height:9em;' src='${barco.barcoTemplate.imagem}'/>
 				</div>
 				<div class="col-md-6 mt3em">
 					<h4>Data de inicio Previsto= ${barco.dtInicioPrevisto}</h4> 
@@ -94,9 +94,17 @@ const MonitorUserTemplate = {
 									<div class="progress">
 										<div id="progressBarEscolhaBarcoId" class="progress-bar bg-success" role="progressbar" style="width: 100%" value=100 aria-valuemin="0" aria-valuemax="100">Tempo de espera</div>
 									</div>
-					            	<div class="card card-body">
-						            	<div id="imgEscolhaBarco" class="row">
-										</div>
+									<div class="row mt15">
+										<table id="imgEscolhaBarco">
+											<thead>
+										    <tr>
+										    	<th>Id</th>
+										        <th>Nome</th>
+										        <th class="text-center">Status</th>
+										    </tr>
+											</thead>
+											<tbody></tbody>
+										</table>
 								    </div>
 								</div>
 							</div>

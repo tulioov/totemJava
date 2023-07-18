@@ -8,6 +8,14 @@ public class FaseDTO {
 	private String nome;
 	private String constanteCampo;
 	private List<Long> localList;
+	private List<Long> barcoTemplateList;
+	
+	public List<Long> getBarcoTemplateList() {
+		return barcoTemplateList;
+	}
+	public void setBarcoTemplateList(List<Long> barcoTemplateList) {
+		this.barcoTemplateList = barcoTemplateList;
+	}
 	public Long getId() {
 		return id;
 	}

@@ -13,10 +13,14 @@ const SelectUtil = {
 	        success: function(retorno) {
 	        	$(retorno.response).each(function(index, data) {
 	        		let srcImageOption = '';
+	        		let prefixoOption = '';
 	        		if(data.imagem!=null){
 	        			srcImageOption = 'srcImage="'+data.imagem+'"';
 	        		}
-	        		$('#'+selectId).append('<option value='+data.id+' '+srcImageOption+' >'+data.nome+'</option>');
+	        		if(data.prefixo!=null){
+	        			prefixoOption = 'prefixo="'+data.prefixo+'"';
+	        		}
+	        		$('#'+selectId).append('<option '+prefixoOption+' value='+data.id+' '+srcImageOption+' >'+data.nome+'</option>');
 	        	});
 	        	$('.selectpicker').selectpicker('refresh');
 	        	if(selecionadoId != undefined){

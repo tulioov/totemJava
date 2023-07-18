@@ -52,6 +52,19 @@ public class Atividade {
 	@JsonFormat(pattern="dd/MM/yyyy")
 	@Column(name = "DT_DELETE")
 	private Date dtDelete;
+	
+	@JsonFormat(pattern="dd/MM/yyyy")
+	@Column(name = "DT_INSERT")
+	private Date DtInsert;
+	
+
+	public Date getDtInsert() {
+		return DtInsert;
+	}
+
+	public void setDtInsert(Date dtInsert) {
+		DtInsert = dtInsert;
+	}
 
 	public Long getId() {
 		return id;

@@ -1,5 +1,7 @@
 package com.totem.service;
 
+import java.util.Date;
+
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,6 +39,7 @@ public class ImportService {
 		if ("atividade".equals(importDTO.getTipoObject())) {
 			
 			for (Atividade atividade : importDTO.getLstAtividade()) {
+				atividade.setDtInsert(new Date());
 				atividadeService.salvar(atividade, emailUsuario);
 			}
 

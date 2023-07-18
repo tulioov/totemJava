@@ -9,6 +9,8 @@
 	<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.3/css/jquery.dataTables.css">
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
 	<link href="../externo/dual-list/bootstrap-duallistbox.css" rel="stylesheet" />
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/css/bootstrap-select.min.css">
+	
 	
 	<title>Cadastro de Fase</title>
 </head>
@@ -49,6 +51,8 @@
 	    </div>
 	</div>
 	<script src="../externo/serializejson/serializejson.js"></script>
+	<script src="../js/util/selectUtil.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/js/bootstrap-select.min.js"></script>
 	<script src="../externo/dual-list/jquery.bootstrap-duallistbox.js"></script>
 	<script src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.js"></script>
 	<script src="../js/cadastroFase/cadastroFaseTemplate.js"></script>

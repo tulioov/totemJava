@@ -25,7 +25,7 @@ const CadastroAtividadeTemplate = {
 										<input type="text" name="codigo" class="form-control uppercase" id="codigoId">
 									</div>
 									<div class="col-md-4">
-										<div>Nome:</div>
+										<div>Embarca\u00e7\u00e3o::</div>
 										<input type="text" name="nome" class="form-control uppercase" id="nomeId">
 									</div>
 									<div class="col-md-4">
@@ -63,8 +63,7 @@ const CadastroAtividadeTemplate = {
 	itemLinha(data){
 		return `
 			<tr>
-				<td>${data.id}</td>
-				<td>${data.nome}</td>
+				<td>${data.constanteCampo}</td>
 				<td>${data.descricao == null ? '' : data.descricao}</td>
 				<td><span class="${data.usuarioDelete != null?'inativo':'ativo'}">${data.usuarioDelete != null?'Inativo':'Ativo'}</span></td>
 				<td>
