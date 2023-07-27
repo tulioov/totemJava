@@ -79,6 +79,7 @@
                 <div class='dashboard-nav-dropdown-menu'>
        				<a href="/cadastroStatusMonitoracao" class="dashboard-nav-dropdown-item">Menu Monitoracao</a>
 					<a href="/cadastroFeriado" class="dashboard-nav-dropdown-item">Feriado</a>
+					<a href="/cadastroBarcoTemplate" class="dashboard-nav-dropdown-item">Barco Template</a>
 					<a href="/cadastroBarco" class="dashboard-nav-dropdown-item">Barco</a>
 					<a href="/cadastroUsuario" onclick="CadastroUsuarioController.listar();" class="dashboard-nav-dropdown-item">Usuario</a>
 					<a href="/cadasdroFases" class="dashboard-nav-dropdown-item">Fase</a>
@@ -90,7 +91,6 @@
 		                <div class='dashboard-nav-dropdown-menu'>
 							<a href="/cadastroAtividade" class="dashboard-nav-dropdown-item">Atividade</a>
 							<a href="/cadastroLocal" class="dashboard-nav-dropdown-item">Local</a>
-							<a href="/cadastroBarcoTemplate" class="dashboard-nav-dropdown-item">Barco Template</a>
 							<a href="/cadastroEspecialidade" class="dashboard-nav-dropdown-item">Especialidade</a>
 						</div>
 		            </div>

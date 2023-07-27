@@ -42,6 +42,7 @@
 			        <th>ID</th>
 			        <th>Nome</th>
 			        <th>Constante Campo</th>
+			        <th>Barco Template</th>
 			        <th>Status</th>
 			        <th>A&ccedil;&atilde;o</th>
 			    </tr>

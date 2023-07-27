@@ -66,6 +66,7 @@ const CadastroFaseTemplate = {
 				<td>${data.id}</td>
 				<td>${data.nome}</td>
 				<td>${data.constanteCampo}</td>
+				<td>${data.barcoTemplateList[0]==undefined?'Sem Barco':data.barcoTemplateList[0].nome}</td>
 				<td><span class="${data.usuarioDelete != null?'inativo':'ativo'}">${data.usuarioDelete != null?'Inativo':'Ativo'}</span></td>
 				<td>
 					<span onclick="CadastroFaseController.editar(${data.id});" class="glyphicon glyphicon-pencil"></span>
